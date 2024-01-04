@@ -9,7 +9,8 @@ export default defineConfig({
     port: 3000
   },
   css: {
-    devSourcemap: true
+    devSourcemap: true,
+    postcss: './postcss.config.js'
   },
   resolve: {
     alias: {

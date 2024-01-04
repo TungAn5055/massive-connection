@@ -1,0 +1,17 @@
+.ant-layout {
+  background: #ffff !important
+}
+
+.ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected {
+  background-color: #95bcf2;
+  color: black;
+}
+
+.ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected::after {
+  border-bottom-color: #95bcf2;
+}
+
+.ant-menu .ant-menu-title-content {
+font-size: 16px;
+  font-weight: 600;
+}
