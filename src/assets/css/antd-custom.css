@@ -15,3 +15,42 @@
 font-size: 16px;
   font-weight: 600;
 }
+
+/* custom form */
+.ant-form legend {
+  border-bottom: none !important;
+  font-size: 18px;
+  color: black;
+}
+
+legend {
+  width: auto !important;
+}
+
+
+
+/* ui */
+.ant-select-selector {
+  border: 1px solid #151010 !important;
+}
+
+.ant-select-arrow {
+  color: #151010 !important;
+}
+
+.ant-input {
+  border-color: #151010 !important;
+}
+
+.ant-btn-default {
+  border-color: #151010 !important;
+}
+
+.ant-btn-default:hover {
+  color: #151010 !important;
+  border-color: #151010 !important;
+}
+
+.ant-input-affix-wrapper {
+  border-color: #151010 !important;
+}

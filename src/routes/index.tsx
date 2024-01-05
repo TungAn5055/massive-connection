@@ -20,7 +20,7 @@ const routes = [
     title_page: 'Prepaid Management',
     exact: true,
     show_in_menu: true,
-    element: <Home />
+    element: <Login />
   },
   {
     path: '/postpaid',
