@@ -1,5 +1,4 @@
 import Home from '@/pages/Home.tsx'
-import About from '@/pages/Postpaid.tsx'
 import Login from '@/pages/Login'
 import Postpaid from '@/pages/Postpaid.tsx'
 
@@ -20,16 +19,110 @@ const routes = [
     title_page: 'Prepaid Management',
     exact: true,
     show_in_menu: true,
-    element: <Login />
+    element: <Home />
   },
   {
-    path: '/postpaid',
-    key: 'postpaid',
+    // path: '/postpaid-management',
+    key: 'postpaid-management',
     title: 'Postpaid Management',
-    title_page: 'Request new postpaid connection',
+    title_page: 'Postpaid Management',
     exact: true,
     show_in_menu: true,
-    element: <Postpaid />
+    // element: <Postpaid />,
+    children: [
+      {
+        // path: 'postpaid-customers-management',
+        key: 'postpaid-customers-management',
+        title: 'Postpaid customers Management',
+        title_page: 'Postpaid customers Management',
+        exact: true,
+        show_in_menu: true,
+        show_icon: true,
+        // element: <Postpaid />,
+        children: [
+          {
+            path: '/connect-new-postpaid',
+            key: 'connect-new-postpaid',
+            title: 'Connect new postpaid',
+            title_page: 'Connect new postpaid',
+            exact: true,
+            show_in_menu: true,
+            show_icon: true
+            // element: <Home />
+          },
+          {
+            path: '/mobile-postpaid-customer',
+            key: 'mobile-postpaid-customer',
+            title: 'Mobile Postpaid Customer',
+            title_page: 'Mobile Postpaid Customer',
+            exact: true,
+            show_icon: true,
+            show_in_menu: true
+            // element: <Home />
+          },
+          {
+            path: '/adsl-ftth-customer',
+            key: 'adsl-ftth-customer',
+            title: 'ADSL/FTTH Customer',
+            title_page: 'ADSL/FTTH Customer',
+            exact: true,
+            show_icon: true,
+            show_in_menu: true
+            // element: <Home />
+          },
+          {
+            path: '/dedicated-link-customer',
+            key: 'dedicated-link-customer',
+            title: 'Dedicated link Customer',
+            title_page: 'Dedicated link Customer',
+            exact: true,
+            show_icon: true,
+            show_in_menu: true
+            // element: <Home />
+          },
+          {
+            path: '/officeWan-customer',
+            key: 'officeWan-customer',
+            title: 'OfficeWan Customer',
+            title_page: 'OfficeWan Customer',
+            exact: true,
+            show_icon: true,
+            show_in_menu: true
+            // element: <Home />
+          },
+          {
+            path: '/white-channel-customer',
+            key: 'white-channel-customer',
+            title: 'White Channel Customer',
+            title_page: 'White Channel Customer',
+            exact: true,
+            show_icon: true,
+            show_in_menu: true
+            // element: <Home />
+          },
+          {
+            path: '/connect-new-postpaid-2',
+            key: 'connect-new-postpaid-2',
+            title: 'Connect new postpaid II',
+            title_page: 'Connect new postpaid II',
+            exact: true,
+            show_icon: true,
+            show_in_menu: true
+            // element: <Home />
+          },
+          {
+            path: '/request-new-prepaid',
+            key: 'request-new-prepaid',
+            title: 'Request new postpaid connection',
+            title_page: 'Request new postpaid connection',
+            exact: true,
+            show_icon: true,
+            show_in_menu: true,
+            element: <Postpaid />
+          }
+        ]
+      }
+    ]
   },
   {
     path: '/contract',
@@ -38,7 +131,7 @@ const routes = [
     title_page: 'Contract Management',
     exact: true,
     show_in_menu: true,
-    element: <About />
+    element: <Home />
   },
   {
     path: '/applications',
@@ -47,7 +140,7 @@ const routes = [
     title_page: 'Applications ',
     exact: true,
     show_in_menu: true,
-    element: <About />
+    element: <Home />
   },
   {
     path: '/portability',
@@ -56,7 +149,7 @@ const routes = [
     title_page: 'Portability',
     exact: true,
     show_in_menu: true,
-    element: <About />
+    element: <Home />
   },
   {
     path: '/postSales',
@@ -65,7 +158,16 @@ const routes = [
     title_page: 'PostSales',
     exact: true,
     show_in_menu: true,
-    element: <About />
+    element: <Home />
+  },
+  {
+    path: '/request-new-prepaid',
+    key: 'request-new-prepaid',
+    title: 'Request new postpaid connection',
+    title_page: 'Request new postpaid connection',
+    exact: true,
+    show_in_menu: false,
+    element: <Postpaid />
   }
 ]
 
