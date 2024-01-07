@@ -94,9 +94,21 @@
   border-image: initial;
 }
 
+.content-customer-information {
+  margin: 10px;
+  width: 100%
+}
 
+/* common */
 .display-flex {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+.message-error {
+  color: #d71e1f;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }

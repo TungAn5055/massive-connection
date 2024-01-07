@@ -4,7 +4,7 @@ import { Link, Route, useLocation, useNavigate } from 'react-router-dom'
 import routes from '@/routes'
 import * as _ from 'lodash'
 import SubMenu from 'antd/es/menu/SubMenu'
-import { FileImageFilled, FileImageOutlined } from '@ant-design/icons'
+import { FileImageOutlined } from '@ant-design/icons'
 
 const CustomMenu: React.FC = () => {
   const navigate = useNavigate()
@@ -19,7 +19,7 @@ const CustomMenu: React.FC = () => {
     if (route.children && !_.isEmpty(route.children)) {
       return (
         <SubMenu
-          key={index}
+          key={route?.key}
           title={
             <>
               {route?.show_icon && <FileImageOutlined style={{ marginRight: '10px' }} />}
@@ -32,7 +32,7 @@ const CustomMenu: React.FC = () => {
               return renderMenu(child, index)
             } else {
               return (
-                <Menu.Item key={index}>
+                <Menu.Item key={child?.key}>
                   <Link to={child?.path}>
                     {child?.show_icon && <FileImageOutlined style={{ marginRight: '10px' }} />}
                     {child?.title}

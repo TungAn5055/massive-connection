@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { FolderOpenFilled } from '@ant-design/icons'
 import { Button, Col, Form, Input, Row, Select, Space } from 'antd'
 
-const Postpaid: React.FC = () => {
+const NewPostpaidConnection: React.FC = () => {
   const [valueType, setValueType] = useState(null)
   const [valueIdentity, setValueIdentity] = useState(null)
   const [form] = Form.useForm()
@@ -38,33 +38,15 @@ const Postpaid: React.FC = () => {
     }
   }, [valueIdentity, valueType])
 
-  const onFinish = (values) => {
-    console.log('Received values:', values)
-  }
   return (
     <>
-      <Row className='site-page-header'>
-        <Col span={8} className='display-flex header-icon'>
-          <FolderOpenFilled style={{ fontSize: '30px', color: '#000000' }} />
-          <span className='page-header-heading-title'>Request new postpaid connection</span>
-        </Col>
-        <Col span={5} className='header-highlight-link grid'>
-          <a href={'http://www.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias'} target='_blank'>
-            RUC Information
-          </a>
-          <a href={'https://cel.reniec.gob.pe/valreg/valreg.do\n'} target='_blank'>
-            DNI information
-          </a>
-        </Col>
-      </Row>
-
       <Row className='site-page-content'>
         <Form
           className={'form-search-customer'}
           form={form}
           name='advanced_search'
           style={formStyle}
-          onFinish={onFinish}
+          // onFinish={onFinish}
         >
           <fieldset>
             <legend>Search customer</legend>
@@ -96,7 +78,7 @@ const Postpaid: React.FC = () => {
                   <Col span={16}>
                     <Input
                       size={'large'}
-                      value={valueIdentity}
+                      // value={valueIdentity}
                       onChange={handleChangeIdentity}
                       // onBlur={onBlur}
                       max={valueType === 'DNI' ? 8 : 11}
@@ -107,16 +89,7 @@ const Postpaid: React.FC = () => {
             </Row>
 
             {valueType && valueIdentity && checkFalseIdentity && (
-              <div
-                style={{
-                  color: '#d71e1f',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginBottom: '20px'
-                }}
-              >
-                Please input your password!
-              </div>
+              <div className={'message-error'}>La cantidad de números requeridos no es suficiente</div>
             )}
             <div
               style={{
@@ -137,4 +110,4 @@ const Postpaid: React.FC = () => {
   )
 }
 
-export default Postpaid
+export default NewPostpaidConnection

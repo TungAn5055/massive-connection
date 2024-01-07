@@ -21,10 +21,15 @@ font-size: 16px;
   border-bottom: none !important;
   font-size: 18px;
   color: black;
+  font-weight: 500;
 }
 
 legend {
   width: auto !important;
+}
+
+.ant-picker {
+  border-color: #151010 !important;
 }
 
 

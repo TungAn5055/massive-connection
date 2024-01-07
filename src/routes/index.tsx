@@ -1,6 +1,7 @@
 import Home from '@/pages/Home.tsx'
 import Login from '@/pages/Login'
-import Postpaid from '@/pages/Postpaid.tsx'
+import NewPostpaidConnection from '@/pages/new-postpaid-connection'
+import CustomerInformation from '@/pages/cusotmer-infomation'
 
 const routes = [
   {
@@ -118,7 +119,7 @@ const routes = [
             exact: true,
             show_icon: true,
             show_in_menu: true,
-            element: <Postpaid />
+            element: <NewPostpaidConnection />
           }
         ]
       }
@@ -167,7 +168,16 @@ const routes = [
     title_page: 'Request new postpaid connection',
     exact: true,
     show_in_menu: false,
-    element: <Postpaid />
+    element: <NewPostpaidConnection />
+  },
+  {
+    path: '/customer-information',
+    key: 'customer-information',
+    title: 'Connect postpaid subscriptor',
+    title_page: 'Connect postpaid subscriptor',
+    exact: true,
+    show_in_menu: false,
+    element: <CustomerInformation />
   }
 ]
 
