@@ -8,3 +8,5 @@ export const CUSTOMER_INFO_TABS = {
 export const FORMAT_DATE = {
   DAY_MONTH_YEAR: 'DD/MM/YYYY'
 }
+
+export const NO_DATA = 'No data'

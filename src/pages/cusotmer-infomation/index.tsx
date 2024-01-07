@@ -4,6 +4,7 @@ import { Button, Col, Form, Input, Row, Select, Space } from 'antd'
 import { Tabs } from 'antd'
 import { CUSTOMER_INFO_TABS } from '@/ultils/constants'
 import CustomerInfoTab from '@/components/customer-infomation/CustomerInfoTab'
+import LineInfoTab from '@/components/customer-infomation/LineInfoTab'
 
 const CustomerInformation: React.FC = () => {
   const [valueType, setValueType] = useState(null)
@@ -19,8 +20,8 @@ const CustomerInformation: React.FC = () => {
   }
 
   const onChangeTabs = (activeKey) => {
-    // setActiveTab(activeKey)
-    return false
+    setActiveTab(activeKey)
+    // return false
   }
   const onFinish = (values) => {
     console.log('Received values:', values)
@@ -61,7 +62,9 @@ const CustomerInformation: React.FC = () => {
               }
               key='2'
               forceRender={true}
-            ></Tabs.TabPane>
+            >
+              <LineInfoTab dataInfo={dataInfo} setDataInfo={setDataInfo} />
+            </Tabs.TabPane>
             <Tabs.TabPane
               tab={
                 <span className={'title-tab-request'} key={3}>
