@@ -112,6 +112,18 @@
   justify-content: center;
 }
 
+.display-flex-space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.display-grid {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
 .button-continue {
   margin: 10px;
 }

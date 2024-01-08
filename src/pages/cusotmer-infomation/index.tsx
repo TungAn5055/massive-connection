@@ -5,6 +5,8 @@ import { Tabs } from 'antd'
 import { CUSTOMER_INFO_TABS } from '@/ultils/constants'
 import CustomerInfoTab from '@/components/customer-infomation/CustomerInfoTab'
 import LineInfoTab from '@/components/customer-infomation/LineInfoTab'
+import AttachedTab from "@/components/customer-infomation/AttachedTab.tsx";
+import SuccessfulTab from "@/components/customer-infomation/SuccessfulTab.tsx";
 
 const CustomerInformation: React.FC = () => {
   const [valueType, setValueType] = useState(null)
@@ -73,7 +75,8 @@ const CustomerInformation: React.FC = () => {
               }
               key='3'
               forceRender={true}
-            ></Tabs.TabPane>
+            >
+            <AttachedTab  dataInfo={dataInfo} setDataInfo={setDataInfo} /></Tabs.TabPane>
             <Tabs.TabPane
               tab={
                 <span className={'title-tab-request'} key={4}>
@@ -82,7 +85,7 @@ const CustomerInformation: React.FC = () => {
               }
               key='4'
               forceRender={true}
-            ></Tabs.TabPane>
+            ><SuccessfulTab /></Tabs.TabPane>
           </Tabs>
         </Row>
       </Row>
