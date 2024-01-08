@@ -106,9 +106,31 @@
   justify-content: flex-start;
 }
 
+.display-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-continue {
+  margin: 10px;
+}
+
 .message-error {
   color: #d71e1f;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+}
+
+.button-title {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin: 10px 10px;
+}
+
+.button-title button{
+  background-color: #cc1600;
+  color: aliceblue;
 }

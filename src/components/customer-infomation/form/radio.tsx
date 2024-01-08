@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Col, Row, Select, Form, DatePicker } from 'antd'
-import { FORMAT_DATE } from '@/ultils/constants'
+import {Col, Row, Select, Form, Radio} from 'antd'
 
-export const FormDate = ({ data, setData, attribute, isDisabled = false, title, isRequired = false }) => {
+export const FormRadio = ({ data, setData, attribute, isDisabled = false, title, isRequired = false }) => {
   const [value, setValue] = useState(null)
   const [errorValue, setErrorValue] = useState(false)
 
@@ -35,13 +34,10 @@ export const FormDate = ({ data, setData, attribute, isDisabled = false, title, 
           {isRequired && <span style={{ color: 'red' }}> *</span>}
         </Col>
         <Col span={18}>
-          <DatePicker
-            style={{ width: '90%', padding: '6px' }}
-            // value={moment('')}
-            // onChange={(e) => onChangeSyncDate(e)}
-            // disabledDate={disableActiveTime}
-            format={FORMAT_DATE.DAY_MONTH_YEAR}
-          />
+          <Radio.Group onChange={onChange} value={value}>
+            <Radio value={1}>Representante Legal</Radio>
+            <Radio value={2}>Otro</Radio>
+          </Radio.Group>
         </Col>
       </Row>
     </Form.Item>

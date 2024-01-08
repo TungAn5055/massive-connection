@@ -1,14 +1,19 @@
 import React, { useMemo, useState } from 'react'
 import { Button, Col, Form, Input, Row, Select } from 'antd'
-import { FormText } from '@/pages/cusotmer-infomation/form/text'
-import { FormSelect } from '@/pages/cusotmer-infomation/form/select'
-import { FormDate } from '@/pages/cusotmer-infomation/form/date'
+import { FormText } from '@/components/customer-infomation/form/text'
+import { FormSelect } from '@/components/customer-infomation/form/select'
+import { FormDate } from '@/components/customer-infomation/form/date'
+import {FormCheckBox} from "@/components/customer-infomation/form/checkbox.tsx";
+import {FormRadio} from "@/components/customer-infomation/form/radio.tsx";
 
-const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
+const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab }) => {
+  const onNextStep = () => {
+    setActiveTab((prev) => (parseInt(prev) + 1).toString())
+  }
   return (
     <>
       {/*form 1*/}
-      <Form className={'form-search-customer'} name='advanced_search'>
+      <form className={'form-search-customer'} name='advanced_search'>
         <fieldset>
           <legend>Información de cliente</legend>
           {/*line 1*/}
@@ -20,6 +25,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 attribute={''}
                 title={'Tipo de cliente'}
                 isDisabled={true}
+                isRequired={true}
               />
             </Col>
             <Col span={8}></Col>
@@ -34,7 +40,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Tipo de documento'}
-                isRequired={true}
+                isDisabled={true}
               />
             </Col>
             <Col span={8}>
@@ -57,7 +63,6 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Razon Social'}
-                isRequired={false}
               />
             </Col>
             <Col span={8}>
@@ -66,7 +71,6 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Campo de activated'}
-                isRequired={false}
               />
             </Col>
             <Col span={8}></Col>
@@ -80,7 +84,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Fec. Emission'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
             <Col span={8}>
@@ -89,7 +93,6 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={'Fec. Vencimiento'}
                 title={'Datepicker'}
-                isRequired={false}
               />
             </Col>
             <Col span={8}>
@@ -98,7 +101,6 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Numero de telefono fijo'}
-                isRequired={false}
               />
             </Col>
           </Row>
@@ -109,7 +111,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
               <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'Numero Movil'} isRequired={true} />
             </Col>
             <Col span={8}>
-              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'Email'} isRequired={true} />
+              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'Email'} isRequired={true} placeholder={"Ej: abc@gmail.com "}/>
             </Col>
             <Col span={8}></Col>
           </Row>
@@ -130,7 +132,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
           {/*line 7*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'Direccion'} isRequired={true} />
+              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'Direccion'} isRequired={true} placeholder={"Ef: Calle ABC#123, Urb XYZ"} />
             </Col>
             <Col span={16}>
               <FormText
@@ -140,14 +142,15 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 title={'Dirección completa'}
                 isRequired={true}
                 isCustomSpan={true}
+                placeholder={"LIMA-UMA-LIMA"}
               />
             </Col>
           </Row>
         </fieldset>
-      </Form>
+      </form>
 
       {/*form 2*/}
-      <Form className={'form-search-customer'} name='advanced_search'>
+      <form className={'form-search-customer'} name='advanced_search'>
         <fieldset>
           <legend>Información de Representante Legal</legend>
           {/*line 1*/}
@@ -162,21 +165,21 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
               />
             </Col>
             <Col span={8}>
-              <FormSelect
+              <FormText
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
                 title={'No de documento'}
-                isDisabled={true}
+                placeholder={"--"}
               />
             </Col>
             <Col span={8}>
-              <FormSelect
+              <FormText
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
                 title={'Nacionalidad'}
-                isDisabled={true}
+                placeholder={"--"}
               />
             </Col>
           </Row>
@@ -184,7 +187,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
           {/*line 2*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormSelect
+              <FormText
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
@@ -214,16 +217,15 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Nombre Completo'}
-                isRequired={false}
               />
             </Col>
             <Col span={8}>
-              <FormText
+              <FormDate
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
                 title={'Fec. Nacimiento'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
             <Col span={8}>
@@ -232,7 +234,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Teléfono de contacto'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
           </Row>
@@ -240,21 +242,20 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
           {/*line 4*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormDate
+              <FormText
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
                 title={'Lugar de Emisión'}
-                isRequired={false}
               />
             </Col>
             <Col span={8}>
-              <FormDate
+              <FormText
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={'Fec. Emisión'}
                 title={'Datepicker'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
             <Col span={8}>
@@ -263,26 +264,33 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Fec. Vencimiento'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
           </Row>
         </fieldset>
-      </Form>
+      </form>
 
+      <div className={"button-title"}>
+        <Button type='default' size={'large'} htmlType='submit'>
+          Buscar contrato
+        </Button>
+        <span style={{ marginLeft: "10px"}}>
+          Este es un contrato normal.  <a href={''} target='_blank' style={{ color: "#3e7eb1"}}>Detalle</a>
+        </span>
+      </div>
       {/*form 3*/}
-      <Form className={'form-search-customer'} name='advanced_search'>
+      <form className={'form-search-customer'} name='advanced_search'>
         <fieldset>
-          <legend>Información de contrato</legend>
+        <legend>Información de contrato</legend>
           {/*line 1*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormSelect
+              <FormText
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
                 title={'Número de contrato'}
-                isDisabled={true}
               />
             </Col>
             <Col span={8}>
@@ -300,7 +308,6 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Idioma de contrato'}
-                isDisabled={true}
               />
             </Col>
           </Row>
@@ -308,7 +315,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
           {/*line 2*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormSelect
+              <FormDate
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
@@ -317,21 +324,19 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
               />
             </Col>
             <Col span={8}>
-              <FormText
+              <FormDate
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
                 title={'Fecha de expiration'}
-                isRequired={false}
               />
             </Col>
             <Col span={8}>
-              <FormText
+              <FormSelect
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
                 title={'Method de pago'}
-                isRequired={false}
               />
             </Col>
           </Row>
@@ -344,7 +349,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Ciclo de facturación'}
-                isRequired={false}
+                isDisabled={true}
               />
             </Col>
             <Col span={8}>
@@ -356,7 +361,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Direccion de facturacion'}
-                isRequired={false}
+                placeholder={"Ej: Colle ABC#123, Urb XYZ"}
               />
             </Col>
           </Row>
@@ -371,10 +376,11 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 title={'Distrito - Prov-Dpto.'}
                 isRequired={true}
                 isCustomSpan={true}
+                placeholder={"Ingresar Distrla"}
               />
             </Col>
             <Col span={8}>
-              <FormText
+              <FormCheckBox
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
@@ -387,12 +393,12 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
           {/*line 5*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormText
+              <FormRadio
                 data={dataInfo}
                 setData={setDataInfo}
                 attribute={''}
                 title={'Account manager'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
           </Row>
@@ -405,7 +411,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Contacto Autorizado'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
           </Row>
@@ -418,11 +424,11 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Nombres y Apellidos'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
             <Col span={8}>
-              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'DNI'} isRequired={false} />
+              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'DNI'} isRequired={true} />
             </Col>
             <Col span={8}>
               <FormText
@@ -430,7 +436,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Posición de cargo'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
           </Row>
@@ -438,7 +444,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
           {/*line 8*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'Email'} isRequired={false} />
+              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'Email'} isRequired={true} />
             </Col>
             <Col span={8}>
               <FormText
@@ -446,13 +452,20 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'PagTel. Contactoador'}
-                isRequired={false}
+                isRequired={true}
               />
             </Col>
             <Col span={8}></Col>
           </Row>
         </fieldset>
-      </Form>
+      </form>
+
+      <div className={"display-flex-center button-continue"}>
+        <Button type='default' size={'large'} onClick={onNextStep}>
+          Continuar
+        </Button>
+      </div>
+
     </>
   )
 }

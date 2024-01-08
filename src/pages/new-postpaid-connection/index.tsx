@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
-import { FolderOpenFilled } from '@ant-design/icons'
 import { Button, Col, Form, Input, Row, Select, Space } from 'antd'
+import {FolderOpenFilled} from "@ant-design/icons";
 
 const NewPostpaidConnection: React.FC = () => {
   const [valueType, setValueType] = useState(null)
@@ -40,6 +40,22 @@ const NewPostpaidConnection: React.FC = () => {
 
   return (
     <>
+      <Row className='site-page-header'>
+        <Col span={8} className='display-flex header-icon'>
+          <FolderOpenFilled style={{fontSize: '30px', color: '#000000'}} twoToneColor='#eb2f96'/>
+          <span className='page-header-heading-title'>Request new postpaid connection</span>
+        </Col>
+        <Col span={5} className='header-highlight-link grid'>
+          <a href={'http://www.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias'} target='_blank'>
+            RUC Information
+          </a>
+          <a href={'https://cel.reniec.gob.pe/valreg/valreg.do\n'} target='_blank'>
+            DNI information
+          </a>
+        </Col>
+      </Row>
+
+
       <Row className='site-page-content'>
         <Form
           className={'form-search-customer'}

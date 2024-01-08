@@ -52,7 +52,7 @@ const CustomerInformation: React.FC = () => {
               }
               key='1'
             >
-              <CustomerInfoTab dataInfo={dataInfo} setDataInfo={setDataInfo} />
+              <CustomerInfoTab dataInfo={dataInfo} setDataInfo={setDataInfo} setActiveTab={setActiveTab}/>
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={

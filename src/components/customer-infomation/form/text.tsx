@@ -8,7 +8,8 @@ export const FormText = ({
   isDisabled = false,
   title,
   isRequired = false,
-  isCustomSpan = false
+  isCustomSpan = false,
+  placeholder = null
 }) => {
   const [value, setValue] = useState(null)
   const [errorValue, setErrorValue] = useState(false)
@@ -50,7 +51,7 @@ export const FormText = ({
               width: isCustomSpan ? '96%' : '90%'
             }}
             disabled={isDisabled}
-            // options={options}
+            placeholder={placeholder}
           />
         </Col>
       </Row>
