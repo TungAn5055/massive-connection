@@ -150,3 +150,9 @@
 .legend-color {
   color: #1562d7;
 }
+
+.title-bold {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
