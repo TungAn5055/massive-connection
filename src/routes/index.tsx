@@ -2,6 +2,7 @@ import Home from '@/pages/Home.tsx'
 import Login from '@/pages/Login'
 import NewPostpaidConnection from '@/pages/new-postpaid-connection'
 import CustomerInformation from '@/pages/cusotmer-infomation'
+import NewPostpaidConnection2 from "@/pages/new-postpaid-connection-2";
 
 const routes = [
   {
@@ -108,8 +109,8 @@ const routes = [
             title_page: 'Connect new postpaid II',
             exact: true,
             show_icon: true,
-            show_in_menu: true
-            // element: <Home />
+            show_in_menu: false,
+            element: <NewPostpaidConnection2 />
           },
           {
             path: '/request-new-prepaid',
@@ -178,7 +179,16 @@ const routes = [
     exact: true,
     show_in_menu: false,
     element: <CustomerInformation />
-  }
+  },
+  {
+    path: '/connect-new-postpaid-2',
+    key: 'connect-new-postpaid-2',
+    title: 'Connect new postpaid II',
+    title_page: 'Connect new postpaid II',
+    exact: true,
+    show_in_menu: false,
+    element: <NewPostpaidConnection2 />
+  },
 ]
 
 export default routes
