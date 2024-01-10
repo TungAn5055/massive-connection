@@ -5,6 +5,7 @@ import { FormSelect } from '@/components/customer-infomation/form/select'
 import { FormDate } from '@/components/customer-infomation/form/date'
 import {FormCheckBox} from "@/components/customer-infomation/form/checkbox.tsx";
 import {FormRadio} from "@/components/customer-infomation/form/radio.tsx";
+import {SOURCE_IDIOMA_DE} from "@/ultils/dataSourceConstants.ts";
 
 const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab }) => {
   const onNextStep = () => {
@@ -308,6 +309,8 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Idioma de contrato'}
+                dataSource={SOURCE_IDIOMA_DE}
+                defaultValue={1}
               />
             </Col>
           </Row>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Row, Select, Form } from 'antd'
 
-export const FormSelect = ({ data, setData, attribute, isDisabled = false, title, isRequired = false }) => {
-  const [value, setValue] = useState(null)
+export const FormSelect = ({ data, setData, attribute, isDisabled = false, title, isRequired = false, dataSource = [],defaultValue = null }) => {
+  const [value, setValue] = useState(defaultValue)
   const [errorValue, setErrorValue] = useState(false)
 
   const onChange = (e) => {
@@ -36,13 +36,13 @@ export const FormSelect = ({ data, setData, attribute, isDisabled = false, title
         <Col span={18}>
           <Select
             size={'large'}
-            // value={valueType}
+            value={value}
             // onChange={handleChangeType}
             style={{
               width: '90%'
             }}
             disabled={isDisabled}
-            // options={options}
+            options={dataSource}
           />
         </Col>
       </Row>

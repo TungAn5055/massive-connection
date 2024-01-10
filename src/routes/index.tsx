@@ -123,16 +123,6 @@ const routes = [
             show_in_menu: true,
             element: <NewPostpaidConnection />
           },
-          {
-            path: '/request-new-line-connection',
-            key: 'request-new-line-connection',
-            title: 'Request new line connection',
-            title_page:  'Request new line connection',
-            exact: false,
-            show_icon: false,
-            show_in_menu: false,
-            element: <NewLineConnection />
-          }
         ]
       }
     ]

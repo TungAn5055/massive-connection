@@ -1,11 +1,7 @@
 import React, { useMemo, useState } from 'react'
-import {Button, Col, Form, Input, Row, Select, Space, Tabs} from 'antd'
+import { Col, Row, Tabs} from 'antd'
 import {FolderOpenFilled} from "@ant-design/icons";
-import {CUSTOMER_INFO_TABS, CUSTOMER_NEW_LINE_TABS} from "@/ultils/constants.ts";
-import CustomerInfoTab from "@/components/customer-infomation/CustomerInfoTab.tsx";
-import LineInfoTab from "@/components/customer-infomation/LineInfoTab.tsx";
-import AttachedTab from "@/components/customer-infomation/AttachedTab.tsx";
-import SuccessfulTab from "@/components/customer-infomation/SuccessfulTab.tsx";
+import {CUSTOMER_NEW_LINE_TABS} from "@/ultils/constants.ts";
 
 const NewLineConnection: React.FC = () => {
   const [valueType, setValueType] = useState(null)
