@@ -1,12 +1,16 @@
-import React, { Suspense } from 'react'
+import  {Suspense, useEffect} from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from '@/pages/Home.tsx'
 import Layouts from '@/components/layouts'
 import LoadingScreen from '@/components/common/LoadingScreen.tsx'
 import routes from '@/routes'
+import {store} from "@/store";
+import {Provider, useDispatch} from "react-redux";
+import {loginWithHeader} from "@/store/thunks/auth.thunk.ts";
 
 const App: React.FC = () => {
   return (
+      <Provider store={store}>
     <Router>
       <Layouts>
         <Suspense fallback={<LoadingScreen />}>
@@ -19,6 +23,7 @@ const App: React.FC = () => {
         </Suspense>
       </Layouts>
     </Router>
+      </Provider>
   )
 }
 
