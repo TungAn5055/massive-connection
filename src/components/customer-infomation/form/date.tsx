@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Row, Select, Form, DatePicker } from 'antd'
-import { FORMAT_DATE } from '@/ultils/constants.ts'
+import {FORMAT_DATE, LIST_ATTRIBUTE_RED_TITLE} from '@/ultils/constants.ts'
 
 export const FormDate = ({ data, setData, attribute, isDisabled = false, title, isRequired = false }) => {
   const [value, setValue] = useState(null)
@@ -31,8 +31,8 @@ export const FormDate = ({ data, setData, attribute, isDisabled = false, title, 
     <Form.Item>
       <Row className={'display-flex'}>
         <Col span={6}>
-          <span>{title}</span>
-          {isRequired && <span style={{ color: 'red' }}> *</span>}
+          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && "title-red"}>{title}</span>
+          {isRequired && <span className={"title-red"}> *</span>}
         </Col>
         <Col span={18}>
           <DatePicker

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Row, Select, Form } from 'antd'
 
-export const FormSelect = ({ data, setData, attribute, isDisabled = false, title, isRequired = false, dataSource = [],defaultValue = null }) => {
+export const FormSelect = ({ data, setData, attribute, isDisabled = false, title, isRequired = false, dataSource = [],defaultValue = null, placholder }) => {
   const [value, setValue] = useState(defaultValue)
   const [errorValue, setErrorValue] = useState(false)
 
@@ -43,6 +43,7 @@ export const FormSelect = ({ data, setData, attribute, isDisabled = false, title
             }}
             disabled={isDisabled}
             options={dataSource}
+            placeholder={placholder}
           />
         </Col>
       </Row>

@@ -330,7 +330,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab }) => {
               <FormDate
                 data={dataInfo}
                 setData={setDataInfo}
-                attribute={''}
+                attribute={'effect_date'}
                 title={'Fecha de expiration'}
               />
             </Col>
@@ -340,6 +340,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab }) => {
                 setData={setDataInfo}
                 attribute={''}
                 title={'Method de pago'}
+                placholder={"----Select payment method----"}
               />
             </Col>
           </Row>
@@ -399,7 +400,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab }) => {
               <FormRadio
                 data={dataInfo}
                 setData={setDataInfo}
-                attribute={''}
+                attribute={'staff_code'}
                 title={'Account manager'}
                 isRequired={true}
               />
@@ -412,7 +413,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab }) => {
               <FormText
                 data={dataInfo}
                 setData={setDataInfo}
-                attribute={''}
+                attribute={'contacto_autorizado'}
                 title={'Contacto Autorizado'}
                 isRequired={true}
               />

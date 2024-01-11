@@ -12,6 +12,8 @@ export const CUSTOMER_NEW_LINE_TABS = {
   SUCCESSFUL: 'Successful Creation'
 }
 
+export const LIST_ATTRIBUTE_RED_TITLE = ['effect_date', 'staff_code']
+
 export const FORMAT_DATE = {
   DAY_MONTH_YEAR: 'DD/MM/YYYY'
 }
