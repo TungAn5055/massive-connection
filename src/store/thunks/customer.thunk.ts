@@ -8,7 +8,13 @@ import { STATE } from '@/ultils/constants'
 let source = null
 export const cancelApiCustomerSearch = () => cancel(source)
 
-export const apiCustomerSearchAsync = async (params) => {
+export const apiCustomerSearchAsync = async (params, setResponse) => {
+  setResponse({
+    data: [],
+    state: STATE.REQUEST,
+    message: '',
+    loading: true
+  })
   cancelApiCustomerSearch()
 
   source = getTokenSource()
@@ -19,27 +25,27 @@ export const apiCustomerSearchAsync = async (params) => {
     })
 
     console.log('response++++', response)
-    if (response.data) {
-      return {
+    if (response?.data) {
+      setResponse({
         data: response.data,
         state: STATE.SUCCESS,
         message: '',
         loading: false
-      }
+      })
     } else {
-      return {
+      setResponse({
         data: [],
         state: STATE.ERROR,
         message: '',
         loading: false
-      }
+      })
     }
   } catch (error) {
-    return {
+    setResponse({
       data: [],
       state: STATE.ERROR,
       message: error?.message || '',
       loading: false
-    }
+    })
   }
 }

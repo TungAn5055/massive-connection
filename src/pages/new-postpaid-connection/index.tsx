@@ -2,11 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Button, Col, Form, Input, Row, Select, Space } from 'antd'
 import { FolderOpenFilled } from '@ant-design/icons'
 import useCustomerSearch from '@/hooks/useCustomerSearch'
+import LoadingScreen from '@/components/common/LoadingScreen'
 
 const NewPostpaidConnection: React.FC = () => {
-  const [valueType, setValueType] = useState(null)
-  const [valueIdentity, setValueIdentity] = useState(null)
+  const [valueIdType, setValueIdType] = useState(null)
+  const [valueIdNo, setValueIdNo] = useState('10432498404')
   const [responseCustomerSearch, requestCustomerSearch] = useCustomerSearch()
+
   const [form] = Form.useForm()
   const formStyle = {
     maxWidth: 'none',
@@ -19,26 +21,35 @@ const NewPostpaidConnection: React.FC = () => {
   ]
 
   const handleChangeType = (e) => {
-    setValueType(e)
+    setValueIdType(e)
   }
 
   const handleChangeIdentity = (e) => {
-    setValueIdentity(e?.target?.value)
+    setValueIdNo(e?.target?.value)
+  }
+
+  const handleOnSearch = () => {
+    if (valueIdNo && valueIdType) {
+      requestCustomerSearch({
+        idNo: valueIdNo,
+        idType: valueIdType
+      })
+    }
   }
 
   const checkFalseIdentity = useMemo(() => {
-    if (valueType && valueIdentity) {
-      if (valueType === 'RUC' && valueIdentity?.length !== 11) {
+    if (valueIdType && valueIdNo) {
+      if (valueIdType === 'RUC' && valueIdNo?.length !== 11) {
         return true
       }
-      if (valueType === 'DNI' && valueIdentity?.length !== 8) {
+      if (valueIdType === 'DNI' && valueIdNo?.length !== 8) {
         return true
       }
       return false
     } else {
       return true
     }
-  }, [valueIdentity, valueType])
+  }, [valueIdNo, valueIdType])
 
   useEffect(() => {
     requestCustomerSearch({
@@ -86,7 +97,7 @@ const NewPostpaidConnection: React.FC = () => {
                   <Col span={16}>
                     <Select
                       size={'large'}
-                      value={valueType}
+                      value={valueIdType}
                       onChange={handleChangeType}
                       style={{
                         width: 400
@@ -108,14 +119,14 @@ const NewPostpaidConnection: React.FC = () => {
                       // value={valueIdentity}
                       onChange={handleChangeIdentity}
                       // onBlur={onBlur}
-                      max={valueType === 'DNI' ? 8 : 11}
+                      max={valueIdType === 'DNI' ? 8 : 11}
                     />
                   </Col>
                 </Row>
               </Col>
             </Row>
 
-            {valueType && valueIdentity && checkFalseIdentity && (
+            {valueIdType && valueIdNo && checkFalseIdentity && (
               <div className={'message-error'}>La cantidad de números requeridos no es suficiente</div>
             )}
             <div
@@ -125,7 +136,14 @@ const NewPostpaidConnection: React.FC = () => {
               }}
             >
               <Space size='small'>
-                <Button type='default' size={'large'} htmlType='submit' disabled={checkFalseIdentity}>
+                <Button
+                  // type='default'
+                  size={'large'}
+                  htmlType='submit'
+                  disabled={checkFalseIdentity || responseCustomerSearch?.loading}
+                  onClick={handleOnSearch}
+                  loading={responseCustomerSearch?.loading}
+                >
                   Search
                 </Button>
               </Space>
