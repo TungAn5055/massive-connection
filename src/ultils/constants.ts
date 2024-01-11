@@ -19,3 +19,11 @@ export const FORMAT_DATE = {
 }
 
 export const NO_DATA = 'No data'
+
+export const STATE = {
+  SUCCESS: 'SUCCESS',
+  ERROR: 'ERROR',
+  REQUEST: 'REQUEST',
+  UNMOUNT: 'UNMOUNT',
+  INVALID: 'INVALID'
+}
