@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Col, Row, Form, Input } from 'antd'
+import {LIST_ATTRIBUTE_RED_TITLE} from "@/ultils/constants.ts";
 
 export const FormText = ({
   data,
@@ -39,13 +40,13 @@ export const FormText = ({
     <Form.Item>
       <Row className={'display-flex'}>
         <Col span={isCustomSpan ? 3 : 6}>
-          <span>{title}</span>
-          {isRequired && <span style={{ color: 'red' }}> *</span>}
+          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && "title-red"}>{title}</span>
+          {isRequired && <span style={{color: 'red'}}> *</span>}
         </Col>
         <Col span={isCustomSpan ? 21 : 18}>
           <Input
-            size={'large'}
-            // value={valueType}
+              size={'large'}
+              // value={valueType}
             // onChange={handleChangeType}
             style={{
               width: isCustomSpan ? '96%' : '90%'

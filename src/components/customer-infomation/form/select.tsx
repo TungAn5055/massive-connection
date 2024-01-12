@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Row, Select, Form } from 'antd'
+import {LIST_ATTRIBUTE_RED_TITLE} from "@/ultils/constants.ts";
 
 export const FormSelect = ({ data, setData, attribute, isDisabled = false, title, isRequired = false, dataSource = [],defaultValue = null, placholder }) => {
   const [value, setValue] = useState(defaultValue)
@@ -30,14 +31,14 @@ export const FormSelect = ({ data, setData, attribute, isDisabled = false, title
     <Form.Item>
       <Row className={'display-flex'}>
         <Col span={6}>
-          <span>{title}</span>
-          {isRequired && <span style={{ color: 'red' }}> *</span>}
+          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && "title-red"}>{title}</span>
+          {isRequired && <span style={{color: 'red'}}> *</span>}
         </Col>
         <Col span={18}>
           <Select
-            size={'large'}
-            value={value}
-            // onChange={handleChangeType}
+              size={'large'}
+              value={value}
+              // onChange={handleChangeType}
             style={{
               width: '90%'
             }}
