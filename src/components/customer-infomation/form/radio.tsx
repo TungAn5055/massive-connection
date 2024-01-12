@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import {Col, Row, Select, Form, Radio} from 'antd'
-import {LIST_ATTRIBUTE_RED_TITLE} from "@/ultils/constants.ts";
+import { Col, Row, Select, Form, Radio } from 'antd'
+import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 
-export const FormRadio = ({ data, setData, attribute, isDisabled = false, title, isRequired = false }) => {
+export const FormRadio = ({
+  dataInfo,
+  setDataInfo,
+  attribute,
+  isDisabled = false,
+  title,
+  isRequired = false,
+  dataCustomer = {}
+}) => {
   const [value, setValue] = useState(null)
   const [errorValue, setErrorValue] = useState(false)
 
@@ -22,17 +30,17 @@ export const FormRadio = ({ data, setData, attribute, isDisabled = false, title,
   }
 
   useEffect(() => {
-    if (data) {
-      setValue(data)
+    if (attribute && dataCustomer[attribute]) {
+      setValue(dataCustomer[attribute])
     }
-  }, [data])
+  }, [dataCustomer])
 
   return (
     <Form.Item>
       <Row className={'display-flex'}>
         <Col span={6}>
-          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && "title-red"}>{title}</span>
-          {isRequired && <span style={{color: 'red'}}> *</span>}
+          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && 'title-red'}>{title}</span>
+          {isRequired && <span style={{ color: 'red' }}> *</span>}
         </Col>
         <Col span={18}>
           <Radio.Group onChange={onChange} value={value}>

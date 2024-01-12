@@ -1,9 +1,9 @@
 import Home from '@/pages/Home.tsx'
 import Index from '@/pages/login'
 import NewPostpaidConnection from '@/pages/new-postpaid-connection'
-import CustomerInformation from '@/pages/cusotmer-infomation'
-import NewPostpaidConnection2 from "@/pages/new-postpaid-connection-2";
-import NewLineConnection from "@/pages/new-line-connection";
+import CustomerInformation from '@/pages/customer-infomation'
+import NewPostpaidConnection2 from '@/pages/new-postpaid-connection-2'
+import NewLineConnection from '@/pages/new-line-connection'
 
 const routes = [
   {
@@ -122,7 +122,7 @@ const routes = [
             show_icon: true,
             show_in_menu: true,
             element: <NewPostpaidConnection />
-          },
+          }
         ]
       }
     ]
@@ -194,7 +194,7 @@ const routes = [
     path: '/request-new-line-connection',
     key: 'request-new-line-connection',
     title: 'Request new line connection',
-    title_page:  'Request new line connection',
+    title_page: 'Request new line connection',
     exact: false,
     show_icon: false,
     show_in_menu: false,

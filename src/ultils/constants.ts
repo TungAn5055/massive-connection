@@ -27,3 +27,5 @@ export const STATE = {
   UNMOUNT: 'UNMOUNT',
   INVALID: 'INVALID'
 }
+
+export const SOURCE_METHOD_DE_PAGO = [{ label: 'Pago normal', value: '01' }]

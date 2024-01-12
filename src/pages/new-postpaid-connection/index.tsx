@@ -7,7 +7,7 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 const NewPostpaidConnection: React.FC = () => {
   const [valueIdType, setValueIdType] = useState(null)
   const [valueIdNo, setValueIdNo] = useState('10432498404')
-  const [responseCustomerSearch, requestCustomerSearch] = useCustomerSearch()
+  const { responseSearchCustomer, requestSearchCustomer } = useCustomerSearch()
 
   const [form] = Form.useForm()
   const formStyle = {
@@ -17,7 +17,7 @@ const NewPostpaidConnection: React.FC = () => {
 
   const options = [
     { value: 'RUC', label: 'RUC' },
-    { value: 'DNI', label: 'DNI' }
+    { value: '3', label: 'DNI' }
   ]
 
   const handleChangeType = (e) => {
@@ -30,7 +30,7 @@ const NewPostpaidConnection: React.FC = () => {
 
   const handleOnSearch = () => {
     if (valueIdNo && valueIdType) {
-      requestCustomerSearch({
+      requestSearchCustomer({
         idNo: valueIdNo,
         idType: valueIdType
       })
@@ -51,16 +51,16 @@ const NewPostpaidConnection: React.FC = () => {
     }
   }, [valueIdNo, valueIdType])
 
-  useEffect(() => {
-    requestCustomerSearch({
-      idNo: '10432498404',
-      idType: 3
-    })
-  }, [])
+  // useEffect(() => {
+  //   requestCustomerSearch({
+  //     idNo: '10432498404',
+  //     idType: 3
+  //   })
+  // }, [])
 
   useEffect(() => {
-    console.log('responseCustomerSear', responseCustomerSearch)
-  }, [responseCustomerSearch])
+    console.log('responseCustomerSear', responseSearchCustomer)
+  }, [responseSearchCustomer])
   return (
     <>
       <Row className='site-page-header'>
@@ -116,7 +116,7 @@ const NewPostpaidConnection: React.FC = () => {
                   <Col span={16}>
                     <Input
                       size={'large'}
-                      // value={valueIdentity}
+                      value={valueIdNo}
                       onChange={handleChangeIdentity}
                       // onBlur={onBlur}
                       max={valueIdType === 'DNI' ? 8 : 11}
@@ -140,9 +140,9 @@ const NewPostpaidConnection: React.FC = () => {
                   // type='default'
                   size={'large'}
                   htmlType='submit'
-                  disabled={checkFalseIdentity || responseCustomerSearch?.loading}
+                  disabled={checkFalseIdentity || responseSearchCustomer?.loading}
                   onClick={handleOnSearch}
-                  loading={responseCustomerSearch?.loading}
+                  loading={responseSearchCustomer?.loading}
                 >
                   Search
                 </Button>

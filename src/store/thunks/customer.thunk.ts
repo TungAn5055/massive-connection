@@ -24,7 +24,6 @@ export const apiCustomerSearchAsync = async (params, setResponse) => {
       cancelToken: source.token
     })
 
-    console.log('response++++', response)
     if (response?.data) {
       setResponse({
         data: response.data,

@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Row, Select, Form, DatePicker } from 'antd'
-import {FORMAT_DATE, LIST_ATTRIBUTE_RED_TITLE} from '@/ultils/constants.ts'
+import { FORMAT_DATE, LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
+import moment from 'moment'
 
-export const FormDate = ({ data, setData, attribute, isDisabled = false, title, isRequired = false }) => {
+export const FormDate = ({
+  dataInfo,
+  setDataInfo,
+  attribute,
+  isDisabled = false,
+  title,
+  isRequired = false,
+  dataCustomer = {}
+}) => {
   const [value, setValue] = useState(null)
   const [errorValue, setErrorValue] = useState(false)
 
@@ -22,22 +31,22 @@ export const FormDate = ({ data, setData, attribute, isDisabled = false, title, 
   }
 
   useEffect(() => {
-    if (data) {
-      setValue(data)
+    if (dataInfo) {
+      setValue(dataInfo)
     }
-  }, [data])
+  }, [dataInfo])
 
   return (
     <Form.Item>
       <Row className={'display-flex'}>
         <Col span={6}>
-          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && "title-red"}>{title}</span>
-          {isRequired && <span className={"title-red"}> *</span>}
+          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && 'title-red'}>{title}</span>
+          {isRequired && <span className={'title-red'}> *</span>}
         </Col>
         <Col span={18}>
           <DatePicker
             style={{ width: '90%', padding: '6px' }}
-            // value={moment('')}
+            value={moment(value)}
             // onChange={(e) => onChangeSyncDate(e)}
             // disabledDate={disableActiveTime}
             format={FORMAT_DATE.DAY_MONTH_YEAR}

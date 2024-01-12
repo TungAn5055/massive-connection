@@ -11,15 +11,15 @@ import {
 } from '@/store/thunks/customer.thunk'
 
 const useCustomerSearch = () => {
-  const [response, setResponse] = useState({
+  const [responseSearchCustomer, setResponseSearchCustomer] = useState({
     data: [],
     message: '',
     loading: false,
     state: ''
   })
 
-  const request = function (params) {
-    apiCustomerSearchAsync(params, setResponse)
+  const requestSearchCustomer = function (params) {
+    apiCustomerSearchAsync(params, setResponseSearchCustomer)
   }
 
   // unmount;
@@ -30,7 +30,7 @@ const useCustomerSearch = () => {
     }
   }, [])
 
-  return [response, request]
+  return { responseSearchCustomer, requestSearchCustomer }
 }
 
 export default useCustomerSearch
