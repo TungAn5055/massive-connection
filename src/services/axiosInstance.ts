@@ -2,8 +2,8 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-    timeout: 30000
+  baseURL: import.meta.env.VITE_API_URL,
+  timeout: 30000
 })
 
 axiosInstance.defaults.withCredentials = true
@@ -13,34 +13,34 @@ axiosInstance.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axiosInstance.defaults.headers.post['Content-Type'] = 'application/json'
 
 axiosInstance.interceptors.request.use(
-    (configs) => {
-        // const jwtToken = getToken()
+  (configs) => {
+    // const jwtToken = getToken()
 
-        // TODO: create middleware to ignore public url or external requests
-        // if (jwtToken) {
-        //     configs.headers = { ...configs.headers, Authorization: `Bearer ${getToken()}` }
-        // }
+    // TODO: create middleware to ignore public url or external requests
+    // if (jwtToken) {
+    //     configs.headers = { ...configs.headers, Authorization: `Bearer ${getToken()}` }
+    // }
 
-        return configs
-    },
-    (error) => {
-        console.error('Axios critical error =>', error)
-        return Promise.reject(error)
-    }
+    return configs
+  },
+  (error) => {
+    console.error('Axios critical error =>', error)
+    return Promise.reject(error)
+  }
 )
 
 axiosInstance.interceptors.response.use(
-    (response) => {
-        // TODO: handle generic errors
-        return Promise.resolve(response.data)
-    },
-    (error) => {
-        // TODO: handle generic errors
-        if (error.response.status === 401) {
-            window.location.href = '/logout'
-        }
-        return Promise.reject(error)
+  (response) => {
+    // TODO: handle generic errors
+    return Promise.resolve(response.data)
+  },
+  (error) => {
+    // TODO: handle generic errors
+    if (error.response.status === 401) {
+      window.location.href = '/logout'
     }
+    return Promise.reject(error)
+  }
 )
 
 export default axiosInstance

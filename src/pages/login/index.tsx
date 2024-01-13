@@ -1,6 +1,5 @@
 import React from 'react'
-import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { Button, Col, Form, Input, Row } from 'antd'
 import { LoginOutlined } from '@ant-design/icons'
 
 const Login: React.FC = () => {

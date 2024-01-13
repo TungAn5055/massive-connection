@@ -15,7 +15,7 @@ axiosInstance.defaults.headers.post['Content-Type'] = 'application/json'
 axiosInstance.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
 
 axiosInstance.interceptors.request.use(
-  (configs) => {
+  (configs: any) => {
     const jwtToken = getToken()
 
     // TODO: create middleware to ignore public url or external requests

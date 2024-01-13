@@ -1,21 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Menu } from 'antd'
-import { Link, Route, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import routes from '@/routes'
 import * as _ from 'lodash'
 import SubMenu from 'antd/es/menu/SubMenu'
 import { FileImageOutlined } from '@ant-design/icons'
 
 const CustomMenu: React.FC = () => {
-  const navigate = useNavigate()
   const location = useLocation()
   const [current, setCurrent] = useState('home')
-  const onClick = (e: any) => {
-    setCurrent(e.key)
-    navigate(`/${e.key}`)
-  }
-
-  const renderMenu = (route, index) => {
+  const renderMenu = (route: any) => {
     if (route.children && !_.isEmpty(route.children)) {
       return (
         <SubMenu
@@ -27,9 +21,9 @@ const CustomMenu: React.FC = () => {
             </>
           }
         >
-          {route.children?.map((child, index) => {
+          {route.children?.map((child: any) => {
             if (child.children && !_.isEmpty(child.children)) {
-              return renderMenu(child, index)
+              return renderMenu(child)
             } else {
               return (
                 <Menu.Item key={child?.key}>
@@ -69,8 +63,8 @@ const CustomMenu: React.FC = () => {
     <Menu mode='horizontal' selectedKeys={[current]} className='content-menu'>
       {routes
         ?.filter((it) => it?.show_in_menu)
-        .map((route, index) => {
-          return renderMenu(route, index)
+        .map((route) => {
+          return renderMenu(route)
         })}
     </Menu>
   )

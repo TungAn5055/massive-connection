@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Button, Col, Form, Input, Row, Select, Space } from 'antd'
 import { FolderOpenFilled } from '@ant-design/icons'
 import useCustomerSearch from '@/hooks/useCustomerSearch'
-import LoadingScreen from '@/components/common/LoadingScreen'
 
 const NewPostpaidConnection: React.FC = () => {
   const [valueIdType, setValueIdType] = useState(null)
@@ -20,11 +19,11 @@ const NewPostpaidConnection: React.FC = () => {
     { value: '3', label: 'DNI' }
   ]
 
-  const handleChangeType = (e) => {
+  const handleChangeType = (e: any) => {
     setValueIdType(e)
   }
 
-  const handleChangeIdentity = (e) => {
+  const handleChangeIdentity = (e: any) => {
     setValueIdNo(e?.target?.value)
   }
 

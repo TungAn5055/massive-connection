@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { FolderOpenFilled } from '@ant-design/icons'
 import { Row, Col } from 'antd'
 import { Tabs } from 'antd'
@@ -8,7 +8,7 @@ import LineInfoTab from '@/components/customer-infomation/tabs/LineInfoTab'
 import AttachedTab from '@/components/customer-infomation/tabs/AttachedTab.tsx'
 import SuccessfulTab from '@/components/customer-infomation/tabs/SuccessfulTab.tsx'
 
-const CustomerInformations: React.FC = ({ dataCustomerx }) => {
+const CustomerInformations = ({}: any) => {
   const dataCustomer = {
     busType: 'COMP',
     idType: 3,
@@ -66,17 +66,14 @@ const CustomerInformations: React.FC = ({ dataCustomerx }) => {
   const [_dataInfo, _setDataInfo] = useState({})
   const dataInfo = _dataInfo
 
-  const setDataInfo = (data) => {
+  const setDataInfo = (data: any) => {
     Object.assign(dataInfo, { ...data })
     _setDataInfo({ ...dataInfo })
   }
 
-  const onChangeTabs = (activeKey) => {
+  const onChangeTabs = (activeKey: any) => {
     setActiveTab(activeKey)
     // return false
-  }
-  const onFinish = (values) => {
-    console.log('Received values:', values)
   }
 
   return (

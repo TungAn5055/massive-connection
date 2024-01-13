@@ -1,22 +1,25 @@
-export const SOURCE_IDIOMA_DE = [{
-  value: "1",
-  label: "Espanol"
-  }, {
-    value: "2",
-    label: "Quechua"
+export const SOURCE_IDIOMA_DE = [
+  {
+    value: '1',
+    label: 'Espanol'
   },
   {
-    value: "3",
-    label: "Aimara"
+    value: '2',
+    label: 'Quechua'
   },
   {
-    value: "4",
-    label: "Ashaninka"
+    value: '3',
+    label: 'Aimara'
   },
   {
-    value: "5",
-    label: " Shipibo-Konibo"
-  }]
+    value: '4',
+    label: 'Ashaninka'
+  },
+  {
+    value: '5',
+    label: ' Shipibo-Konibo'
+  }
+]
 
 export const CUSTOMER_NEW_LINE_TABS = {
   INFO: 'Customer Information',

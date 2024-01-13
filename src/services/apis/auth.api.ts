@@ -1,5 +1,5 @@
-import axiosInstance from "@/services/axiosInstance.ts";
+import axiosInstance from '@/services/axiosInstance.ts'
 
 export const loginWithHeader = () => {
-    return axiosInstance.get('api/login/')
+  return axiosInstance.get('api/login/')
 }

@@ -10,8 +10,10 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', 'prettier'],
+  plugins: ['react-refresh', 'prettier', 'unused-imports'],
   rules: {
+    'react/prop-types': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
@@ -29,7 +31,9 @@ module.exports = {
         printWidth: 120,
         jsxSingleQuote: true
       }
-    ]
-
+    ],
+    'unused-imports/no-unused-imports-ts': 'error',
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
   },
 }

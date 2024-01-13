@@ -1,32 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { Col, Row, Select, Form, Radio } from 'antd'
+import { useState, useEffect } from 'react'
+import { Col, Row, Form, Radio } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 
-export const FormRadio = ({
-  dataInfo,
-  setDataInfo,
-  attribute,
-  isDisabled = false,
-  title,
-  isRequired = false,
-  dataCustomer = {}
-}) => {
+export const FormRadio = ({ attribute, title, isRequired = false, dataCustomer = {} }: any) => {
   const [value, setValue] = useState(null)
-  const [errorValue, setErrorValue] = useState(false)
+  // const [errorValue, setErrorValue] = useState(false)
 
   const onChange = (e) => {
-    if (e.target.value) {
-      setValue(e.target.value)
-    } else {
-      setErrorValue(true)
-    }
-  }
-  const onBlur = (e) => {
-    if (e.target.value) {
-      setValue(e.target.value.trim())
-    } else {
-      setErrorValue(true)
-    }
+    setValue(e.target.value)
   }
 
   useEffect(() => {
@@ -39,7 +20,7 @@ export const FormRadio = ({
     <Form.Item>
       <Row className={'display-flex'}>
         <Col span={6}>
-          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && 'title-red'}>{title}</span>
+          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) ? 'title-red' : ''}>{title}</span>
           {isRequired && <span style={{ color: 'red' }}> *</span>}
         </Col>
         <Col span={18}>

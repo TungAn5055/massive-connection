@@ -1,16 +1,8 @@
 import React from 'react'
-import { Button, Col, Row } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import { FolderOpenFilled, LoginOutlined } from '@ant-design/icons'
+import { Col, Row } from 'antd'
+import { FolderOpenFilled } from '@ant-design/icons'
 
 const Home: React.FC = () => {
-  const navigate = useNavigate()
-
-  const handleClick = () => {
-    // Thực hiện điều hướng bằng cách sử dụng history.push
-    navigate('/about')
-  }
-
   return (
     <>
       <Row className='site-page-header'>

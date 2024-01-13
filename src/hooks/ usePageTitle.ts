@@ -8,7 +8,7 @@ const usePageTitle = (pathname: { pathname: string }) => {
     title: route?.title_page ?? ''
   }))
 
-  const route = matchRoutes(listKeys as never, pathname)
+  const route: any = matchRoutes(listKeys as never, pathname)
   const pageTitle = route?.[0]?.route?.title ?? 'Massive Connection'
 
   useEffect(() => {

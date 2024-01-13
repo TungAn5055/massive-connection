@@ -1,14 +1,11 @@
-import { message } from 'antd'
-import * as apis from '@/apis/auth.api.ts'
-import * as actions from '@/store/actions/customer.action'
 import { cancel, getTokenSource } from '@/ultils/helper'
 import axiosInstance from '@/configs/axios'
 import { STATE } from '@/ultils/constants'
 
-let source = null
+let source: any = null
 export const cancelApiCustomerSearch = () => cancel(source)
 
-export const apiCustomerSearchAsync = async (params, setResponse) => {
+export const apiCustomerSearchAsync = async (params: any, setResponse: any) => {
   setResponse({
     data: [],
     state: STATE.REQUEST,
@@ -39,7 +36,7 @@ export const apiCustomerSearchAsync = async (params, setResponse) => {
         loading: false
       })
     }
-  } catch (error) {
+  } catch (error: any) {
     setResponse({
       data: [],
       state: STATE.ERROR,

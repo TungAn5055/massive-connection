@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button, Col, Row } from 'antd'
 import { FormText } from '@/components/customer-infomation/form/text'
 import { FormSelect } from '@/components/customer-infomation/form/select'
@@ -8,7 +7,7 @@ import { FormRadio } from '@/components/customer-infomation/form/radio.tsx'
 import { SOURCE_IDIOMA_DE } from '@/ultils/dataSourceConstants.ts'
 import { SOURCE_METHOD_DE_PAGO } from '@/ultils/constants'
 
-const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {} }) => {
+const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {} }: any) => {
   const onNextStep = () => {
     setActiveTab((prev) => (parseInt(prev) + 1).toString())
   }

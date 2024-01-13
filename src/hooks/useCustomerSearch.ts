@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react'
-import { matchRoutes } from 'react-router-dom'
-import routes from '@/routes'
-import { useDispatch } from 'react-redux'
-import { loginWithHeader } from '@/store/thunks/auth.thunk'
-import {
-  apiCustomerSarchAsync,
-  apiCustomerSearchAsync,
-  cancelApiCustomerSearch,
-  searchCustomer
-} from '@/store/thunks/customer.thunk'
+import { apiCustomerSearchAsync, cancelApiCustomerSearch } from '@/store/thunks/customer.thunk'
 
 const useCustomerSearch = () => {
   const [responseSearchCustomer, setResponseSearchCustomer] = useState({
@@ -18,7 +9,7 @@ const useCustomerSearch = () => {
     state: ''
   })
 
-  const requestSearchCustomer = function (params) {
+  const requestSearchCustomer = function (params: any) {
     apiCustomerSearchAsync(params, setResponseSearchCustomer)
   }
 

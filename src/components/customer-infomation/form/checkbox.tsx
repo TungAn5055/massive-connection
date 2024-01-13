@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Col, Row, Form, Checkbox } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 
-export const FormCheckBox = ({
-  dataInfo,
-  setDataInfo,
-  attribute,
-  isDisabled = false,
-  title,
-  isRequired = false,
-  dataCustomer = {}
-}) => {
-  const [value, setValue] = useState(null)
-  const [errorValue, setErrorValue] = useState(false)
+export const FormCheckBox = ({ attribute, title, isRequired = false, dataCustomer = {} }: any) => {
+  const [value, setValue] = useState([])
+  // const [errorValue, setErrorValue] = useState(false)
 
   const options = [
     {
@@ -30,18 +22,7 @@ export const FormCheckBox = ({
   ]
 
   const onChange = (e) => {
-    if (e.target.value) {
-      setValue(e.target.value)
-    } else {
-      setErrorValue(true)
-    }
-  }
-  const onBlur = (e) => {
-    if (e.target.value) {
-      setValue(e.target.value.trim())
-    } else {
-      setErrorValue(true)
-    }
+    setValue(e.target.value)
   }
 
   useEffect(() => {
@@ -54,11 +35,11 @@ export const FormCheckBox = ({
     <Form.Item>
       <Row className={'display-flex'}>
         <Col span={6}>
-          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) && 'title-red'}>{title}</span>
+          <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) ? 'title-red' : ''}>{title}</span>
           {isRequired && <span style={{ color: 'red' }}> *</span>}
         </Col>
         <Col span={18}>
-          <Checkbox.Group options={options} defaultValue={['Apple']} onChange={onChange} />
+          <Checkbox.Group options={options} defaultValue={['Apple']} onChange={onChange} value={value} />
         </Col>
       </Row>
     </Form.Item>
