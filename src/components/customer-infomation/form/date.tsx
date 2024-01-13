@@ -4,7 +4,7 @@ import { FORMAT_DATE, LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 import dayjs from 'dayjs'
 
 export const FormDate = ({ attribute, title, isRequired = false, dataCustomer = {} }: any) => {
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState(dayjs())
 
   const onChangeSyncDate = (e) => {
     setValue(e.target.value)

@@ -1,22 +1,22 @@
 export const SOURCE_IDIOMA_DE = [
   {
-    value: '1',
+    value: 1,
     label: 'Espanol'
   },
   {
-    value: '2',
+    value: 2,
     label: 'Quechua'
   },
   {
-    value: '3',
+    value: 3,
     label: 'Aimara'
   },
   {
-    value: '4',
+    value: 4,
     label: 'Ashaninka'
   },
   {
-    value: '5',
+    value: 5,
     label: ' Shipibo-Konibo'
   }
 ]

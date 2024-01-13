@@ -392,17 +392,19 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormDate
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'sign_date'}
+                attribute={'signDate'}
                 title={'Fecha de firma'}
                 isRequired={true}
+                dataCustomer={dataCustomer?.contractInfo}
               />
             </Col>
             <Col span={8}>
               <FormDate
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'effect_date'}
+                attribute={'effectDate'}
                 title={'Fecha de expiration'}
+                dataCustomer={dataCustomer?.contractInfo}
               />
             </Col>
             <Col span={8}>
@@ -530,7 +532,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormText
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={''}
+                attribute={'position'}
                 title={'Posición de cargo'}
                 isRequired={true}
               />
@@ -543,7 +545,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormText
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={''}
+                attribute={'email'}
                 title={'Email'}
                 isRequired={true}
               />
