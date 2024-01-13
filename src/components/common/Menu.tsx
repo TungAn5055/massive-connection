@@ -21,20 +21,22 @@ const CustomMenu: React.FC = () => {
             </>
           }
         >
-          {route.children?.map((child: any) => {
-            if (child.children && !_.isEmpty(child.children)) {
-              return renderMenu(child)
-            } else {
-              return (
-                <Menu.Item key={child?.key}>
-                  <Link to={child?.path}>
-                    {child?.show_icon && <FileImageOutlined style={{ marginRight: '10px' }} />}
-                    {child?.title}
-                  </Link>
-                </Menu.Item>
-              )
-            }
-          })}
+          {route.children
+            ?.filter((it) => it?.show_in_menu)
+            .map((child: any) => {
+              if (child.children && !_.isEmpty(child.children)) {
+                return renderMenu(child)
+              } else {
+                return (
+                  <Menu.Item key={child?.key}>
+                    <Link to={child?.path}>
+                      {child?.show_icon && <FileImageOutlined style={{ marginRight: '10px' }} />}
+                      {child?.title}
+                    </Link>
+                  </Menu.Item>
+                )
+              }
+            })}
         </SubMenu>
       )
     } else {

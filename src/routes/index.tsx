@@ -110,7 +110,7 @@ const routes = [
             title_page: 'Connect new postpaid II',
             exact: true,
             show_icon: true,
-            show_in_menu: false,
+            show_in_menu: true,
             element: <NewPostpaidConnection2 />
           },
           {
@@ -122,6 +122,15 @@ const routes = [
             show_icon: true,
             show_in_menu: true,
             element: <NewPostpaidConnection />
+          },
+          {
+            path: '/customer-information',
+            key: 'customer-information',
+            title: 'Connect postpaid subscriptor',
+            title_page: 'Connect postpaid subscriptor',
+            exact: true,
+            show_in_menu: false,
+            element: <CustomerInformation />
           }
         ]
       }
