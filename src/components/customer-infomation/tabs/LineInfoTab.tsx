@@ -5,6 +5,7 @@ import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
+import { PlusOutlined } from '@ant-design/icons'
 
 const LineInfoTab: React.FC = ({ dataInfo, setDataInfo, dataCustomer, setActiveTab }) => {
   const tableLoading = {
@@ -24,7 +25,7 @@ const LineInfoTab: React.FC = ({ dataInfo, setDataInfo, dataCustomer, setActiveT
           </legend>
           {/*line 1*/}
           <Row gutter={24} style={{ marginLeft: '10px' }}>
-            <Col span={12}>
+            <Col span={10}>
               <FormSelect
                 data={dataInfo}
                 setData={setDataInfo}
@@ -43,10 +44,10 @@ const LineInfoTab: React.FC = ({ dataInfo, setDataInfo, dataCustomer, setActiveT
               <div style={{ marginLeft: '10px' }}>
                 {/*line 1*/}
                 <Row gutter={24} style={{ marginBottom: '30px' }}>
-                  <Col span={8}>
+                  <Col span={10}>
                     <FormSelect data={dataInfo} setData={setDataInfo} attribute={''} title={'Plan'} isRequired={true} />
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <FormSelect
                       data={dataInfo}
                       setData={setDataInfo}
@@ -59,7 +60,7 @@ const LineInfoTab: React.FC = ({ dataInfo, setDataInfo, dataCustomer, setActiveT
 
                 {/*line 2*/}
                 <Row gutter={24} style={{ marginBottom: '30px' }}>
-                  <Col span={8}>
+                  <Col span={10}>
                     <FormSelect
                       data={dataInfo}
                       setData={setDataInfo}
@@ -68,7 +69,7 @@ const LineInfoTab: React.FC = ({ dataInfo, setDataInfo, dataCustomer, setActiveT
                       isRequired={true}
                     />
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <FormSelect
                       data={dataInfo}
                       setData={setDataInfo}
@@ -78,6 +79,12 @@ const LineInfoTab: React.FC = ({ dataInfo, setDataInfo, dataCustomer, setActiveT
                     />
                   </Col>
                 </Row>
+              </div>
+
+              <div className={'button-title button-title-green'}>
+                <Button type='default' size={'large'}>
+                  <PlusOutlined size={'large'} style={{ color: '#F0F8FF' }} /> Create a group of lines
+                </Button>
               </div>
 
               {/* tables */}

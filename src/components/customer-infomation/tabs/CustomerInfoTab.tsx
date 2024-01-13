@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react'
-import { Button, Col, Form, Input, Row, Select } from 'antd'
+import React from 'react'
+import { Button, Col, Row } from 'antd'
 import { FormText } from '@/components/customer-infomation/form/text'
 import { FormSelect } from '@/components/customer-infomation/form/select'
 import { FormDate } from '@/components/customer-infomation/form/date'
@@ -345,8 +345,8 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab, dataCu
         </fieldset>
       </form>
 
-      <div className={'button-title'}>
-        <Button type='default' size={'large'} htmlType='submit'>
+      <div className={'button-title button-title-red'}>
+        <Button type='default' size={'large'}>
           Buscar contrato
         </Button>
         <span style={{ marginLeft: '10px' }}>
@@ -557,7 +557,7 @@ const CustomerInfoTab: React.FC = ({ dataInfo, setDataInfo, setActiveTab, dataCu
                 title={'Tel. Contacto'}
                 isRequired={true}
                 dataCustomer={dataCustomer}
-                type={number}
+                type={'number'}
               />
             </Col>
             <Col span={8}></Col>

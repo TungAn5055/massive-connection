@@ -135,17 +135,26 @@
   margin-bottom: 20px;
 }
 
-.button-title {
+.button-title-red  {
   display: flex;
   align-items: center;
   justify-content: left;
   margin: 10px 10px;
 }
 
-.button-title button{
+.button-title-red button{
   background-color: #cc1600;
   color: aliceblue;
 }
+
+.button-title-green button{
+  background-color: #1562d7;
+  color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .legend-color {
   color: #1562d7;
