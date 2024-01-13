@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { FolderOpenFilled } from '@ant-design/icons'
-import { Row, Col } from 'antd'
+import { Row } from 'antd'
 import { Tabs } from 'antd'
 import { CUSTOMER_INFO_TABS } from '@/ultils/constants'
 import CustomerInfoTab from '@/components/customer-infomation/tabs/CustomerInfoTab'
@@ -8,7 +7,7 @@ import LineInfoTab from '@/components/customer-infomation/tabs/LineInfoTab'
 import AttachedTab from '@/components/customer-infomation/tabs/AttachedTab.tsx'
 import SuccessfulTab from '@/components/customer-infomation/tabs/SuccessfulTab.tsx'
 
-const CustomerInformations = ({}: any) => {
+const CustomerInformation = ({ dataCustomers }: any) => {
   const dataCustomer = {
     busType: 'COMP',
     idType: 3,
@@ -62,6 +61,7 @@ const CustomerInformations = ({}: any) => {
     }
   }
   const [activeTab, setActiveTab] = useState('1')
+  console.log('dataCustomers++++', dataCustomers)
 
   const [_dataInfo, _setDataInfo] = useState({})
   const dataInfo = _dataInfo
@@ -78,12 +78,12 @@ const CustomerInformations = ({}: any) => {
 
   return (
     <>
-      <Row className='site-page-header'>
-        <Col span={8} className='display-flex header-icon'>
-          <FolderOpenFilled style={{ fontSize: '30px', color: '#000000' }} />
-          <span className='page-header-heading-title'>Connect postpaid subscriptor</span>
-        </Col>
-      </Row>
+      {/*<Row className='site-page-header'>*/}
+      {/*  <Col span={8} className='display-flex header-icon'>*/}
+      {/*    <FolderOpenFilled style={{ fontSize: '30px', color: '#000000' }} />*/}
+      {/*    <span className='page-header-heading-title'>Connect postpaid subscriptor</span>*/}
+      {/*  </Col>*/}
+      {/*</Row>*/}
 
       <Row className='site-page-content'>
         <Row className={'content-customer-information'}>
@@ -154,4 +154,4 @@ const CustomerInformations = ({}: any) => {
   )
 }
 
-export default CustomerInformations
+export default CustomerInformation

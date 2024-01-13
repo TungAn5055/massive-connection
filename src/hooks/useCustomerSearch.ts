@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { apiCustomerSearchAsync, cancelApiCustomerSearch } from '@/store/thunks/customer.thunk'
 
 const useCustomerSearch = () => {
-  const [responseSearchCustomer, setResponseSearchCustomer] = useState({
+  const [responseSearchCustomer, setResponseSearchCustomer] = useState(<any>{
     data: [],
     message: '',
     loading: false,
