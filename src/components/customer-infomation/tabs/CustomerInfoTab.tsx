@@ -1,11 +1,12 @@
 import { Button, Col, Row } from 'antd'
-import { FormText } from '@/components/customer-infomation/form/text'
-import { FormSelect } from '@/components/customer-infomation/form/select'
-import { FormDate } from '@/components/customer-infomation/form/date'
-import { FormCheckBox } from '@/components/customer-infomation/form/checkbox.tsx'
-import { FormRadio } from '@/components/customer-infomation/form/radio.tsx'
+import { FormText } from '@/components/customer-infomation/form/Text'
+import { FormSelect } from '@/components/customer-infomation/form/Select'
+import { FormDate } from '@/components/customer-infomation/form/Date'
+import { FormCheckBox } from '@/components/customer-infomation/form/Checkbox.tsx'
+import { FormRadio } from '@/components/customer-infomation/form/Radio.tsx'
 import { SOURCE_IDIOMA_DE } from '@/ultils/dataSourceConstants.ts'
 import { SOURCE_METHOD_DE_PAGO } from '@/ultils/constants'
+import { FormTextAutoComplete } from '@/components/customer-infomation/form/TextAutoComplete'
 
 const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {} }: any) => {
   const onNextStep = () => {
@@ -362,7 +363,12 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
           {/*line 1*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormText dataInfo={dataInfo} setDataInfo={setDataInfo} attribute={''} title={'Número de contrato'} />
+              <FormText
+                dataInfo={dataInfo}
+                setDataInfo={setDataInfo}
+                attribute={'contact_no'}
+                title={'Número de contrato'}
+              />
             </Col>
             <Col span={8}>
               <FormText
@@ -482,10 +488,10 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
           {/*line 5*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormRadio
+              <FormTextAutoComplete
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'staff_code'}
+                attribute={'staffCode'}
                 title={'Account manager'}
                 isRequired={true}
               />
@@ -495,10 +501,10 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
           {/*line 6*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormText
+              <FormRadio
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'contacto_autorizado'}
+                attribute={'staffCode'}
                 title={'Contacto Autorizado'}
                 isRequired={true}
               />

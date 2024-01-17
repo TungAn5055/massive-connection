@@ -1,10 +1,10 @@
 import { Button, Col, Form, Row, Table } from 'antd'
-import { FormSelect } from '@/components/customer-infomation/form/select'
+import { FormSelect } from '@/components/customer-infomation/form/Select'
 import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA, SOURCE_TYPE_OF_DOCUMENT } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
-import { FormText } from '@/components/customer-infomation/form/text'
+import { FormText } from '@/components/customer-infomation/form/Text'
 
 const AttachedTab = ({ dataInfo, setDataInfo, setActiveTab }: any) => {
   const tableLoading = {

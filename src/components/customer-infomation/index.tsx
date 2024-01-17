@@ -8,7 +8,7 @@ import AttachedTab from '@/components/customer-infomation/tabs/AttachedTab.tsx'
 import SuccessfulTab from '@/components/customer-infomation/tabs/SuccessfulTab.tsx'
 import { FolderOpenFilled } from '@ant-design/icons'
 
-const CustomerInformation = ({ dataCustomers }: any) => {
+const CustomerInformation = ({ dataCustomers = {} }: any) => {
   const dataCustomer = {
     busType: 'COMP',
     idType: 3,
@@ -104,6 +104,7 @@ const CustomerInformation = ({ dataCustomers }: any) => {
               key='1'
             >
               <CustomerInfoTab
+                key={'customer'}
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 setActiveTab={setActiveTab}
@@ -120,6 +121,7 @@ const CustomerInformation = ({ dataCustomers }: any) => {
               forceRender={true}
             >
               <LineInfoTab
+                key={'line'}
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 dataCustomer={dataCustomer}
@@ -146,7 +148,7 @@ const CustomerInformation = ({ dataCustomers }: any) => {
               key='4'
               forceRender={true}
             >
-              <SuccessfulTab />
+              <SuccessfulTab key={'successfu'} />
             </Tabs.TabPane>
           </Tabs>
         </Row>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, Col, Form, Row, Table } from 'antd'
-import { FormSelect } from '@/components/customer-infomation/form/select'
+import { FormSelect } from '@/components/customer-infomation/form/Select'
 import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA } from '@/ultils/constants'

@@ -24,6 +24,12 @@ export const FormSelect = ({
     }
   }, [dataCustomer])
 
+  useEffect(() => {
+    if (dataSource?.length && dataSource?.length === 1) {
+      setValue(dataSource[0])
+    }
+  }, [dataSource])
+
   return (
     <Form.Item>
       <Row className={'display-flex'}>
