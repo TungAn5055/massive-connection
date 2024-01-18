@@ -135,6 +135,13 @@
     margin-top: 5px;
 }
 
+.message-error-data {
+  color: #d71e1f;
+  display: flex;
+  justify-content: left;
+  margin-top: 5px;
+}
+
 .button-title-red {
     display: flex;
     align-items: center;

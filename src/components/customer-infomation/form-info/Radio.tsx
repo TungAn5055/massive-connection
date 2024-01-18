@@ -2,12 +2,34 @@ import { useState, useEffect } from 'react'
 import { Col, Row, Form, Radio } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 
-export const FormRadio = ({ attribute, title, isRequired = false, dataCustomer = {} }: any) => {
+export const FormRadio = ({
+  attribute,
+  title,
+  isRequired = false,
+  dataCustomer = {},
+  setValidateAll = () => {}
+}: any) => {
   const [value, setValue] = useState(null)
-  // const [errorValue, setErrorValue] = useState(false)
+  const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
+
+  setValidateAll([attribute], () => {
+    let check = true
+    if (isRequired && !value) {
+      check = false
+      setErrorValue({
+        status: true,
+        message: `Please choice ${title}`
+      })
+    }
+    return check
+  })
 
   const onChange = (e) => {
     setValue(e.target.value)
+    setErrorValue({
+      status: false,
+      message: null
+    })
   }
 
   useEffect(() => {
@@ -29,6 +51,14 @@ export const FormRadio = ({ attribute, title, isRequired = false, dataCustomer =
             <Radio value={2}>Otro</Radio>
           </Radio.Group>
         </Col>
+        {errorValue?.status && (
+          <>
+            <Col span={6}> </Col>
+            <Col span={18}>
+              <div className={'message-error-data'}>{errorValue?.message}</div>{' '}
+            </Col>
+          </>
+        )}
       </Row>
     </Form.Item>
   )

@@ -17,7 +17,7 @@ export const apiGetStaffCodeAsync = async (params: any, setResponse: any) => {
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.get(`/api/get-staff-code?staffCode=${params?.staffCode}`, {
+    const response = await axiosInstance.get(params, {
       cancelToken: source.token
     })
 

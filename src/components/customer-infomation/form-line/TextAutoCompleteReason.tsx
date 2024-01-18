@@ -3,24 +3,37 @@ import { Col, Row, Form, AutoComplete } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE, STATE } from '@/ultils/constants.ts'
 import useCustomerSearch from '@/hooks/useGetStaffCode'
 
-export const FormTextAutoComplete = ({
+export const TextAutoCompleteReason = ({
   attribute,
   isDisabled = false,
   title,
   isRequired = false,
-  isCustomSpan = false,
-  placeholder = ''
+  index,
+  item,
+  setData = () => {},
+  setValidateAll = () => {},
+  setIsChangeGroup = () => {}
 }: any) => {
   const [value, setValue] = useState('')
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
   const { responseStaffCode, requestGetStaffCode } = useCustomerSearch()
-  const onSearch = (val) => {
-    if (val?.length > 1) {
-      requestGetStaffCode({
-        staffCode: val?.toUpperCase()
+
+  setValidateAll([attribute], () => {
+    let check = true
+    if (isRequired && !value) {
+      check = false
+      setErrorValue({
+        status: true,
+        message: `Please input ${title}`
       })
+    }
+    return check
+  })
+  const onSearch = (val) => {
+    if (val?.length >= 1) {
+      requestGetStaffCode(`/api/get-shop?code=${val}`)
     }
   }
 
@@ -29,17 +42,25 @@ export const FormTextAutoComplete = ({
   }
 
   const onSelect = (data) => {
-    console.log('onSelect', data)
     if (data) {
       setValue(data)
       setErrorValue({ status: false, message: null })
+      setData((prev) => {
+        prev[index] = { ...item, plan: data }
+        return prev
+      })
+      setIsChangeGroup((prev) => !prev)
     }
   }
 
   useEffect(() => {
-    console.log('responseStaffCode+++', responseStaffCode)
     if (responseStaffCode?.data?.length > 0 && responseStaffCode?.state === STATE?.SUCCESS) {
-      setOptions(responseStaffCode?.data.map((it) => ({ value: it })))
+      setOptions(
+        responseStaffCode?.data.map((it) => ({
+          value: it?.name,
+          code: it?.code
+        }))
+      )
     } else {
       setOptions([])
     }
@@ -48,11 +69,11 @@ export const FormTextAutoComplete = ({
   return (
     <Form.Item>
       <Row className={'display-flex'}>
-        <Col span={isCustomSpan ? 3 : 6}>
+        <Col span={6}>
           <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) ? 'title-red' : ''}>{title}</span>
           {isRequired && <span style={{ color: 'red' }}> *</span>}
         </Col>
-        <Col span={isCustomSpan ? 21 : 18}>
+        <Col span={18}>
           <AutoComplete
             options={options ?? []}
             size={'large'}
@@ -61,13 +82,20 @@ export const FormTextAutoComplete = ({
             onChange={onChange}
             onSearch={(text) => onSearch(text)}
             style={{
-              width: isCustomSpan ? '96%' : '90%'
+              width: '90%'
             }}
             disabled={isDisabled}
-            placeholder={placeholder}
+            placeholder={''}
           />
-          {errorValue?.status && <div style={{ color: ' #d71e1f' }}>{errorValue?.message}</div>}
         </Col>
+        {errorValue?.status && (
+          <>
+            <Col span={6}> </Col>
+            <Col span={18}>
+              <div className={'message-error-data'}>{errorValue?.message}</div>{' '}
+            </Col>
+          </>
+        )}
       </Row>
     </Form.Item>
   )

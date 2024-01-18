@@ -1,20 +1,41 @@
 import { useState } from 'react'
-import { Button, Col, Form, Row, Table } from 'antd'
-import { FormSelect } from '@/components/customer-infomation/form/Select'
+import { Button, Col, Form, Row, Table, Input } from 'antd'
 import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { PlusOutlined } from '@ant-design/icons'
+import { FormInputNumber } from '@/components/customer-infomation/form-line/InputNumber'
+import { TextAutoCompletePlan } from '@/components/customer-infomation/form-line/TextAutoCompletePlan'
+import { TextAutoCompleteReason } from '@/components/customer-infomation/form-line/TextAutoCompleteReason'
+import { TextAutoCompleteBranch } from '@/components/customer-infomation/form-line/TextAutoCompleteBranch'
 
 const LineInfoTab = ({ dataInfo, setDataInfo, setActiveTab }: any) => {
-  const [listGroups, setListGroups] = useState([{}])
+  const [isTotal, setIsTotal] = useState<any>('')
+  const [, setIsChangeGroup] = useState<boolean>(false)
+  const [listGroups, setListGroups] = useState<any>([
+    {
+      plan: null,
+      quantity: null,
+      reason: null,
+      branch: null
+    }
+  ])
+
+  console.log('listGroups++++', listGroups)
   const [isChanged, setIsChanged] = useState(false)
 
   const tableLoading = {
     spinning: true,
     indicator: <LoadingRegion />
   }
+
+  //validate
+  const validateField = {}
+  const setValidateAll = (index, func) => {
+    validateField[index] = func
+  }
+
   const addGroup = () => {
     setListGroups((prev) => {
       prev.push({})
@@ -22,8 +43,27 @@ const LineInfoTab = ({ dataInfo, setDataInfo, setActiveTab }: any) => {
     })
     setIsChanged(!isChanged)
   }
+
+  const removeGroup = (index) => {
+    setListGroups(
+      (prev) =>
+        prev?.filter((it, inx) => {
+          if (inx !== index) {
+            return it
+          }
+        })
+    )
+  }
   const onNextStep = () => {
     setActiveTab((prev) => (parseInt(prev) + 1).toString())
+  }
+
+  const onChangeTotal = (e) => {
+    const { value: inputValue } = e.target
+    const reg = /^-?\d*(\.\d*)?$/
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+      setIsTotal(parseInt(inputValue, 10))
+    }
   }
 
   return (
@@ -36,13 +76,17 @@ const LineInfoTab = ({ dataInfo, setDataInfo, setActiveTab }: any) => {
           {/*line 1*/}
           <Row gutter={24} style={{ marginLeft: '10px' }}>
             <Col span={10}>
-              <FormSelect
-                data={dataInfo}
-                setData={setDataInfo}
-                attribute={'contract_no'}
-                title={'Total quantity of lines'}
-                isRequired={true}
-              />
+              <Form.Item>
+                <Row className={'display-flex'}>
+                  <Col span={6}>
+                    <span>Total quantity of lines</span>
+                    <span style={{ color: 'red' }}> *</span>
+                  </Col>
+                  <Col span={16}>
+                    <Input size={'large'} value={isTotal} onChange={onChangeTotal} min={0} />
+                  </Col>
+                </Row>
+              </Form.Item>
             </Col>
           </Row>
 
@@ -56,47 +100,66 @@ const LineInfoTab = ({ dataInfo, setDataInfo, setActiveTab }: any) => {
                   {/*line 1*/}
                   <Row gutter={24} style={{ marginBottom: '30px' }}>
                     <Col span={10}>
-                      <FormSelect
-                        data={dataInfo}
-                        setData={setDataInfo}
-                        attribute={''}
+                      <TextAutoCompletePlan
+                        index={index}
+                        item={item}
+                        setData={setListGroups}
+                        attribute={'plan'}
                         title={'Plan'}
                         isRequired={true}
-                        item={item}
+                        setValidateAll={setValidateAll}
+                        setIsChangeGroup={setIsChangeGroup}
                       />
                     </Col>
                     <Col span={10}>
-                      <FormSelect
-                        data={dataInfo}
-                        setData={setDataInfo}
-                        attribute={''}
+                      <FormInputNumber
+                        index={index}
+                        item={item}
+                        setData={setListGroups}
+                        attribute={'quantily'}
                         title={'Quantity of lines'}
                         isRequired={true}
+                        setIsChangeGroup={setIsChangeGroup}
                       />
                     </Col>
                   </Row>
 
                   {/*line 2*/}
-                  <Row gutter={24} style={{ marginBottom: '30px' }}>
-                    <Col span={10}>
-                      <FormSelect
-                        data={dataInfo}
-                        setData={setDataInfo}
-                        attribute={''}
-                        title={'Reason of connection'}
-                        isRequired={true}
-                      />
-                    </Col>
-                    <Col span={10}>
-                      <FormSelect
-                        data={dataInfo}
-                        setData={setDataInfo}
-                        attribute={''}
-                        title={'Branch Assigned'}
-                        isRequired={true}
-                      />
-                    </Col>
-                  </Row>
+                  {item?.plan && (
+                    <>
+                      <Row gutter={24} style={{ marginBottom: '30px' }}>
+                        <Col span={10}>
+                          <TextAutoCompleteReason
+                            data={dataInfo}
+                            setData={setDataInfo}
+                            attribute={'reason'}
+                            title={'Reason of connection'}
+                            isRequired={true}
+                          />
+                        </Col>
+                        <Col span={10}>
+                          <TextAutoCompleteBranch
+                            data={dataInfo}
+                            setData={setDataInfo}
+                            attribute={'branch'}
+                            title={'Branch Assigned'}
+                            isRequired={true}
+                          />
+                        </Col>
+                      </Row>
+                    </>
+                  )}
+
+                  {/*button remove group */}
+                  {index > 0 && (
+                    <>
+                      <div className={'display-flex-left button-continue'}>
+                        <Button type='default' size={'large'} onClick={() => removeGroup(index)}>
+                          Delete
+                        </Button>
+                      </div>
+                    </>
+                  )}
                 </div>
               </fieldset>
             </Form>

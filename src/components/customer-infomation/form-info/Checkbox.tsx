@@ -2,9 +2,15 @@ import { useState, useEffect } from 'react'
 import { Col, Row, Form, Checkbox } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 
-export const FormCheckBox = ({ attribute, title, isRequired = false, dataCustomer = {} }: any) => {
+export const FormCheckBox = ({
+  attribute,
+  title,
+  isRequired = false,
+  dataCustomer = {},
+  setValidateAll = () => {}
+}: any) => {
   const [value, setValue] = useState([])
-  // const [errorValue, setErrorValue] = useState(false)
+  const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
   const options = [
     {
@@ -21,8 +27,20 @@ export const FormCheckBox = ({ attribute, title, isRequired = false, dataCustome
     }
   ]
 
-  const onChange = (e) => {
-    setValue(e.target.value)
+  setValidateAll([attribute], () => {
+    let check = true
+    if (isRequired && !value) {
+      check = false
+      setErrorValue({
+        status: true,
+        message: `Please enter input ${title}`
+      })
+    }
+    return check
+  })
+
+  const onChange = (val) => {
+    setValue(val)
   }
 
   useEffect(() => {
@@ -41,6 +59,14 @@ export const FormCheckBox = ({ attribute, title, isRequired = false, dataCustome
         <Col span={18}>
           <Checkbox.Group options={options} defaultValue={['Apple']} onChange={onChange} value={value} />
         </Col>
+        {errorValue?.status && (
+          <>
+            <Col span={6}> </Col>
+            <Col span={18}>
+              <div className={'message-error-data'}>{errorValue?.message}</div>{' '}
+            </Col>
+          </>
+        )}
       </Row>
     </Form.Item>
   )

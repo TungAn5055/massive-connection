@@ -10,14 +10,27 @@ export const FormSelect = ({
   dataSource = [],
   defaultValue = null,
   placholder,
-  dataCustomer = {}
+  dataCustomer = {},
+  setValidateAll = () => {}
 }: any) => {
   const [value, setValue] = useState(defaultValue)
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
+  setValidateAll([attribute], () => {
+    let check = true
+    if (isRequired && !value) {
+      check = false
+      setErrorValue({
+        status: true,
+        message: `Please choice ${title}`
+      })
+    }
+    return check
+  })
+
   const onChange = (e) => {
     setValue(e)
-    if(e) {
+    if (e) {
       setErrorValue({ status: false, message: null })
     }
   }
@@ -53,8 +66,15 @@ export const FormSelect = ({
             options={dataSource}
             placeholder={placholder}
           />
-          {errorValue?.status && <div style={{ color: ' #FD5202' }} className={"message-error"}>{errorValue?.message}</div>}
         </Col>
+        {errorValue?.status && (
+          <>
+            <Col span={6}> </Col>
+            <Col span={18}>
+              <div className={'message-error-data'}>{errorValue?.message}</div>{' '}
+            </Col>
+          </>
+        )}
       </Row>
     </Form.Item>
   )
