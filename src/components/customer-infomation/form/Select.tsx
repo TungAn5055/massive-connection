@@ -13,9 +13,13 @@ export const FormSelect = ({
   dataCustomer = {}
 }: any) => {
   const [value, setValue] = useState(defaultValue)
+  const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
   const onChange = (e) => {
     setValue(e)
+    if(e) {
+      setErrorValue({ status: false, message: null })
+    }
   }
 
   useEffect(() => {
@@ -49,6 +53,7 @@ export const FormSelect = ({
             options={dataSource}
             placeholder={placholder}
           />
+          {errorValue?.status && <div style={{ color: ' #FD5202' }} className={"message-error"}>{errorValue?.message}</div>}
         </Col>
       </Row>
     </Form.Item>
