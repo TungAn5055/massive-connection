@@ -131,7 +131,7 @@
 .message-error {
     color: #d71e1f;
     display: flex;
-    justify-content: left;
+    justify-content: center;
     margin-top: 5px;
 }
 
