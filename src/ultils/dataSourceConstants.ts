@@ -33,3 +33,54 @@ export const FORMAT_DATE = {
 }
 
 export const NO_DATA = 'No data'
+
+export const SOURCE_UPLOAD_FILE = [
+  {
+    idx: 1,
+    type: null,
+    title_type: 'Contrato',
+    mandatory: true,
+    link_file: null,
+    status: false
+  },
+  {
+    idx: 2,
+    type: null,
+    title_type: 'Ficha RUC',
+    mandatory: true,
+    link_file: null,
+    status: false
+  },
+  {
+    idx: 3,
+    type: null,
+    title_type: 'Vigencia de Poder',
+    mandatory: true,
+    link_file: null,
+    status: false
+  },
+  {
+    idx: 4,
+    type: null,
+    title_type: 'DNI de Representante Lega',
+    mandatory: true,
+    link_file: null,
+    status: false
+  },
+  {
+    idx: 5,
+    type: null,
+    title_type: 'Autorización para solicitudes por niveles',
+    mandatory: false,
+    link_file: null,
+    status: false
+  },
+  {
+    idx: 6,
+    type: null,
+    title_type: 'Otros',
+    mandatory: false,
+    link_file: null,
+    status: false
+  }
+]

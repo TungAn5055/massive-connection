@@ -9,13 +9,22 @@ export const getTokenSource = () => {
   return axios.CancelToken.source()
 }
 
-export const formatPrice = val => {
-  return val ? new Intl.NumberFormat().format(val) : val === 0 ? 0 : null;
-};
+export const formatPrice = (val) => {
+  return val ? new Intl.NumberFormat().format(val) : val === 0 ? 0 : null
+}
 
-export const colorRowTotal = info => {
+export const colorRowTotal = (info) => {
   return {
-    backgroundColor: info?.is_total  ? "#9fb5da" : "",
-    fontWeight: info?.is_total ? "500" : ""
-  };
-};
+    backgroundColor: info?.is_total ? '#9fb5da' : '',
+    fontWeight: info?.is_total ? '500' : ''
+  }
+}
+
+export function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject(error)
+  })
+}

@@ -1,5 +1,5 @@
-import {useMemo, useState} from 'react'
-import {Button, Col, Form, Row, Table, Input, Radio, Space} from 'antd'
+import { useMemo, useState } from 'react'
+import { Button, Col, Form, Row, Table, Input, Radio, Space } from 'antd'
 import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA } from '@/ultils/constants'
@@ -9,7 +9,7 @@ import { FormInputNumber } from '@/components/customer-infomation/form-line/Inpu
 import { TextAutoCompletePlan } from '@/components/customer-infomation/form-line/TextAutoCompletePlan'
 import { TextAutoCompleteReason } from '@/components/customer-infomation/form-line/TextAutoCompleteReason'
 import { TextAutoCompleteBranch } from '@/components/customer-infomation/form-line/TextAutoCompleteBranch'
-import {colorRowTotal, formatPrice} from "@/ultils/helper.ts";
+import { colorRowTotal, formatPrice } from '@/ultils/helper.ts'
 
 const LineInfoTab = ({ setActiveTab }: any) => {
   const [isTotal, setIsTotal] = useState<any>('')
@@ -22,7 +22,7 @@ const LineInfoTab = ({ setActiveTab }: any) => {
       quantity: null,
       reason: null,
       branch: null,
-      unit_price: null,
+      unit_price: null
     }
   ])
 
@@ -67,21 +67,20 @@ const LineInfoTab = ({ setActiveTab }: any) => {
     const reg = /^\d*(\.\d*)?$/
     if (reg.test(inputValue)) {
       setIsTotal(parseInt(inputValue, 10))
-      if(inputValue > 0) {
+      if (inputValue > 0) {
         setIsDisabledTotal(false)
       }
-
     }
   }
 
   const onChangeLineActive = (e, idx) => {
-    if(e?.target?.checked) {
+    if (e?.target?.checked) {
       setIdxIsLine(idx)
     }
   }
 
   const dataTable = useMemo(() => {
-    let res: any[] = [];
+    let res: any[] = []
     let itemTotal: any = {
       title: `Total`,
       is_total: true,
@@ -90,21 +89,23 @@ const LineInfoTab = ({ setActiveTab }: any) => {
       reason: null,
       branch: null,
       unit_price: null,
-      total_price: null,
-    };
-    let dataGroupFull = listGroups?.filter((it) => it?.plan && it?.quantity && it?.reason && it?.branch && it?.unit_price)
-    res = dataGroupFull?.map((item, index ) => {
+      total_price: null
+    }
+    const dataGroupFull = listGroups?.filter(
+      (it) => it?.plan && it?.quantity && it?.reason && it?.branch && it?.unit_price
+    )
+    res = dataGroupFull?.map((item, index) => {
       return {
         ...item,
         title: `Group ${index + 1}`,
         total_price: item?.quantity * item?.unit_price,
         is_line_active: index === idxIsLine ? true : false,
-        is_total: false,
+        is_total: false
       }
     })
-      let quantity= 0;
-      let unitPrice= 0;
-      let totalPrice= 0;
+    let quantity = 0
+    let unitPrice = 0
+    let totalPrice = 0
 
     res?.forEach((item) => {
       quantity += parseInt(item?.quantity)
@@ -112,15 +113,11 @@ const LineInfoTab = ({ setActiveTab }: any) => {
       totalPrice += parseFloat(item?.total_price)
     })
 
-    itemTotal = { ...itemTotal,
-      quantity: quantity,
-      unit_price: unitPrice,
-      total_price: totalPrice
-    }
+    itemTotal = { ...itemTotal, quantity: quantity, unit_price: unitPrice, total_price: totalPrice }
 
     res.push(itemTotal)
     return res
-  }, [listGroups, isChangeGroup,idxIsLine])
+  }, [listGroups, isChangeGroup, idxIsLine])
 
   return (
     <>
@@ -139,7 +136,7 @@ const LineInfoTab = ({ setActiveTab }: any) => {
                     <span style={{ color: 'red' }}> *</span>
                   </Col>
                   <Col span={16}>
-                    <Input size={'large'} value={isTotal} onChange={onChangeTotal}  />
+                    <Input size={'large'} value={isTotal} onChange={onChangeTotal} />
                   </Col>
                 </Row>
               </Form.Item>
@@ -197,7 +194,6 @@ const LineInfoTab = ({ setActiveTab }: any) => {
                             isRequired={true}
                             setIsChangeGroup={setIsChangeGroup}
                             isDisabled={isDisabledTotal}
-
                           />
                         </Col>
                         <Col span={10}>
@@ -210,7 +206,6 @@ const LineInfoTab = ({ setActiveTab }: any) => {
                             isRequired={true}
                             setIsChangeGroup={setIsChangeGroup}
                             isDisabled={isDisabledTotal}
-
                           />
                         </Col>
                       </Row>
@@ -258,62 +253,59 @@ const LineInfoTab = ({ setActiveTab }: any) => {
                   render={(value, record: any) => {
                     return {
                       props: { style: colorRowTotal(record) },
-                      children: (
-                          <Space>{value}</Space>
-                      )
-                    };
+                      children: <Space>{value}</Space>
+                    }
                   }}
                 />
-                <Column title={'Quantity of lines'} dataIndex='quantity' key='quantity'
-                        render={(value, record: any) => {
-                          return {
-                            props: { style: colorRowTotal(record) },
-                            children: (
-                                <Space>
-                                  {value}
-                                </Space>
-                            )
-                          };
-                        }}
-                      />
-                <Column title={'Unit Price'} dataIndex='unit_price' key='unit_price'
-                        render={(value, record: any) => {
-                          return {
-                            props: { style: colorRowTotal(record) },
-                            children: (
-                                <Space>
-                                  S/ {formatPrice(value)}
-                                </Space>
-                            )
-                          };
-                        }}
+                <Column
+                  title={'Quantity of lines'}
+                  dataIndex='quantity'
+                  key='quantity'
+                  render={(value, record: any) => {
+                    return {
+                      props: { style: colorRowTotal(record) },
+                      children: <Space>{value}</Space>
+                    }
+                  }}
                 />
-                <Column title={'Totals Price'} dataIndex='total_price' key='total_price'
-                        render={(value, record: any) => {
-                          return {
-                            props: { style: colorRowTotal(record) },
-                            children: (
-                                <Space>
-                                  S/  {formatPrice(value)}
-                                </Space>
-                            )
-                          };
-                        }}
+                <Column
+                  title={'Unit Price'}
+                  dataIndex='unit_price'
+                  key='unit_price'
+                  render={(value, record: any) => {
+                    return {
+                      props: { style: colorRowTotal(record) },
+                      children: <Space>S/ {formatPrice(value)}</Space>
+                    }
+                  }}
                 />
-                <Column title={'Line Validation'} dataIndex='is_line_active' key='is_line_active'
-                        render={(value, record: any, index) => {
-                          return {
-                            props: { style: colorRowTotal(record) },
-                            children: (
-                                <Space>{
-                                 !record?.is_total &&
-                                    <Radio checked={value} onChange={(e) => onChangeLineActive(e, index )}/>
-                                }
-
-                                </Space>
-                            )
-                          };
-                        }}
+                <Column
+                  title={'Totals Price'}
+                  dataIndex='total_price'
+                  key='total_price'
+                  render={(value, record: any) => {
+                    return {
+                      props: { style: colorRowTotal(record) },
+                      children: <Space>S/ {formatPrice(value)}</Space>
+                    }
+                  }}
+                />
+                <Column
+                  title={'Line Validation'}
+                  dataIndex='is_line_active'
+                  key='is_line_active'
+                  render={(value, record: any, index) => {
+                    return {
+                      props: { style: colorRowTotal(record) },
+                      children: (
+                        <Space>
+                          {!record?.is_total && (
+                            <Radio checked={value} onChange={(e) => onChangeLineActive(e, index)} />
+                          )}
+                        </Space>
+                      )
+                    }
+                  }}
                 />
               </Table>
             </fieldset>

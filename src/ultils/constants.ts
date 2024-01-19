@@ -29,6 +29,13 @@ export const STATE = {
   INVALID: 'INVALID'
 }
 
+export const NOTIFICATION = {
+  WARNING: 'Cảnh báo',
+  SUCCESS: 'Thành công',
+  INFO: 'Thông tin',
+  ERROR: 'Lỗi'
+}
+
 export const SOURCE_METHOD_DE_PAGO = [{ label: 'Pago normal', value: '01' }]
 
 export const SOURCE_TYPE_OF_DOCUMENT = [

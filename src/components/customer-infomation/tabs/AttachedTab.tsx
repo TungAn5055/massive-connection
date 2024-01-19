@@ -1,20 +1,66 @@
-import { Button, Col, Form, Row, Table } from 'antd'
-import { FormSelect } from '@/components/customer-infomation/form-info/Select'
-import { FormText } from '@/components/customer-infomation/form-info/Text'
+import { Button, Col, Form, Input, Row, Select, Space, Table, Upload } from 'antd'
 import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
-import { NO_DATA, SOURCE_TYPE_OF_DOCUMENT } from '@/ultils/constants'
+import { NO_DATA, SOURCE_TYPE_OF_DOCUMENT, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
+import { useEffect, useState } from 'react'
+import { CheckCircleFilled, DropboxSquareFilled, ExclamationCircleFilled } from '@ant-design/icons'
+import { NotificationWarning } from '@/components/common/Notification'
+import { getBase64 } from '@/ultils/helper'
+import useUploadFile from '@/hooks/useUploadFile'
+import { SOURCE_UPLOAD_FILE } from '@/ultils/dataSourceConstants'
 
-const AttachedTab = ({ dataInfo, setDataInfo, setActiveTab }: any) => {
+const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
+  const [listDataFiles, setListDataFiles] = useState<any>(SOURCE_UPLOAD_FILE)
+  const [currentFile, setCurrentFile] = useState<any>('')
+  const [currentType, setCurrentType] = useState<any>('')
+
+  const { responseUploadFile, requestUploadFile } = useUploadFile()
+
   const tableLoading = {
-    spinning: true,
+    spinning: false,
     indicator: <LoadingRegion />
+  }
+
+  const onBeforeUploadFile = async (file) => {
+    if (file) {
+      setCurrentFile(file)
+    }
+  }
+  const onUploadFile = async () => {
+    console.log('file+++', currentFile)
+    console.log('dataInfo+++', dataInfo)
+    setListDataFiles([])
+
+    if (currentFile && currentType) {
+      currentFile.base64 = await getBase64(currentFile)
+      if (currentFile.base64) {
+        const params = {
+          file: currentFile.base64.slice(currentFile.base64.indexOf(',') + 1),
+          idType: currentType,
+          idNo: dataInfo?.idNo ?? '10432498404'
+        }
+        requestUploadFile(params)
+      }
+    } else {
+      if (!currentType) {
+        NotificationWarning('NOOOOOO')
+      } else if (currentFile) {
+        NotificationWarning('Not have file')
+      }
+    }
   }
 
   const onNextStep = () => {
     setActiveTab((prev) => (parseInt(prev) + 1).toString())
   }
+
+  useEffect(() => {
+    console.log('responseUploadFile+++', responseUploadFile)
+    if (responseUploadFile?.data?.length > 0 && responseUploadFile?.state === STATE?.SUCCESS) {
+      console.log(responseUploadFile?.data)
+    }
+  }, [responseUploadFile])
 
   return (
     <>
@@ -27,25 +73,58 @@ const AttachedTab = ({ dataInfo, setDataInfo, setActiveTab }: any) => {
           {/*line 1*/}
           <Row gutter={24} style={{ marginLeft: '10px', marginTop: '20px' }}>
             <Col span={8}>
-              <FormSelect
-                data={dataInfo}
-                setData={setDataInfo}
-                attribute={''}
-                title={'Type  of document'}
-                isRequired={true}
-                dataSource={SOURCE_TYPE_OF_DOCUMENT}
-              />
+              <Form.Item>
+                <Row className={'display-flex'}>
+                  <Col span={6}>
+                    <span>Type of document</span>
+                  </Col>
+                  <Col span={18}>
+                    <Select
+                      size={'large'}
+                      value={currentType}
+                      onChange={(e) => {
+                        setCurrentType(e)
+                      }}
+                      style={{
+                        width: '90%'
+                      }}
+                      options={SOURCE_TYPE_OF_DOCUMENT}
+                    />
+                  </Col>
+                </Row>
+              </Form.Item>
             </Col>
             <Col span={8}>
-              <FormText data={dataInfo} setData={setDataInfo} attribute={''} title={'Data file'} isRequired={true} />
+              <Form.Item>
+                <Row className={'display-flex'}>
+                  <Col span={6}>
+                    <span>Data file</span>
+                  </Col>
+                  <Col span={18}>
+                    <Input size={'large'} value={currentFile?.name ?? ''} disabled={true} />
+                  </Col>
+                </Row>
+              </Form.Item>
             </Col>
             <Col span={3}>
-              <Button type='default' size={'large'} onClick={() => {}}>
-                Seleccionar archivo
-              </Button>
+              <Upload
+                showUploadList={false}
+                beforeUpload={onBeforeUploadFile}
+                // onChange={onUploadFile}
+                multiple={false}
+              >
+                <Button type='default' size={'large'} onClick={() => {}}>
+                  Seleccionar archivo
+                </Button>
+              </Upload>
             </Col>
             <Col span={3}>
-              <Button type='default' size={'large'} onClick={() => {}}>
+              <Button
+                type='default'
+                size={'large'}
+                onClick={() => onUploadFile()}
+                loading={responseUploadFile?.loading}
+              >
                 Upload
               </Button>
             </Col>
@@ -60,23 +139,52 @@ const AttachedTab = ({ dataInfo, setDataInfo, setActiveTab }: any) => {
           </legend>
           <Table
             rowKey={(record: any) => record.id}
-            dataSource={[]}
+            dataSource={listDataFiles}
             pagination={false}
             loading={tableLoading}
             locale={{ emptyText: <EmptyUI content={NO_DATA} /> }}
           >
             <Column
               title={'#'}
-              dataIndex=''
-              key=''
-              // render={(type, record) => {
-              //     return BOM_TYPE_DISPLAY[type];
-              // }}
+              dataIndex='idx'
+              key='idx'
+              render={(val) => {
+                return <Space>{val}</Space>
+              }}
             />
-            <Column title={'Type of document'} dataIndex='' key='' />
-            <Column title={'Mandatory'} dataIndex='' key='' />
-            <Column title={'Download document'} dataIndex='material_type_label' key='material_type_label' />
-            <Column title={'Status'} dataIndex='' key='' />
+            <Column title={'Type of document'} dataIndex='title_type' key='title_type' />
+            <Column
+              title={'Mandatory'}
+              dataIndex='mandatory'
+              key='mandatory'
+              render={(val) => {
+                return <Space>{val ? 'YES' : 'NO'}</Space>
+              }}
+            />
+            <Column
+              title={'Download document'}
+              dataIndex='link_file'
+              key='link_file'
+              render={(val) => {
+                if (val) {
+                  return <DropboxSquareFilled style={{ fontSize: 30 }} />
+                } else {
+                  return <></>
+                }
+              }}
+            />
+            <Column
+              title={'Status'}
+              dataIndex='status'
+              key='status'
+              render={(val) => {
+                if (val) {
+                  return <CheckCircleFilled style={{ fontSize: 30 }} />
+                } else {
+                  return <ExclamationCircleFilled style={{ fontSize: 30 }} />
+                }
+              }}
+            />
           </Table>
         </fieldset>
       </Form>
