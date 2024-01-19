@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Col, Row, Form, AutoComplete } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE, STATE } from '@/ultils/constants.ts'
-import useCustomerSearch from '@/hooks/useGetStaffCode'
+import useCustomGetData from '@/hooks/useGetStaffCode'
 
 export const FormTextAutoComplete = ({
   attribute,
@@ -16,7 +16,7 @@ export const FormTextAutoComplete = ({
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
-  const { responseStaffCode, requestGetStaffCode } = useCustomerSearch()
+  const [responseStaffCode, requestGetStaffCode] = useCustomGetData()
 
   setValidateAll([attribute], () => {
     let check = true

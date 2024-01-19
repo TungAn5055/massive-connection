@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Col, Row, Form, AutoComplete } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE, STATE } from '@/ultils/constants.ts'
-import useCustomerSearch from '@/hooks/useGetStaffCode'
+import useCustomGetData from '@/hooks/useGetStaffCode'
 
 export const TextAutoCompleteBranch = ({
   attribute,
@@ -15,11 +15,10 @@ export const TextAutoCompleteBranch = ({
   setIsChangeGroup = () => {}
 }: any) => {
   const [value, setValue] = useState('')
-  // Basico19_9C
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
-  const { responseStaffCode, requestGetStaffCode } = useCustomerSearch()
+  const [responseStaffCode, requestGetStaffCode] = useCustomGetData()
 
   setValidateAll([attribute], () => {
     let check = true
@@ -40,6 +39,11 @@ export const TextAutoCompleteBranch = ({
 
   const onChange = (data) => {
     setValue(data)
+    setData((prev) => {
+      prev[index] = { ...item, branch: data }
+      return prev
+    })
+    setIsChangeGroup((prev) => !prev)
   }
 
   const onSelect = (data) => {
@@ -47,7 +51,7 @@ export const TextAutoCompleteBranch = ({
       setValue(data)
       setErrorValue({ status: false, message: null })
       setData((prev) => {
-        prev[index] = { ...item, plan: data }
+        prev[index] = { ...item, branch: data }
         return prev
       })
       setIsChangeGroup((prev) => !prev)

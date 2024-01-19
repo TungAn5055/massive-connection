@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Col, Row, Form, AutoComplete } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE, STATE } from '@/ultils/constants.ts'
-import useCustomerSearch from '@/hooks/useGetStaffCode'
+import useCustomGetData from '@/hooks/useGetStaffCode'
 
 export const TextAutoCompletePlan = ({
   attribute,
@@ -14,12 +14,13 @@ export const TextAutoCompletePlan = ({
   setValidateAll = () => {},
   setIsChangeGroup = () => {}
 }: any) => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState('Basico19_9C')
   // Basico19_9C
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
-  const { responseStaffCode, requestGetStaffCode } = useCustomerSearch()
+  const [responseStaffCode, requestGetStaffCode] = useCustomGetData()
+  const [responseGetPrice, requestGetPrice] = useCustomGetData()
 
   setValidateAll([attribute], () => {
     let check = true
@@ -42,15 +43,18 @@ export const TextAutoCompletePlan = ({
     setValue(data)
   }
 
-  const onSelect = (data) => {
+  const onSelect = (data, list) => {
     if (data) {
       setValue(data)
       setErrorValue({ status: false, message: null })
       setData((prev) => {
-        prev[index] = { ...item, plan: data }
+        prev[index] = { ...item, plan: data, offerId : list?.offerId }
         return prev
       })
       setIsChangeGroup((prev) => !prev)
+      if(list?.offerId) {
+        requestGetPrice(`/api/get-price?offerId=${list?.offerId}`)
+      }
     }
   }
 
@@ -68,6 +72,17 @@ export const TextAutoCompletePlan = ({
       setOptions([])
     }
   }, [responseStaffCode])
+
+  useEffect(() => {
+    console.log('responseGetPrice', responseGetPrice)
+    if (responseGetPrice?.data && responseGetPrice?.state === STATE?.SUCCESS) {
+      setData((prev) => {
+        prev[index] = { ...item, unit_price : responseGetPrice?.data }
+        return prev
+      })
+      setIsChangeGroup((prev) => !prev)
+    }
+  }, [responseGetPrice])
 
   return (
     <Form.Item>
@@ -95,7 +110,7 @@ export const TextAutoCompletePlan = ({
           <>
             <Col span={6}> </Col>
             <Col span={18}>
-              <div className={'message-error-data'}>{errorValue?.message}</div>{' '}
+              <div className={'message-error-data'}>{errorValue?.message}</div>
             </Col>
           </>
         )}

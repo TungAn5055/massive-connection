@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { cancelApiCustomerSearch } from '@/store/thunks/customer.thunk'
 import { apiGetStaffCodeAsync } from '@/store/thunks/getStaffCode.thunk'
 
-const useCustomerSearch = () => {
+const useCustomGetData = () => {
   const [responseStaffCode, setResponseStaffCode] = useState(<any>{
     data: [],
     message: '',
@@ -22,7 +22,7 @@ const useCustomerSearch = () => {
     }
   }, [])
 
-  return { responseStaffCode, requestGetStaffCode }
+  return [responseStaffCode, requestGetStaffCode]
 }
 
-export default useCustomerSearch
+export default useCustomGetData

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Col, Row, Form, AutoComplete } from 'antd'
 import { LIST_ATTRIBUTE_RED_TITLE, STATE } from '@/ultils/constants.ts'
-import useCustomerSearch from '@/hooks/useGetStaffCode'
+import useCustomGetData from '@/hooks/useGetStaffCode'
 
 export const TextAutoCompleteReason = ({
   attribute,
@@ -18,7 +18,7 @@ export const TextAutoCompleteReason = ({
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
-  const { responseStaffCode, requestGetStaffCode } = useCustomerSearch()
+  const [responseStaffCode, requestGetStaffCode] = useCustomGetData()
 
   setValidateAll([attribute], () => {
     let check = true
@@ -39,6 +39,11 @@ export const TextAutoCompleteReason = ({
 
   const onChange = (data) => {
     setValue(data)
+    setData((prev) => {
+      prev[index] = { ...item, reason: data }
+      return prev
+    })
+    setIsChangeGroup((prev) => !prev)
   }
 
   const onSelect = (data) => {
@@ -46,7 +51,7 @@ export const TextAutoCompleteReason = ({
       setValue(data)
       setErrorValue({ status: false, message: null })
       setData((prev) => {
-        prev[index] = { ...item, plan: data }
+        prev[index] = { ...item, reason: data }
         return prev
       })
       setIsChangeGroup((prev) => !prev)

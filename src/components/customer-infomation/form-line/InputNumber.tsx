@@ -7,10 +7,12 @@ export const FormInputNumber = ({
   attribute,
   title,
   isRequired = false,
+  isDisabled = false,
   item,
   setData,
   setValidateAll = () => {},
-  setIsChangeGroup = () => {}
+  setIsChangeGroup = () => {},
+  max = null
 }: any) => {
   const [value, setValue] = useState<any>('')
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
@@ -29,13 +31,17 @@ export const FormInputNumber = ({
 
   const onChange = (e) => {
     const { value: inputValue } = e.target
-    const reg = /^-?\d*(\.\d*)?$/
-    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-      setValue(parseInt(inputValue, 10))
+    const reg = /^\d*(\.\d*)?$/
+    if (reg.test(inputValue)) {
+      let val  = inputValue
+      if(max && inputValue > max) {
+        val = max
+      }
+      setValue(parseInt(val, 10))
       setErrorValue({ status: false, message: null })
 
       setData((prev) => {
-        prev[index] = { ...item, quantity: inputValue }
+        prev[index] = { ...item, quantity: val }
         return prev
       })
       setIsChangeGroup((prev) => !prev)
@@ -50,13 +56,13 @@ export const FormInputNumber = ({
           {isRequired && <span style={{ color: 'red' }}> *</span>}
         </Col>
         <Col span={16}>
-          <Input size={'large'} value={value} onChange={onChange} min={0} />
+          <Input size={'large'}  disabled={isDisabled} value={value} onChange={onChange} min={0} max={max}/>
         </Col>
         {errorValue?.status && (
           <>
             <Col span={6}> </Col>
             <Col span={18}>
-              <div className={'message-error-data'}>{errorValue?.message}</div>{' '}
+              <div className={'message-error-data'}>{errorValue?.message}</div>
             </Col>
           </>
         )}
