@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, Row } from 'antd'
 import { Tabs } from 'antd'
 import { CUSTOMER_INFO_TABS } from '@/ultils/constants'
@@ -9,58 +9,6 @@ import SuccessfulTab from '@/components/customer-infomation/tabs/SuccessfulTab.t
 import { FolderOpenFilled } from '@ant-design/icons'
 
 const CustomerInformation = ({ dataCustomers = {} }: any) => {
-  // const dataCustomer = {
-  //   busType: 'COMP',
-  //   idType: 3,
-  //   idNo: '10432498404',
-  //   idIssueDate: '2019-04-07',
-  //   idExpireDate: '2026-10-03',
-  //   name: 'Patricia Espinoza Hernandez',
-  //   nationality: 'PER',
-  //   address: 'CALLE CALLAO 119  , ICA - ICA - SUBTANJALLA',
-  //   email: 'notiene@gmail.com',
-  //   province: '11',
-  //   district: '01',
-  //   precinct: '12',
-  //   home: 'CALLE CALLAO 119',
-  //   repreCustName: 'Patricia Espinoza Hernandez',
-  //   repreCustBirthDate: '1983-07-08',
-  //   repreCustIdNo: '43249840',
-  //   repreCustIdType: 1,
-  //   repreCustIdIssueDate: '2019-04-07',
-  //   repreCustIdIssuePlace: 'LIMA',
-  //   repreCustIdExpireDate: '2026-10-03',
-  //   repreCustTelFax: '999999999',
-  //   activitiesField: 'COMERCIO',
-  //   landlineNo: null,
-  //   mobileNo: '927370562',
-  //   repreName: 'Patricia',
-  //   repreLastNameFather: 'Espinoza',
-  //   repreLastNameMother: 'Hernandez',
-  //   areaCode: '110112',
-  //   areaName: 'ICA - ICA - SUBTANJALLA',
-  //   busTypeName: 'COMPANY',
-  //   typeName: 'RUC',
-  //   repreCustTypeName: 'DNI',
-  //   contractInfo: {
-  //     contractTypeCode: '0',
-  //     billCycleFrom: 6,
-  //     signDate: null,
-  //     effectDate: '2023-12-29',
-  //     payer: 'Patricia Espinoza Hernandez',
-  //     home: null,
-  //     contactName: null,
-  //     noticeCharge: '010',
-  //     contractTypeName: null,
-  //     contractLanguages: {
-  //       '1': 'Español',
-  //       '2': 'Quechua',
-  //       '3': 'Aimara',
-  //       '4': 'Ashaninka',
-  //       '5': 'Shipibo - Konibo'
-  //     }
-  //   }
-  // }
   const [activeTab, setActiveTab] = useState('1')
   // console.log('dataCustomers++++', dataCustomers)
 
@@ -77,6 +25,13 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
     // return false
   }
 
+  useEffect(() => {
+    if (dataCustomers?.custId) {
+      setDataInfo({
+        custId: dataCustomers?.custId
+      })
+    }
+  }, [dataCustomers])
   return (
     <>
       <Row className='site-page-header'>

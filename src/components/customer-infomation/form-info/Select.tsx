@@ -4,6 +4,7 @@ import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 
 export const FormSelect = ({
   attribute,
+  attributeSave = null,
   isDisabled = false,
   title,
   isRequired = false,
@@ -11,7 +12,8 @@ export const FormSelect = ({
   defaultValue = null,
   placholder,
   dataCustomer = {},
-  setValidateAll = () => {}
+  setValidateAll = () => {},
+  setDataInfo = () => {}
 }: any) => {
   const [value, setValue] = useState(defaultValue)
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
@@ -32,6 +34,9 @@ export const FormSelect = ({
     setValue(e)
     if (e) {
       setErrorValue({ status: false, message: null })
+    }
+    if (attributeSave) {
+      setDataInfo({ [attributeSave ?? attribute]: e })
     }
   }
 

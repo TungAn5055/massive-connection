@@ -11,7 +11,7 @@ import { TextAutoCompleteReason } from '@/components/customer-infomation/form-li
 import { TextAutoCompleteBranch } from '@/components/customer-infomation/form-line/TextAutoCompleteBranch'
 import { colorRowTotal, formatPrice } from '@/ultils/helper.ts'
 
-const LineInfoTab = ({ setActiveTab }: any) => {
+const LineInfoTab = ({ setActiveTab, setDataInfo }: any) => {
   const [isTotal, setIsTotal] = useState<any>('')
   const [isChangeGroup, setIsChangeGroup] = useState<boolean>(false)
   const [isDisabledTotal, setIsDisabledTotal] = useState<boolean>(true)
@@ -70,6 +70,7 @@ const LineInfoTab = ({ setActiveTab }: any) => {
       if (inputValue > 0) {
         setIsDisabledTotal(false)
       }
+      setDataInfo({ totalLines: inputValue })
     }
   }
 
