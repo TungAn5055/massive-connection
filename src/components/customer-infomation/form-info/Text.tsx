@@ -5,14 +5,16 @@ import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 export const FormText = ({
   dataCustomer = {},
   attribute,
+  attributeSave,
   isDisabled = false,
   title,
   isRequired = false,
   isCustomSpan = false,
   placeholder = '',
-  setValidateAll = () => {}
+  setValidateAll = () => {},
+                           setDataInfo = () => {}
 }: any) => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState<any>(null)
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
   setValidateAll([attribute], () => {
@@ -28,7 +30,9 @@ export const FormText = ({
   })
 
   const onChange = (e) => {
-    setValue(e.target.value)
+    let val = e?.target?.value ? e.target.value?.trim(): e.target.value
+    setValue(val)
+    setDataInfo({ [attributeSave]: val})
   }
 
   const onBlur = (e) => {
@@ -76,6 +80,7 @@ export const FormText = ({
   useEffect(() => {
     if (attribute && dataCustomer[attribute]) {
       setValue(dataCustomer[attribute])
+      setDataInfo({ [attributeSave]: dataCustomer[attributeSave]})
     }
   }, [dataCustomer])
 

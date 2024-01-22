@@ -51,6 +51,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'busTypeName'}
+                attributeSave={'bus-type'}
                 dataCustomer={dataCustomer}
                 title={'Tipo de cliente'}
                 isDisabled={true}

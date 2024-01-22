@@ -6,7 +6,7 @@ import { LoadingRegion } from '@/components/ui-source/loading'
 import { useEffect, useState } from 'react'
 import { CheckCircleFilled, DropboxSquareFilled, ExclamationCircleFilled } from '@ant-design/icons'
 import { NotificationWarning } from '@/components/common/Notification'
-import { getBase64 } from '@/ultils/helper'
+// import { getBase64 } from '@/ultils/helper'
 import useUploadFile from '@/hooks/useUploadFile'
 import { SOURCE_UPLOAD_FILE } from '@/ultils/dataSourceConstants'
 
@@ -24,24 +24,43 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
 
   const onBeforeUploadFile = async (file) => {
     if (file) {
+      console.log('file+++123', file)
       setCurrentFile(file)
     }
   }
-  const onUploadFile = async () => {
-    console.log('file+++', currentFile)
-    console.log('dataInfo+++', dataInfo)
+  const onUploadFile = async (info) => {
+    console.log('info+++', info)
+    // console.log('currentFile+++', currentFile)
+    // console.log('dataInfo+++', dataInfo)
     setListDataFiles([])
 
+    let formData = new FormData();
+
+    formData.append("file", info?.file?.originFileObj);
+    formData.append("fileType", currentType);
+    formData.append("idNo", dataInfo?.idNo ?? '10432498404');
+
+    // const params = {
+    //   file: currentFile.base64.slice(currentFile.base64.indexOf(',') + 1),
+    //   idType: currentType,
+    //   idNo: dataInfo?.idNo ?? '10432498404'
+    // }
+    requestUploadFile(formData)
+
     if (currentFile && currentType) {
-      currentFile.base64 = await getBase64(currentFile)
-      if (currentFile.base64) {
-        const params = {
-          file: currentFile.base64.slice(currentFile.base64.indexOf(',') + 1),
-          idType: currentType,
-          idNo: dataInfo?.idNo ?? '10432498404'
-        }
-        requestUploadFile(params)
-      }
+    //   // currentFile.base64 = await getBase64(currentFile)
+    //   if (currentFile) {
+    //     formData.append("file", info?.originFileObj);
+    //     formData.append("idType", currentType);
+    //     formData.append("idNo", dataInfo?.idNo ?? '10432498404');
+    //
+    //     // const params = {
+    //     //   file: currentFile.base64.slice(currentFile.base64.indexOf(',') + 1),
+    //     //   idType: currentType,
+    //     //   idNo: dataInfo?.idNo ?? '10432498404'
+    //     // }
+    //     requestUploadFile(formData)
+    //   }
     } else {
       if (!currentType) {
         NotificationWarning('NOOOOOO')
@@ -110,7 +129,8 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
               <Upload
                 showUploadList={false}
                 beforeUpload={onBeforeUploadFile}
-                // onChange={onUploadFile}
+                onChange={onUploadFile}
+                customRequest={() => { return false}}
                 multiple={false}
               >
                 <Button type='default' size={'large'} onClick={() => {}}>
@@ -122,7 +142,7 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
               <Button
                 type='default'
                 size={'large'}
-                onClick={() => onUploadFile()}
+                // onClick={() => onUploadFile()}
                 loading={responseUploadFile?.loading}
               >
                 Upload

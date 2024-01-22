@@ -18,6 +18,9 @@ export const apiUploadFileAsync = async (params: any, setResponse: any) => {
 
   try {
     const response = await axiosInstance.post('/api/upload-file', params, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
       cancelToken: source.token
     })
 
