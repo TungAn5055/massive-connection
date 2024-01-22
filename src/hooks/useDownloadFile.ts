@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import { cancelApiCustomerSearch } from '@/store/thunks/customer.thunk'
-import { apiUploadFileAsync } from '@/store/thunks/apiUploadFile.thunk'
+import { apiDownloadFileAsync } from '@/store/thunks/apiDownloadFile.thunk'
 
 const useDownloadFile = () => {
-  const [responseUploadFile, setResponseUploadFile] = useState(<any>{
+  const [responseDownloadFile, setResponseDownloadFile] = useState(<any>{
     data: [],
     message: '',
     loading: false,
     state: ''
   })
 
-  const requestUploadFile = function (params: any) {
-    apiUploadFileAsync(params, setResponseUploadFile)
+  const requestDownloadFile = function (params: any) {
+    apiDownloadFileAsync(params, setResponseDownloadFile)
   }
 
   // unmount;
@@ -22,7 +22,7 @@ const useDownloadFile = () => {
     }
   }, [])
 
-  return { responseUploadFile, requestUploadFile }
+  return { responseDownloadFile, requestDownloadFile }
 }
 
 export default useDownloadFile

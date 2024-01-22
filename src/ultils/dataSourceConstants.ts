@@ -37,7 +37,7 @@ export const NO_DATA = 'No data'
 export const SOURCE_UPLOAD_FILE = [
   {
     idx: 1,
-    type: null,
+    type: 1,
     title_type: 'Contrato',
     mandatory: true,
     link_file: null,
@@ -45,7 +45,7 @@ export const SOURCE_UPLOAD_FILE = [
   },
   {
     idx: 2,
-    type: null,
+    type: 2,
     title_type: 'Ficha RUC',
     mandatory: true,
     link_file: null,
@@ -53,7 +53,7 @@ export const SOURCE_UPLOAD_FILE = [
   },
   {
     idx: 3,
-    type: null,
+    type: 3,
     title_type: 'Vigencia de Poder',
     mandatory: true,
     link_file: null,
@@ -61,7 +61,7 @@ export const SOURCE_UPLOAD_FILE = [
   },
   {
     idx: 4,
-    type: null,
+    type: 4,
     title_type: 'DNI de Representante Lega',
     mandatory: true,
     link_file: null,
@@ -69,7 +69,7 @@ export const SOURCE_UPLOAD_FILE = [
   },
   {
     idx: 5,
-    type: null,
+    type: 5,
     title_type: 'Autorización para solicitudes por niveles',
     mandatory: false,
     link_file: null,
@@ -77,7 +77,7 @@ export const SOURCE_UPLOAD_FILE = [
   },
   {
     idx: 6,
-    type: null,
+    type: 6,
     title_type: 'Otros',
     mandatory: false,
     link_file: null,

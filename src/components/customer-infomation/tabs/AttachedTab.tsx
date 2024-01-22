@@ -6,67 +6,58 @@ import { LoadingRegion } from '@/components/ui-source/loading'
 import { useEffect, useState } from 'react'
 import { CheckCircleFilled, DropboxSquareFilled, ExclamationCircleFilled } from '@ant-design/icons'
 import { NotificationWarning } from '@/components/common/Notification'
-// import { getBase64 } from '@/ultils/helper'
 import useUploadFile from '@/hooks/useUploadFile'
 import { SOURCE_UPLOAD_FILE } from '@/ultils/dataSourceConstants'
+import useDownloadFile from '@/hooks/useDownloadFile'
+const { Option } = Select
 
 const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
+  const [listSourceType, setListSourceType] = useState<any>(SOURCE_TYPE_OF_DOCUMENT)
   const [listDataFiles, setListDataFiles] = useState<any>(SOURCE_UPLOAD_FILE)
   const [currentFile, setCurrentFile] = useState<any>('')
   const [currentType, setCurrentType] = useState<any>('')
 
   const { responseUploadFile, requestUploadFile } = useUploadFile()
-
+  const { responseDownloadFile, requestDownloadFile } = useDownloadFile()
+  console.log('responseUploadFile+++', responseUploadFile)
   const tableLoading = {
     spinning: false,
     indicator: <LoadingRegion />
   }
 
-  const onBeforeUploadFile = async (file) => {
-    if (file) {
-      console.log('file+++123', file)
-      setCurrentFile(file)
+  const onChangeFile = async (file) => {
+    if (file?.file?.originFileObj) {
+      setCurrentFile(file?.file?.originFileObj)
     }
   }
-  const onUploadFile = async (info) => {
-    console.log('info+++', info)
-    // console.log('currentFile+++', currentFile)
-    // console.log('dataInfo+++', dataInfo)
-    setListDataFiles([])
-
-    let formData = new FormData();
-
-    formData.append("file", info?.file?.originFileObj);
-    formData.append("fileType", currentType);
-    formData.append("idNo", dataInfo?.idNo ?? '10432498404');
-
-    // const params = {
-    //   file: currentFile.base64.slice(currentFile.base64.indexOf(',') + 1),
-    //   idType: currentType,
-    //   idNo: dataInfo?.idNo ?? '10432498404'
-    // }
-    requestUploadFile(formData)
-
+  const onUploadFile = async () => {
+    const formData = new FormData()
     if (currentFile && currentType) {
-    //   // currentFile.base64 = await getBase64(currentFile)
-    //   if (currentFile) {
-    //     formData.append("file", info?.originFileObj);
-    //     formData.append("idType", currentType);
-    //     formData.append("idNo", dataInfo?.idNo ?? '10432498404');
-    //
-    //     // const params = {
-    //     //   file: currentFile.base64.slice(currentFile.base64.indexOf(',') + 1),
-    //     //   idType: currentType,
-    //     //   idNo: dataInfo?.idNo ?? '10432498404'
-    //     // }
-    //     requestUploadFile(formData)
-    //   }
+      formData.append('file', currentFile)
+      formData.append('fileType', currentType)
+      formData.append('idNo', dataInfo?.idNo ?? '10432498404')
+
+      requestUploadFile(formData)
     } else {
       if (!currentType) {
-        NotificationWarning('NOOOOOO')
+        NotificationWarning('Please choice Type of document')
       } else if (currentFile) {
         NotificationWarning('Not have file')
       }
+    }
+  }
+
+  const downloadFile = async (item) => {
+    console.log('responseDownloadFile++++', responseDownloadFile)
+    console.log('dataInfo++++', dataInfo)
+    if (item?.link_file && item?.type) {
+      requestDownloadFile({
+        fileName: item?.link_file,
+        fileType: item?.type,
+        idNo: dataInfo?.idNo ?? '10432498404'
+      })
+    } else {
+      NotificationWarning('File not found')
     }
   }
 
@@ -76,13 +67,44 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
 
   useEffect(() => {
     console.log('responseUploadFile+++', responseUploadFile)
-    if (responseUploadFile?.data?.length > 0 && responseUploadFile?.state === STATE?.SUCCESS) {
-      console.log(responseUploadFile?.data)
+    if (responseUploadFile?.data?.idType > 0 && responseUploadFile?.state === STATE?.SUCCESS) {
+      setListDataFiles((prev) => {
+        prev = prev?.map((it) => {
+          if (it?.type == responseUploadFile?.data?.idType) {
+            return { ...it, status: true, link_file: responseUploadFile?.data?.fileName }
+          } else {
+            return it
+          }
+        })
+
+        return prev
+      })
+      setCurrentType('')
+      setListSourceType((prev) => {
+        prev = prev?.map((it) => {
+          if (it?.value == responseUploadFile?.data?.idType) {
+            return { ...it, disabled: true }
+          } else {
+            return it
+          }
+        })
+
+        return prev
+      })
     }
   }, [responseUploadFile])
 
+  useEffect(() => {
+    console.log('responseDownloadFile+++', responseDownloadFile)
+    if (responseDownloadFile?.data?.idType > 0 && responseDownloadFile?.state === STATE?.SUCCESS) {
+    }
+  }, [responseDownloadFile])
+
   return (
     <>
+      {/*<div className='full-page-loading'>*/}
+      {/*  <LoadingRegion />*/}
+      {/*</div>*/}
       <Form className={'form-search-customer'} name='advanced_search'>
         <fieldset>
           <legend>
@@ -107,8 +129,16 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
                       style={{
                         width: '90%'
                       }}
-                      options={SOURCE_TYPE_OF_DOCUMENT}
-                    />
+                      // options={listSourceType}
+                    >
+                      {listSourceType.map((item, itemIndex) => {
+                        return (
+                          <Option key={itemIndex} value={item.value} disabled={item?.disabled}>
+                            {item.label}
+                          </Option>
+                        )
+                      })}
+                    </Select>
                   </Col>
                 </Row>
               </Form.Item>
@@ -128,12 +158,14 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
             <Col span={3}>
               <Upload
                 showUploadList={false}
-                beforeUpload={onBeforeUploadFile}
-                onChange={onUploadFile}
-                customRequest={() => { return false}}
+                onChange={onChangeFile}
+                customRequest={() => {
+                  return false
+                }}
                 multiple={false}
+                accept={'.pdf'}
               >
-                <Button type='default' size={'large'} onClick={() => {}}>
+                <Button type='default' size={'large'} onClick={() => {}} loading={responseUploadFile?.loading}>
                   Seleccionar archivo
                 </Button>
               </Upload>
@@ -142,7 +174,7 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
               <Button
                 type='default'
                 size={'large'}
-                // onClick={() => onUploadFile()}
+                onClick={() => onUploadFile()}
                 loading={responseUploadFile?.loading}
               >
                 Upload
@@ -151,7 +183,6 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
           </Row>
         </fieldset>
       </Form>
-
       <Form className={'form-search-customer'} name='advanced_search'>
         <fieldset>
           <legend style={{ marginBottom: '0 !important' }}>
@@ -185,9 +216,9 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
               title={'Download document'}
               dataIndex='link_file'
               key='link_file'
-              render={(val) => {
+              render={(val, record) => {
                 if (val) {
-                  return <DropboxSquareFilled style={{ fontSize: 30 }} />
+                  return <DropboxSquareFilled style={{ fontSize: 30 }} onClick={() => downloadFile(record)} />
                 } else {
                   return <></>
                 }
@@ -208,7 +239,6 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
           </Table>
         </fieldset>
       </Form>
-
       <div className={'display-flex-center button-continue'}>
         <Button type='default' size={'large'} onClick={onNextStep}>
           Continuar

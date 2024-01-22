@@ -39,10 +39,10 @@ export const NOTIFICATION = {
 export const SOURCE_METHOD_DE_PAGO = [{ label: 'Pago normal', value: '01' }]
 
 export const SOURCE_TYPE_OF_DOCUMENT = [
-  { label: 'Contrato', value: 1 },
-  { label: 'Ficha RUC', value: 2 },
-  { label: 'Vigencia de Poder', value: 3 },
-  { label: 'DNI de Representante Lega', value: 4 },
-  { label: 'Autorización para solicitudes por niveles', value: 5 },
-  { label: 'Otros', value: 6 }
+  { label: 'Contrato', value: 1, disabled: false },
+  { label: 'Ficha RUC', value: 2, disabled: false },
+  { label: 'Vigencia de Poder', value: 3, disabled: false },
+  { label: 'DNI de Representante Lega', value: 4, disabled: false },
+  { label: 'Autorización para solicitudes por niveles', value: 5, disabled: false },
+  { label: 'Otros', value: 6, disabled: false }
 ]
