@@ -100,7 +100,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
               key='3'
               forceRender={true}
             >
-              <AttachedTab dataInfo={dataInfo} setDataInfo={setDataInfo} />
+              <AttachedTab dataInfo={dataInfo} dataInfoGroup={dataInfoGroup} setDataInfo={setDataInfo}/>
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={

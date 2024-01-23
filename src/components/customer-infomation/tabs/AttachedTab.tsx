@@ -9,6 +9,8 @@ import { NotificationWarning } from '@/components/common/Notification'
 import useUploadFile from '@/hooks/useUploadFile'
 import { SOURCE_UPLOAD_FILE } from '@/ultils/dataSourceConstants'
 import useDownloadFile from '@/hooks/useDownloadFile'
+import useSaveContract from "@/hooks/useSaveContract.ts";
+import useSaveGroup from "@/hooks/useSaveGroup.ts";
 const { Option } = Select
 
 const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
@@ -19,6 +21,8 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
 
   const { responseUploadFile, requestUploadFile } = useUploadFile()
   const { responseDownloadFile, requestDownloadFile } = useDownloadFile()
+  const { responseSaveContract, requestSaveContract } = useSaveContract()
+  const { responseSaveGroup, requestSaveGroup } = useSaveGroup()
   const tableLoading = {
     spinning: false,
     indicator: <LoadingRegion />
@@ -58,9 +62,24 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
     }
   }
 
-  const onNextStep = () => {
-    setActiveTab((prev) => (parseInt(prev) + 1).toString())
+  const onSaveDataContract = () => {
+    requestSaveContract(dataInfo)
+    requestSaveGroup(dataInfo)
+    setActiveTab(3);
   }
+
+  const isdDisableButtonNext = useMemo(() => {
+    let flag = false;
+    if(listDataFiles?.length > 0) {
+      listDataFiles.filter((it) => it?.mandatory)?.forEach((it) => {
+        if(!it?.link_file) {
+          flag = true
+        }
+      })
+    }
+
+    return flag;
+  }, [listDataFiles])
 
   useEffect(() => {
     if (responseUploadFile?.data?.fileType && responseUploadFile?.state === STATE?.SUCCESS) {
@@ -97,20 +116,11 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
     }
   }, [responseDownloadFile])
 
-  const isdDisableButtonNext = useMemo(() => {
-    let flag = false;
-    if(listDataFiles?.length > 0) {
-      listDataFiles.filter((it) => it?.mandatory)?.forEach((it) => {
-        if(!it?.link_file) {
-          flag = true
-        }
-      })
-
+  useEffect(() => {
+    console.log('responseSaveContract+++', responseSaveContract)
+    if (responseSaveContract?.data  && responseSaveContract?.state === STATE?.SUCCESS) {
     }
-
-    return flag;
-
-  }, [listDataFiles])
+  }, [responseSaveContract, responseSaveGroup])
 
   return (
     <>
@@ -255,7 +265,7 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
           <div className={'message-error'}>Por Favor subir todos los documentos sustentatorios del Client</div>
       )}
       <div className={'display-flex-center button-continue'}>
-        <Button type='default' size={'large'} onClick={onNextStep} disabled={isdDisableButtonNext}>
+        <Button type='default' size={'large'} onClick={onSaveDataContract} disabled={isdDisableButtonNext}>
           Registrar solicitud
         </Button>
       </div>
