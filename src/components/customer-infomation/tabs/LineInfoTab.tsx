@@ -11,7 +11,7 @@ import { TextAutoCompleteReason } from '@/components/customer-infomation/form-li
 import { TextAutoCompleteBranch } from '@/components/customer-infomation/form-line/TextAutoCompleteBranch'
 import { colorRowTotal, formatPrice } from '@/ultils/helper.ts'
 
-const LineInfoTab = ({ setActiveTab, setDataInfo }: any) => {
+const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
   const [isTotal, setIsTotal] = useState<any>('')
   const [isChangeGroup, setIsChangeGroup] = useState<boolean>(false)
   const [isDisabledTotal, setIsDisabledTotal] = useState<boolean>(true)
@@ -26,7 +26,6 @@ const LineInfoTab = ({ setActiveTab, setDataInfo }: any) => {
     }
   ])
 
-  console.log('listGroups++++', listGroups)
   const [isChanged, setIsChanged] = useState(false)
 
   const tableLoading = {
@@ -98,27 +97,47 @@ const LineInfoTab = ({ setActiveTab, setDataInfo }: any) => {
     res = dataGroupFull?.map((item, index) => {
       return {
         ...item,
+        index: index,
         title: `Group ${index + 1}`,
         total_price: item?.quantity * item?.unit_price,
         is_line_active: index === idxIsLine ? true : false,
         is_total: false
       }
     })
+    let total = 0
     let quantity = 0
     let unitPrice = 0
     let totalPrice = 0
 
     res?.forEach((item) => {
+      total += 1;
       quantity += parseInt(item?.quantity)
       unitPrice += parseFloat(item?.unit_price)
       totalPrice += parseFloat(item?.total_price)
     })
 
-    itemTotal = { ...itemTotal, quantity: quantity, unit_price: unitPrice, total_price: totalPrice }
+    itemTotal = { ...itemTotal, quantity: quantity, unit_price: unitPrice, total_price: totalPrice, total_items: total, is_total: true }
 
-    res.push(itemTotal)
+    if(total > 0){
+      res.push(itemTotal)
+      let itemActive = res?.find((it) => it?.is_line_active);
+      setDataInfo({contractValue: total, quantityOfPlans: itemActive?.index + 1 })
+    }
     return res
   }, [listGroups, isChangeGroup, idxIsLine])
+
+  const isdDisableButtonNext = useMemo(() => {
+    let flag = true;
+    if(isTotal && dataTable?.length > 0) {
+      let itemTotal = dataTable?.find((it) => it?.is_total)
+      if(itemTotal?.quantity == isTotal) {
+        flag = false
+      }
+    }
+
+    return flag;
+
+  }, [isTotal, dataTable])
 
   return (
     <>
@@ -164,6 +183,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo }: any) => {
                         setValidateAll={setValidateAll}
                         setIsChangeGroup={setIsChangeGroup}
                         isDisabled={isDisabledTotal}
+                        setDataInfoGroup={setDataInfoGroup}
                       />
                     </Col>
                     <Col span={10}>
@@ -315,7 +335,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo }: any) => {
       </Form>
 
       <div className={'display-flex-center button-continue'}>
-        <Button type='default' size={'large'} onClick={onNextStep}>
+        <Button type='default' size={'large'} onClick={onNextStep} disabled={isdDisableButtonNext}>
           Continuar
         </Button>
       </div>

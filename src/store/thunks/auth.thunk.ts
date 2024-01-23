@@ -4,7 +4,6 @@ import * as actions from '@/store/actions/auth.action.ts'
 export const loginWithHeader = () => {
   return (dispatch) => {
     dispatch(actions.loginWithHeader())
-    console.log('Start call authen++++')
     apis
       .login()
       .then((res: any) => {

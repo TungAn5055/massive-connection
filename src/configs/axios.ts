@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 30000
 })
-console.log('baseURL+++', import.meta.env.VITE_BASE_URL)
+
 axiosInstance.defaults.withCredentials = true
 
 axiosInstance.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'

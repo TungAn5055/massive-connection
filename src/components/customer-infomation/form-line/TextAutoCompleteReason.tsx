@@ -46,12 +46,12 @@ export const TextAutoCompleteReason = ({
     setIsChangeGroup((prev) => !prev)
   }
 
-  const onSelect = (data) => {
+  const onSelect = (data, list) => {
     if (data) {
       setValue(data)
       setErrorValue({ status: false, message: null })
       setData((prev) => {
-        prev[index] = { ...item, reason: data }
+        prev[index] = { ...item, reason: data, reasonCode: list?.code }
         return prev
       })
       setIsChangeGroup((prev) => !prev)

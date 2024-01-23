@@ -3,7 +3,7 @@ import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA, SOURCE_TYPE_OF_DOCUMENT, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
-import { useEffect, useState } from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import { CheckCircleFilled, DropboxSquareFilled, ExclamationCircleFilled } from '@ant-design/icons'
 import { NotificationWarning } from '@/components/common/Notification'
 import useUploadFile from '@/hooks/useUploadFile'
@@ -19,7 +19,6 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
 
   const { responseUploadFile, requestUploadFile } = useUploadFile()
   const { responseDownloadFile, requestDownloadFile } = useDownloadFile()
-  console.log('responseUploadFile+++', responseUploadFile)
   const tableLoading = {
     spinning: false,
     indicator: <LoadingRegion />
@@ -48,8 +47,6 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
   }
 
   const downloadFile = async (item) => {
-    console.log('responseDownloadFile++++', responseDownloadFile)
-    console.log('dataInfo++++', dataInfo)
     if (item?.link_file && item?.type) {
       requestDownloadFile({
         fileName: item?.link_file,
@@ -66,11 +63,10 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
   }
 
   useEffect(() => {
-    console.log('responseUploadFile+++', responseUploadFile)
-    if (responseUploadFile?.data?.idType > 0 && responseUploadFile?.state === STATE?.SUCCESS) {
+    if (responseUploadFile?.data?.fileType && responseUploadFile?.state === STATE?.SUCCESS) {
       setListDataFiles((prev) => {
         prev = prev?.map((it) => {
-          if (it?.type == responseUploadFile?.data?.idType) {
+          if (it?.type == responseUploadFile?.data?.fileType) {
             return { ...it, status: true, link_file: responseUploadFile?.data?.fileName }
           } else {
             return it
@@ -80,9 +76,10 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
         return prev
       })
       setCurrentType('')
+      setCurrentFile('')
       setListSourceType((prev) => {
         prev = prev?.map((it) => {
-          if (it?.value == responseUploadFile?.data?.idType) {
+          if (it?.value == responseUploadFile?.data?.fileType) {
             return { ...it, disabled: true }
           } else {
             return it
@@ -96,9 +93,24 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
 
   useEffect(() => {
     console.log('responseDownloadFile+++', responseDownloadFile)
-    if (responseDownloadFile?.data?.idType > 0 && responseDownloadFile?.state === STATE?.SUCCESS) {
+    if (responseDownloadFile?.data?.idType  && responseDownloadFile?.state === STATE?.SUCCESS) {
     }
   }, [responseDownloadFile])
+
+  const isdDisableButtonNext = useMemo(() => {
+    let flag = false;
+    if(listDataFiles?.length > 0) {
+      listDataFiles.filter((it) => it?.mandatory)?.forEach((it) => {
+        if(!it?.link_file) {
+          flag = true
+        }
+      })
+
+    }
+
+    return flag;
+
+  }, [listDataFiles])
 
   return (
     <>
@@ -239,9 +251,12 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
           </Table>
         </fieldset>
       </Form>
+      {isdDisableButtonNext && (
+          <div className={'message-error'}>Por Favor subir todos los documentos sustentatorios del Client</div>
+      )}
       <div className={'display-flex-center button-continue'}>
-        <Button type='default' size={'large'} onClick={onNextStep}>
-          Continuar
+        <Button type='default' size={'large'} onClick={onNextStep} disabled={isdDisableButtonNext}>
+          Registrar solicitud
         </Button>
       </div>
     </>

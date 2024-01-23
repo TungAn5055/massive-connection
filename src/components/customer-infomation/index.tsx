@@ -14,10 +14,17 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
 
   const [_dataInfo, _setDataInfo] = useState({})
   const dataInfo = _dataInfo
-
   const setDataInfo = (data: any) => {
     Object.assign(dataInfo, { ...data })
     _setDataInfo({ ...dataInfo })
+  }
+
+  const [_dataInfoGroup, _setDataInfoGroup] = useState({})
+  const dataInfoGroup = _dataInfoGroup
+
+  const setDataInfoGroup = (data: any) => {
+    Object.assign(dataInfoGroup, { ...data })
+    _setDataInfoGroup({ ...dataInfoGroup })
   }
 
   const onChangeTabs = (activeKey: any) => {
@@ -79,6 +86,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
                 key={'line'}
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
+                setDataInfoGroup={setDataInfoGroup}
                 dataCustomer={dataCustomers}
                 setActiveTab={setActiveTab}
               />

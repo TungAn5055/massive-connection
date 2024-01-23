@@ -37,10 +37,10 @@ export const TextAutoCompleteBranch = ({
     }
   }
 
-  const onChange = (data) => {
+  const onChange = (data, list) => {
     setValue(data)
     setData((prev) => {
-      prev[index] = { ...item, branch: data }
+      prev[index] = { ...item, branch: data, shopCode: list?.code }
       return prev
     })
     setIsChangeGroup((prev) => !prev)

@@ -12,7 +12,7 @@ export const TextAutoCompletePlan = ({
   item,
   setData = () => {},
   setValidateAll = () => {},
-  setIsChangeGroup = () => {}
+  setIsChangeGroup = () => {},
 }: any) => {
   const [value, setValue] = useState('Basico19_9C')
   // Basico19_9C
@@ -48,7 +48,7 @@ export const TextAutoCompletePlan = ({
       setValue(data)
       setErrorValue({ status: false, message: null })
       setData((prev) => {
-        prev[index] = { ...item, plan: data, offerId : list?.offerId }
+        prev[index] = { ...item, plan: data, offerId : list?.offerId, productCode: list?.productCode  }
         return prev
       })
       setIsChangeGroup((prev) => !prev)
@@ -74,7 +74,6 @@ export const TextAutoCompletePlan = ({
   }, [responseStaffCode])
 
   useEffect(() => {
-    console.log('responseGetPrice', responseGetPrice)
     if (responseGetPrice?.data && responseGetPrice?.state === STATE?.SUCCESS) {
       setData((prev) => {
         prev[index] = { ...item, unit_price : responseGetPrice?.data }
