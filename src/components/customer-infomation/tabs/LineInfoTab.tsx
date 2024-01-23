@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import { Button, Col, Form, Row, Table, Input, Radio, Space } from 'antd'
 import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
@@ -10,6 +10,7 @@ import { TextAutoCompletePlan } from '@/components/customer-infomation/form-line
 import { TextAutoCompleteReason } from '@/components/customer-infomation/form-line/TextAutoCompleteReason'
 import { TextAutoCompleteBranch } from '@/components/customer-infomation/form-line/TextAutoCompleteBranch'
 import { colorRowTotal, formatPrice } from '@/ultils/helper.ts'
+import dayjs from "dayjs";
 
 const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
   const [isTotal, setIsTotal] = useState<any>('')
@@ -139,6 +140,32 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
 
   }, [isTotal, dataTable])
 
+  useEffect(() => {
+    if(dataTable?.length > 0) {
+      let itemSave: any = [];
+
+      dataTable.filter((it) => !it?.is_total).forEach((it) => {
+        let currentDate = dayjs().format('YYYY-MM-DD');;
+        itemSave.push({
+          "createTime": currentDate,
+          "createUser": "any",
+          "groupName":  it?.title,
+          "lineActivation": it?.is_line_active,
+          "offerId": it?.offerId,
+          "productCode": it?.productCode,
+          "quantityOfLines":it?.quantity,
+          "reasonCode": it?.reasonCode,
+          "serviceTypeId": 0,
+          "shopCode": it?.shopCode,
+          "status": true,
+          "unitPrice": it?.unit_price,
+        })
+      })
+      setDataInfoGroup(itemSave)
+    }
+
+  }, [dataTable])
+
   return (
     <>
       <Form className={'form-search-customer'} name='advanced_search'>
@@ -183,7 +210,6 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
                         setValidateAll={setValidateAll}
                         setIsChangeGroup={setIsChangeGroup}
                         isDisabled={isDisabledTotal}
-                        setDataInfoGroup={setDataInfoGroup}
                       />
                     </Col>
                     <Col span={10}>

@@ -17,7 +17,7 @@ export const apiSaveGroupAsync = async (params: any, setResponse: any) => {
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.post('/api/save-contract', params, {
+    const response = await axiosInstance.post('/api/save-group', params, {
       cancelToken: source.token
     })
 

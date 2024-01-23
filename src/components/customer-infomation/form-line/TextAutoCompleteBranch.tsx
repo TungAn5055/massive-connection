@@ -14,7 +14,7 @@ export const TextAutoCompleteBranch = ({
   setValidateAll = () => {},
   setIsChangeGroup = () => {}
 }: any) => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState('BR_A')
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
@@ -33,7 +33,7 @@ export const TextAutoCompleteBranch = ({
   })
   const onSearch = (val) => {
     if (val?.length >= 1) {
-      requestGetStaffCode(`/api/get-reason?code=${val}`)
+      requestGetStaffCode(`/api/get-shop?code=${val}`)
     }
   }
 
@@ -62,8 +62,8 @@ export const TextAutoCompleteBranch = ({
     if (responseStaffCode?.data?.length > 0 && responseStaffCode?.state === STATE?.SUCCESS) {
       setOptions(
         responseStaffCode?.data.map((it) => ({
-          value: it?.name,
-          code: it?.code
+          value: it,
+          code: it
         }))
       )
     } else {

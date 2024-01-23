@@ -3,7 +3,7 @@ import { Layout, Spin } from 'antd'
 import { useLocation } from 'react-router-dom'
 const { Content } = Layout
 import CustomMenu from '@/components/common/Menu.tsx'
-import usePageTitle from '@/hooks/ usePageTitle'
+import usePageTitle from '@/hooks/usePageTitle.ts'
 // import LoadingScreen from '@components/common/LoadingScreen'
 
 const Layouts = ({ children }) => {

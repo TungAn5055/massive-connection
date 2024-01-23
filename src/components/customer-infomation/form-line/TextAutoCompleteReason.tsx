@@ -14,7 +14,7 @@ export const TextAutoCompleteReason = ({
   setValidateAll = () => {},
   setIsChangeGroup = () => {}
 }: any) => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState('Basico19_9C')
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
@@ -33,7 +33,7 @@ export const TextAutoCompleteReason = ({
   })
   const onSearch = (val) => {
     if (val?.length >= 1) {
-      requestGetStaffCode(`/api/get-shop?code=${val}`)
+      requestGetStaffCode(`/api/get-reason?code=${val}`)
     }
   }
 

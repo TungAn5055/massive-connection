@@ -32,7 +32,7 @@ export const FormInputNumber = ({
   const onChange = (e) => {
     const { value: inputValue } = e.target
     const reg = /^\d*(\.\d*)?$/
-    if (reg.test(inputValue)) {
+    if (reg.test(inputValue) && !isNaN(inputValue)) {
       let val  = inputValue
       if(max && inputValue > max) {
         val = max

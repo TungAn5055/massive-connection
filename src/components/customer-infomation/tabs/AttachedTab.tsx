@@ -13,7 +13,7 @@ import useSaveContract from "@/hooks/useSaveContract.ts";
 import useSaveGroup from "@/hooks/useSaveGroup.ts";
 const { Option } = Select
 
-const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
+const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: any) => {
   const [listSourceType, setListSourceType] = useState<any>(SOURCE_TYPE_OF_DOCUMENT)
   const [listDataFiles, setListDataFiles] = useState<any>(SOURCE_UPLOAD_FILE)
   const [currentFile, setCurrentFile] = useState<any>('')
@@ -38,7 +38,7 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
     if (currentFile && currentType) {
       formData.append('file', currentFile)
       formData.append('fileType', currentType)
-      formData.append('idNo', dataInfo?.idNo ?? '10432498404')
+      formData.append('idNo', dataInfo?.idNo)
 
       requestUploadFile(formData)
     } else {
@@ -64,8 +64,6 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
 
   const onSaveDataContract = () => {
     requestSaveContract(dataInfo)
-    requestSaveGroup(dataInfo)
-    setActiveTab(3);
   }
 
   const isdDisableButtonNext = useMemo(() => {
@@ -111,22 +109,30 @@ const AttachedTab = ({ dataInfo, setActiveTab }: any) => {
   }, [responseUploadFile])
 
   useEffect(() => {
-    console.log('responseDownloadFile+++', responseDownloadFile)
     if (responseDownloadFile?.data?.idType  && responseDownloadFile?.state === STATE?.SUCCESS) {
     }
   }, [responseDownloadFile])
 
   useEffect(() => {
-    console.log('responseSaveContract+++', responseSaveContract)
-    if (responseSaveContract?.data  && responseSaveContract?.state === STATE?.SUCCESS) {
+    if (responseSaveContract?.data  && responseSaveContract?.state === STATE?.SUCCESS && dataInfoGroup?.length > 0) {
+      let data = dataInfoGroup.map((it) => ({
+        ...it,
+        contractNo: responseSaveContract?.data
+      }))
+      setContractNo(responseSaveContract?.data)
+      requestSaveGroup(data)
     }
-  }, [responseSaveContract, responseSaveGroup])
+  }, [responseSaveContract])
+
+  useEffect(() => {
+    console.log('responseSaveContract+++', responseSaveGroup)
+    if (responseSaveGroup?.data && responseSaveGroup?.state === STATE?.SUCCESS) {
+      setActiveTab('4');
+    }
+  }, [responseSaveGroup ])
 
   return (
     <>
-      {/*<div className='full-page-loading'>*/}
-      {/*  <LoadingRegion />*/}
-      {/*</div>*/}
       <Form className={'form-search-customer'} name='advanced_search'>
         <fieldset>
           <legend>

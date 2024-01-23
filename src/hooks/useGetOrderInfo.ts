@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {apiSaveContactAsync, cancelApiSaveContact} from "@/store/thunks/apiSaveContact.thunk.ts";
+import { cancelApiSaveContact } from "@/store/thunks/apiSaveContact.thunk.ts";
 import {apiGetOrderInfoAsync} from "@/store/thunks/getOrderInfo.thunk.ts";
 
 const useGetOrderInfo = () => {

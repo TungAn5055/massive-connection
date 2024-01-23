@@ -10,7 +10,7 @@ import { FolderOpenFilled } from '@ant-design/icons'
 
 const CustomerInformation = ({ dataCustomers = {} }: any) => {
   const [activeTab, setActiveTab] = useState('1')
-  // console.log('dataCustomers++++', dataCustomers)
+  const [contractNo, setContractNo] = useState(null)
 
   const [_dataInfo, _setDataInfo] = useState({})
   const dataInfo = _dataInfo
@@ -19,13 +19,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
     _setDataInfo({ ...dataInfo })
   }
 
-  const [_dataInfoGroup, _setDataInfoGroup] = useState({})
-  const dataInfoGroup = _dataInfoGroup
-
-  const setDataInfoGroup = (data: any) => {
-    Object.assign(dataInfoGroup, { ...data })
-    _setDataInfoGroup({ ...dataInfoGroup })
-  }
+  const [dataInfoGroup, setDataInfoGroup] = useState({})
 
   const onChangeTabs = (activeKey: any) => {
     setActiveTab(activeKey)
@@ -100,7 +94,12 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
               key='3'
               forceRender={true}
             >
-              <AttachedTab dataInfo={dataInfo} dataInfoGroup={dataInfoGroup} setDataInfo={setDataInfo}/>
+              <AttachedTab dataInfo={dataInfo}
+                           dataInfoGroup={dataInfoGroup}
+                           setDataInfo={setDataInfo}
+                           setContractNo={setContractNo}
+                           setActiveTab={setActiveTab}
+              />
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={
@@ -111,7 +110,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
               key='4'
               forceRender={true}
             >
-              <SuccessfulTab key={'successfu'} />
+              <SuccessfulTab key={'successful'} contractNo={contractNo}/>
             </Tabs.TabPane>
           </Tabs>
         </Row>

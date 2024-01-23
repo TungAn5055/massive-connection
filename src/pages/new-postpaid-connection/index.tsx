@@ -18,8 +18,8 @@ const NewPostpaidConnection: React.FC = () => {
   }
 
   const options = [
-    { value: 'RUC', label: 'RUC' },
-    { value: '3', label: 'DNI' }
+    { value: '3', label: 'RUC' },
+    { value: '1', label: 'DNI' }
   ]
 
   const handleChangeType = (e: any) => {
@@ -52,14 +52,6 @@ const NewPostpaidConnection: React.FC = () => {
       return true
     }
   }, [valueIdNo, valueIdType])
-
-  useEffect(() => {
-    console.log('start')
-    // requestCustomerSearch({
-    //   idNo: '10432498404',
-    //   idType: 3
-    // })
-  }, [])
 
   useEffect(() => {
     if (responseSearchCustomer?.data?.idNo) {
