@@ -296,7 +296,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
                 <span className={'legend-color'}>Payment Information</span>
               </legend>
               <Table
-                rowKey={(record: any) => record?.id}
+                rowKey={(record: any) => record?.title}
                 dataSource={dataTable}
                 pagination={false}
                 loading={tableLoading}

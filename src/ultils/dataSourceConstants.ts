@@ -34,6 +34,8 @@ export const FORMAT_DATE = {
 
 export const NO_DATA = 'No data'
 
+export const PageSizeOptionsInTableForMaterial = [10, 20, 50, 100, 500]
+
 export const SOURCE_UPLOAD_FILE = [
   {
     idx: 1,

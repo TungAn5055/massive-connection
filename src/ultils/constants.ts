@@ -37,6 +37,13 @@ export const NOTIFICATION = {
 }
 
 export const SOURCE_METHOD_DE_PAGO = [{ label: 'Pago normal', value: '01' }]
+export const SOURCE_STATUS_POST2 = [
+  { label: 'New', value: 1 },
+  { label: 'Uploaded', value: 2 },
+  { label: 'Delivered', value: 3 },
+  { label: 'Connection', value: 4 },
+  { label: 'Closed', value: 5 }
+]
 
 export const SOURCE_TYPE_OF_DOCUMENT = [
   { label: 'Contrato', value: 1, disabled: false },
