@@ -21,9 +21,9 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
 
   const [dataInfoGroup, setDataInfoGroup] = useState({})
 
-  const onChangeTabs = (activeKey: any) => {
-    setActiveTab(activeKey)
-    // return false
+  const onChangeTabs = () => {
+    // setActiveTab(activeKey)
+    return false
   }
 
   useEffect(() => {
@@ -94,11 +94,12 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
               key='3'
               forceRender={true}
             >
-              <AttachedTab dataInfo={dataInfo}
-                           dataInfoGroup={dataInfoGroup}
-                           setDataInfo={setDataInfo}
-                           setContractNo={setContractNo}
-                           setActiveTab={setActiveTab}
+              <AttachedTab
+                dataInfo={dataInfo}
+                dataInfoGroup={dataInfoGroup}
+                setDataInfo={setDataInfo}
+                setContractNo={setContractNo}
+                setActiveTab={setActiveTab}
               />
             </Tabs.TabPane>
             <Tabs.TabPane
@@ -110,7 +111,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
               key='4'
               forceRender={true}
             >
-              <SuccessfulTab key={'successful'} contractNo={contractNo}/>
+              <SuccessfulTab key={'successful'} contractNo={contractNo} />
             </Tabs.TabPane>
           </Tabs>
         </Row>

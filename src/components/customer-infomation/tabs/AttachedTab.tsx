@@ -3,14 +3,16 @@ import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA, SOURCE_TYPE_OF_DOCUMENT, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
-import {useEffect, useMemo, useState} from 'react'
-import { CheckCircleFilled, DropboxSquareFilled, ExclamationCircleFilled } from '@ant-design/icons'
+import { useEffect, useMemo, useState } from 'react'
 import { NotificationWarning } from '@/components/common/Notification'
 import useUploadFile from '@/hooks/useUploadFile'
 import { SOURCE_UPLOAD_FILE } from '@/ultils/dataSourceConstants'
 import useDownloadFile from '@/hooks/useDownloadFile'
-import useSaveContract from "@/hooks/useSaveContract.ts";
-import useSaveGroup from "@/hooks/useSaveGroup.ts";
+import useSaveContract from '@/hooks/useSaveContract.ts'
+import useSaveGroup from '@/hooks/useSaveGroup.ts'
+import downloadIcon from '@/assets/images/downloadicon.svg'
+import checkMarkIcon from '@/assets/images/check-mark-circle-icon.svg'
+import circleIcon from '@/assets/images/circle-line-icon.svg'
 const { Option } = Select
 
 const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: any) => {
@@ -67,16 +69,18 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   }
 
   const isdDisableButtonNext = useMemo(() => {
-    let flag = false;
-    if(listDataFiles?.length > 0) {
-      listDataFiles.filter((it) => it?.mandatory)?.forEach((it) => {
-        if(!it?.link_file) {
-          flag = true
-        }
-      })
+    let flag = false
+    if (listDataFiles?.length > 0) {
+      listDataFiles
+        .filter((it) => it?.mandatory)
+        ?.forEach((it) => {
+          if (!it?.link_file) {
+            flag = true
+          }
+        })
     }
 
-    return flag;
+    return flag
   }, [listDataFiles])
 
   useEffect(() => {
@@ -109,13 +113,13 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   }, [responseUploadFile])
 
   useEffect(() => {
-    if (responseDownloadFile?.data?.idType  && responseDownloadFile?.state === STATE?.SUCCESS) {
+    if (responseDownloadFile?.data?.idType && responseDownloadFile?.state === STATE?.SUCCESS) {
     }
   }, [responseDownloadFile])
 
   useEffect(() => {
-    if (responseSaveContract?.data  && responseSaveContract?.state === STATE?.SUCCESS && dataInfoGroup?.length > 0) {
-      let data = dataInfoGroup.map((it) => ({
+    if (responseSaveContract?.data && responseSaveContract?.state === STATE?.SUCCESS && dataInfoGroup?.length > 0) {
+      const data = dataInfoGroup.map((it) => ({
         ...it,
         contractNo: responseSaveContract?.data
       }))
@@ -127,9 +131,9 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   useEffect(() => {
     console.log('responseSaveContract+++', responseSaveGroup)
     if (responseSaveGroup?.data && responseSaveGroup?.state === STATE?.SUCCESS) {
-      setActiveTab('4');
+      setActiveTab('4')
     }
-  }, [responseSaveGroup ])
+  }, [responseSaveGroup])
 
   return (
     <>
@@ -246,7 +250,14 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               key='link_file'
               render={(val, record) => {
                 if (val) {
-                  return <DropboxSquareFilled style={{ fontSize: 30 }} onClick={() => downloadFile(record)} />
+                  return (
+                    <img
+                      src={downloadIcon}
+                      alt='download'
+                      onClick={() => downloadFile(record)}
+                      style={{ height: '30px' }}
+                    />
+                  )
                 } else {
                   return <></>
                 }
@@ -258,9 +269,9 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               key='status'
               render={(val) => {
                 if (val) {
-                  return <CheckCircleFilled style={{ fontSize: 30 }} />
+                  return <img src={checkMarkIcon} alt='download' style={{ height: '30px' }} />
                 } else {
-                  return <ExclamationCircleFilled style={{ fontSize: 30 }} />
+                  return <img src={circleIcon} alt='download' style={{ height: '30px' }} />
                 }
               }}
             />
@@ -268,10 +279,16 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
         </fieldset>
       </Form>
       {isdDisableButtonNext && (
-          <div className={'message-error'}>Por Favor subir todos los documentos sustentatorios del Client</div>
+        <div className={'message-error'}>Por Favor subir todos los documentos sustentatorios del Client</div>
       )}
       <div className={'display-flex-center button-continue'}>
-        <Button type='default' size={'large'} onClick={onSaveDataContract} disabled={isdDisableButtonNext}>
+        <Button
+          type='default'
+          size={'large'}
+          onClick={onSaveDataContract}
+          disabled={isdDisableButtonNext}
+          loading={responseSaveContract?.loading || responseSaveContract?.loading}
+        >
           Registrar solicitud
         </Button>
       </div>

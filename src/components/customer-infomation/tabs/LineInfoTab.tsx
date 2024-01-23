@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Button, Col, Form, Row, Table, Input, Radio, Space } from 'antd'
 import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
@@ -10,7 +10,7 @@ import { TextAutoCompletePlan } from '@/components/customer-infomation/form-line
 import { TextAutoCompleteReason } from '@/components/customer-infomation/form-line/TextAutoCompleteReason'
 import { TextAutoCompleteBranch } from '@/components/customer-infomation/form-line/TextAutoCompleteBranch'
 import { colorRowTotal, formatPrice } from '@/ultils/helper.ts'
-import dayjs from "dayjs";
+import dayjs from 'dayjs'
 
 const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
   const [isTotal, setIsTotal] = useState<any>('')
@@ -65,12 +65,14 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
   const onChangeTotal = (e) => {
     const { value: inputValue } = e.target
     const reg = /^\d*(\.\d*)?$/
-    if (reg.test(inputValue)) {
+    if (inputValue && reg.test(inputValue) && !isNaN(inputValue)) {
       setIsTotal(parseInt(inputValue, 10))
       if (inputValue > 0) {
         setIsDisabledTotal(false)
       }
       setDataInfo({ totalLines: inputValue })
+    } else {
+      setIsTotal('')
     }
   }
 
@@ -111,59 +113,66 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
     let totalPrice = 0
 
     res?.forEach((item) => {
-      total += 1;
+      total += 1
       quantity += parseInt(item?.quantity)
       unitPrice += parseFloat(item?.unit_price)
       totalPrice += parseFloat(item?.total_price)
     })
 
-    itemTotal = { ...itemTotal, quantity: quantity, unit_price: unitPrice, total_price: totalPrice, total_items: total, is_total: true }
+    itemTotal = {
+      ...itemTotal,
+      quantity: quantity,
+      unit_price: unitPrice,
+      total_price: totalPrice,
+      total_items: total,
+      is_total: true
+    }
 
-    if(total > 0){
+    if (total > 0) {
       res.push(itemTotal)
-      let itemActive = res?.find((it) => it?.is_line_active);
-      setDataInfo({contractValue: total, quantityOfPlans: itemActive?.index + 1 })
+      const itemActive = res?.find((it) => it?.is_line_active)
+      setDataInfo({ contractValue: total, quantityOfPlans: itemActive?.index + 1 })
     }
     return res
   }, [listGroups, isChangeGroup, idxIsLine])
 
   const isdDisableButtonNext = useMemo(() => {
-    let flag = true;
-    if(isTotal && dataTable?.length > 0) {
-      let itemTotal = dataTable?.find((it) => it?.is_total)
-      if(itemTotal?.quantity == isTotal) {
+    let flag = true
+    if (isTotal && dataTable?.length > 0) {
+      const itemTotal = dataTable?.find((it) => it?.is_total)
+      if (itemTotal?.quantity == isTotal) {
         flag = false
       }
     }
 
-    return flag;
-
+    return flag
   }, [isTotal, dataTable])
 
   useEffect(() => {
-    if(dataTable?.length > 0) {
-      let itemSave: any = [];
+    if (dataTable?.length > 0) {
+      const itemSave: any = []
 
-      dataTable.filter((it) => !it?.is_total).forEach((it) => {
-        let currentDate = dayjs().format('YYYY-MM-DD');;
-        itemSave.push({
-          "createTime": currentDate,
-          "createUser": "any",
-          "groupName":  it?.title,
-          "lineActivation": it?.is_line_active,
-          "offerId": it?.offerId,
-          "productCode": it?.productCode,
-          "quantityOfLines":it?.quantity,
-          "reasonCode": it?.reasonCode,
-          "serviceTypeId": 0,
-          "shopCode": it?.shopCode,
-          "status": true,
-          "unitPrice": it?.unit_price,
+      dataTable
+        .filter((it) => !it?.is_total)
+        .forEach((it) => {
+          const currentDate = dayjs().format('YYYY-MM-DD')
+          itemSave.push({
+            createTime: currentDate,
+            createUser: 'any',
+            groupName: it?.title,
+            lineActivation: it?.is_line_active,
+            offerId: it?.offerId,
+            productCode: it?.productCode,
+            quantityOfLines: it?.quantity,
+            reasonCode: it?.reasonCode,
+            serviceTypeId: 0,
+            shopCode: it?.shopCode,
+            status: true,
+            unitPrice: it?.unit_price
+          })
         })
-      })
       setDataInfoGroup(itemSave)
     }
-
   }, [dataTable])
 
   return (

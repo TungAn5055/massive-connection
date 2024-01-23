@@ -83,6 +83,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 attributeSave={'idNo'}
                 title={'No de documento'}
                 isRequired={false}
+                readOnly={true}
                 dataCustomer={dataCustomer}
               />
             </Col>
@@ -98,6 +99,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 attribute={'name'}
                 title={'Razon Social'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -107,6 +109,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 attribute={'activitiesField'}
                 title={'Campo de activated'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}></Col>

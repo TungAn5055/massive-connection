@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Col, Row, Form, Input } from 'antd'
-import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
+import { LIST_ATTRIBUTE_RED_TITLE, listAttrRepresentanteLegal } from '@/ultils/constants.ts'
 
 export const FormText = ({
+  dataInfo = {},
   dataCustomer = {},
   attribute,
   attributeSave = null,
   isDisabled = false,
+  readOnly = false,
   title,
   isRequired = false,
   isCustomSpan = false,
@@ -81,12 +83,23 @@ export const FormText = ({
 
   useEffect(() => {
     if (attribute && dataCustomer[attribute]) {
+      if (attributeSave && !listAttrRepresentanteLegal.includes(attributeSave)) {
+        setValue(dataCustomer[attribute])
+        if (attributeSave) {
+          setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+        }
+      }
+    }
+  }, [dataCustomer])
+
+  useEffect(() => {
+    if (attributeSave && dataInfo?.typeOfContact == 1 && listAttrRepresentanteLegal.includes(attributeSave)) {
       setValue(dataCustomer[attribute])
       if (attributeSave) {
         setDataInfo({ [attributeSave]: dataCustomer[attribute] })
       }
     }
-  }, [dataCustomer])
+  }, [dataInfo?.typeOfContact])
 
   return (
     <Form.Item
@@ -121,6 +134,7 @@ export const FormText = ({
             }}
             disabled={isDisabled}
             placeholder={placeholder}
+            readOnly={readOnly}
           />
         </Col>
         {errorValue?.status && (

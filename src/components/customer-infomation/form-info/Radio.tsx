@@ -7,7 +7,9 @@ export const FormRadio = ({
   title,
   isRequired = false,
   dataCustomer = {},
-  setValidateAll = () => {}
+  setValidateAll = () => {},
+  attributeSave,
+  setDataInfo = () => {}
 }: any) => {
   const [value, setValue] = useState(null)
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
@@ -30,11 +32,17 @@ export const FormRadio = ({
       status: false,
       message: null
     })
+    if (attributeSave) {
+      setDataInfo({ [attributeSave]: e.target.value })
+    }
   }
 
   useEffect(() => {
     if (attribute && dataCustomer[attribute]) {
       setValue(dataCustomer[attribute])
+      if (attributeSave) {
+        setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+      }
     }
   }, [dataCustomer])
 

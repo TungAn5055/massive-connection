@@ -14,7 +14,7 @@ export const TextAutoCompleteReason = ({
   setValidateAll = () => {},
   setIsChangeGroup = () => {}
 }: any) => {
-  const [value, setValue] = useState('Basico19_9C')
+  const [value, setValue] = useState('')
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 

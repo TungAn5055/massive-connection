@@ -5,12 +5,14 @@ import useCustomGetData from '@/hooks/useGetStaffCode'
 
 export const FormTextAutoComplete = ({
   attribute,
+  attributeSave,
   isDisabled = false,
   title,
   isRequired = false,
   isCustomSpan = false,
   placeholder = '',
-  setValidateAll = () => {}
+  setValidateAll = () => {},
+  setDataInfo = () => {}
 }: any) => {
   const [value, setValue] = useState('')
   const [options, setOptions] = useState<any>([])
@@ -43,6 +45,9 @@ export const FormTextAutoComplete = ({
     if (data) {
       setValue(data)
       setErrorValue({ status: false, message: null })
+      if (attributeSave) {
+        setDataInfo({ [attributeSave]: data })
+      }
     }
   }
 

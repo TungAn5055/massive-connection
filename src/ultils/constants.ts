@@ -46,3 +46,5 @@ export const SOURCE_TYPE_OF_DOCUMENT = [
   { label: 'Autorización para solicitudes por niveles', value: 5, disabled: false },
   { label: 'Otros', value: 6, disabled: false }
 ]
+
+export const listAttrRepresentanteLegal = ['contactName', 'contactId', 'contactTitle', 'contactEmail', 'contactTelFax']

@@ -12,10 +12,9 @@ export const TextAutoCompletePlan = ({
   item,
   setData = () => {},
   setValidateAll = () => {},
-  setIsChangeGroup = () => {},
+  setIsChangeGroup = () => {}
 }: any) => {
-  const [value, setValue] = useState('Basico19_9C')
-  // Basico19_9C
+  const [value, setValue] = useState('')
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
@@ -48,11 +47,11 @@ export const TextAutoCompletePlan = ({
       setValue(data)
       setErrorValue({ status: false, message: null })
       setData((prev) => {
-        prev[index] = { ...item, plan: data, offerId : list?.offerId, productCode: list?.productCode  }
+        prev[index] = { ...item, plan: data, offerId: list?.offerId, productCode: list?.productCode }
         return prev
       })
       setIsChangeGroup((prev) => !prev)
-      if(list?.offerId) {
+      if (list?.offerId) {
         requestGetPrice(`/api/get-price?offerId=${list?.offerId}`)
       }
     }
@@ -76,7 +75,7 @@ export const TextAutoCompletePlan = ({
   useEffect(() => {
     if (responseGetPrice?.data && responseGetPrice?.state === STATE?.SUCCESS) {
       setData((prev) => {
-        prev[index] = { ...item, unit_price : responseGetPrice?.data }
+        prev[index] = { ...item, unit_price: responseGetPrice?.data }
         return prev
       })
       setIsChangeGroup((prev) => !prev)
@@ -103,6 +102,7 @@ export const TextAutoCompletePlan = ({
             }}
             disabled={isDisabled}
             placeholder={''}
+            // notFoundContent={'Not Found'}
           />
         </Col>
         {errorValue?.status && (

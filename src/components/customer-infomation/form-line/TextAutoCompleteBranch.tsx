@@ -14,7 +14,7 @@ export const TextAutoCompleteBranch = ({
   setValidateAll = () => {},
   setIsChangeGroup = () => {}
 }: any) => {
-  const [value, setValue] = useState('BR_A')
+  const [value, setValue] = useState('')
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
