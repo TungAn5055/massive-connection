@@ -4,7 +4,7 @@ import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA, SOURCE_TYPE_OF_DOCUMENT, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { useEffect, useMemo, useState } from 'react'
-import { NotificationWarning } from '@/components/common/Notification'
+import {NotificationSuccess, NotificationWarning} from '@/components/common/Notification'
 import useUploadFile from '@/hooks/useUploadFile'
 import { SOURCE_UPLOAD_FILE } from '@/ultils/dataSourceConstants'
 import useDownloadFile from '@/hooks/useDownloadFile'
@@ -20,6 +20,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   const [listDataFiles, setListDataFiles] = useState<any>(SOURCE_UPLOAD_FILE)
   const [currentFile, setCurrentFile] = useState<any>('')
   const [currentType, setCurrentType] = useState<any>('')
+  const [currentClickItem, setCurrentClickItem] = useState<any>({})
 
   const { responseUploadFile, requestUploadFile } = useUploadFile()
   const { responseDownloadFile, requestDownloadFile } = useDownloadFile()
@@ -54,10 +55,11 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
 
   const downloadFile = async (item) => {
     if (item?.link_file && item?.type) {
+      setCurrentClickItem(item)
       requestDownloadFile({
         fileName: item?.link_file,
         fileType: item?.type,
-        idNo: dataInfo?.idNo ?? '10432498404'
+        idNo: dataInfo?.idNo
       })
     } else {
       NotificationWarning('File not found')
@@ -85,6 +87,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
 
   useEffect(() => {
     if (responseUploadFile?.data?.fileType && responseUploadFile?.state === STATE?.SUCCESS) {
+      NotificationSuccess("Upload file success",null)
       setListDataFiles((prev) => {
         prev = prev?.map((it) => {
           if (it?.type == responseUploadFile?.data?.fileType) {
@@ -113,7 +116,14 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   }, [responseUploadFile])
 
   useEffect(() => {
-    if (responseDownloadFile?.data?.idType && responseDownloadFile?.state === STATE?.SUCCESS) {
+    if (responseDownloadFile?.data && responseDownloadFile?.state === STATE?.SUCCESS) {
+      const url = window.URL.createObjectURL(new Blob([responseSaveGroup?.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', currentClickItem?.link_file); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+      setCurrentClickItem({})
     }
   }, [responseDownloadFile])
 
@@ -129,7 +139,6 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   }, [responseSaveContract])
 
   useEffect(() => {
-    console.log('responseSaveContract+++', responseSaveGroup)
     if (responseSaveGroup?.data && responseSaveGroup?.state === STATE?.SUCCESS) {
       setActiveTab('4')
     }

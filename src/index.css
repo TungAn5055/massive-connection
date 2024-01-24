@@ -207,3 +207,13 @@
 .footer-paging {
   margin-top: 20px;
 }
+
+.content-title-summary-detail {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+.title-summary-detail {
+    font-weight: 600
+}

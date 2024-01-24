@@ -17,7 +17,6 @@ const SuccessfulTab = ({ contractNo }: any) => {
   }, [contractNo])
 
   useEffect(() => {
-    console.log('responseSaveContract+++', responseGetOrderInfo)
     if (responseGetOrderInfo?.data && responseGetOrderInfo?.state === STATE?.SUCCESS) {
       setContentSuccess(responseGetOrderInfo?.data)
     }

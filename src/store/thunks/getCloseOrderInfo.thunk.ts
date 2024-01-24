@@ -3,31 +3,27 @@ import axiosInstance from '@/configs/axios'
 import { STATE } from '@/ultils/constants'
 
 let source: any = null
-export const cancelApiDownloadFile = () => cancel(source)
+export const cancelGetCloseOrderInfo = () => cancel(source)
 
-export const apiDownloadFileAsync = async (params: any, setResponse: any) => {
+export const apiGetCloseOrderInfoAsync = async (params: any, setResponse: any) => {
   setResponse({
     data: [],
     state: STATE.REQUEST,
     message: '',
     loading: true
   })
-  cancelApiDownloadFile()
+  cancelGetCloseOrderInfo()
 
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.post('/api/download-file', params, {
-      cancelToken: source.token ,
-      responseType: 'arraybuffer',
-      headers: {
-        'Content-Type': 'application/json',
-      }
+    const response = await axiosInstance.post('/api/get-close-order-info', params, {
+      cancelToken: source.token
     })
 
-    if (response) {
+    if (response?.data) {
       setResponse({
-        data: response,
+        data: response.data,
         state: STATE.SUCCESS,
         message: '',
         loading: false
@@ -35,6 +31,8 @@ export const apiDownloadFileAsync = async (params: any, setResponse: any) => {
     } else {
       setResponse({
         data: [],
+        totalPages: null,
+        currentPage: 1,
         state: STATE.ERROR,
         message: '',
         loading: false

@@ -6,10 +6,16 @@ import useSearchMassiveOrder from '@/hooks/useSearchMassiveOrder'
 import Column from 'antd/es/table/Column'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { PageSizeOptionsInTableForMaterial } from '@/ultils/dataSourceConstants'
+import PopupDetailOrder from "@/components/post-paid-connection2/PopupDetailOrder.tsx";
+import PopupCloseOrder from "@/components/post-paid-connection2/PopupCloseOrder.tsx";
 
 const NewPostpaidConnection2: React.FC = () => {
   const [valueType, setValueType] = useState<any>('10432498404')
   const [valueStatus, setValueStatus] = useState<any>(null)
+  const [isShowDetail, setIsShowDetail] = useState<boolean>(false)
+  const [isShowClose, setIsShowClose] = useState<boolean>(false)
+  const [currentContractNo, setCurrentContractNo] = useState<any>(null)
+  const [currentContract, setCurrentContract] = useState<any>({})
 
   const [paramsPage, setParamsPage] = useState({
     pageSize: 10,
@@ -38,7 +44,8 @@ const NewPostpaidConnection2: React.FC = () => {
 
   const doSearch = () => {
     if (valueType && valueStatus) {
-      requestSearchMassiveOrder({ idNo: valueType, page: 1, pageSize: 10, status: valueStatus })
+      // requestSearchMassiveOrder({ idNo: valueType, page: 1, pageSize: 10, status: valueStatus })
+      requestSearchMassiveOrder({ idNo: valueType, page: 0, pageSize: 10, status: '' })
     }
   }
 
@@ -248,10 +255,34 @@ const NewPostpaidConnection2: React.FC = () => {
                       />
                       <Column
                         title={'Action'}
-                        dataIndex='action'
-                        key='action'
-                        render={(value) => {
-                          return <Space>{value}</Space>
+                        dataIndex='null'
+                        key='null'
+                        render={(value, info: any ) => {
+                          if(info?.status == 3) {
+                           return  <Button type='default' size={'large'} onClick={() => {
+                             setIsShowDetail(true);
+                             setCurrentContractNo(info?.contractNo);
+                           }} >
+                              View Detail
+                            </Button>
+                          } else if(info?.status == 4) {
+                            return  <Button type='default' size={'large'} onClick={() => {
+                              setIsShowClose(true);
+                              setCurrentContract({
+                                'contractNo' : info?.contractNo,
+                                'idNo' : info?.idNo,
+                              });
+
+                            }} >
+                              Close
+                            </Button>
+                          }  else if(info?.status == 6) {
+                            return  <Button type='default' size={'large'} onClick={() => {}} >
+                              Partial Connected Detail
+                            </Button>
+                          } else {
+                            return <Space>{value}</Space>
+                          }
                         }}
                       />
                     </Table>
@@ -277,6 +308,9 @@ const NewPostpaidConnection2: React.FC = () => {
               </form>
             </Row>
           </Row>
+
+          <PopupDetailOrder isShowDetail={isShowDetail} setIsShowDetail={setIsShowDetail} contractNo={currentContractNo} setCurrentContractNo={setCurrentContractNo}/>
+          <PopupCloseOrder isShowDetail={isShowClose} setIsShowDetail={setIsShowClose} dataContract={currentContract} setCurrentContract={setCurrentContract}/>
         </>
       )}
     </>
