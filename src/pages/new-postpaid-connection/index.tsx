@@ -8,7 +8,7 @@ import { STATE } from '@/ultils/constants'
 const NewPostpaidConnection: React.FC = () => {
   const navigate = useNavigate()
   const [valueIdType, setValueIdType] = useState(null)
-  const [valueIdNo, setValueIdNo] = useState('10432498404')
+  const [valueIdNo, setValueIdNo] = useState('')
   const { responseSearchCustomer, requestSearchCustomer } = useCustomerSearch()
 
   const [form] = Form.useForm()

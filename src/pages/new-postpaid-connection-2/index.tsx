@@ -6,11 +6,11 @@ import useSearchMassiveOrder from '@/hooks/useSearchMassiveOrder'
 import Column from 'antd/es/table/Column'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { PageSizeOptionsInTableForMaterial } from '@/ultils/dataSourceConstants'
-import PopupDetailOrder from "@/components/post-paid-connection2/PopupDetailOrder.tsx";
-import PopupCloseOrder from "@/components/post-paid-connection2/PopupCloseOrder.tsx";
+import PopupDetailOrder from '@/components/post-paid-connection2/PopupDetailOrder.tsx'
+import PopupCloseOrder from '@/components/post-paid-connection2/PopupCloseOrder.tsx'
 
 const NewPostpaidConnection2: React.FC = () => {
-  const [valueType, setValueType] = useState<any>('10432498404')
+  const [valueType, setValueType] = useState<any>('')
   const [valueStatus, setValueStatus] = useState<any>(null)
   const [isShowDetail, setIsShowDetail] = useState<boolean>(false)
   const [isShowClose, setIsShowClose] = useState<boolean>(false)
@@ -69,7 +69,6 @@ const NewPostpaidConnection2: React.FC = () => {
   }, [valueStatus, valueType])
 
   useEffect(() => {
-    console.log('responseSaveContract+++', responseMassiveOrder)
     if (responseMassiveOrder?.data && responseMassiveOrder?.state === STATE?.SUCCESS) {
     }
   }, [responseMassiveOrder])
@@ -257,29 +256,42 @@ const NewPostpaidConnection2: React.FC = () => {
                         title={'Action'}
                         dataIndex='null'
                         key='null'
-                        render={(value, info: any ) => {
-                          if(info?.status == 3) {
-                           return  <Button type='default' size={'large'} onClick={() => {
-                             setIsShowDetail(true);
-                             setCurrentContractNo(info?.contractNo);
-                           }} >
-                              View Detail
-                            </Button>
-                          } else if(info?.status == 4) {
-                            return  <Button type='default' size={'large'} onClick={() => {
-                              setIsShowClose(true);
-                              setCurrentContract({
-                                'contractNo' : info?.contractNo,
-                                'idNo' : info?.idNo,
-                              });
-
-                            }} >
-                              Close
-                            </Button>
-                          }  else if(info?.status == 6) {
-                            return  <Button type='default' size={'large'} onClick={() => {}} >
-                              Partial Connected Detail
-                            </Button>
+                        render={(value, info: any) => {
+                          if (info?.status == 3) {
+                            return (
+                              <Button
+                                type='default'
+                                size={'large'}
+                                onClick={() => {
+                                  setIsShowDetail(true)
+                                  setCurrentContractNo(info?.contractNo)
+                                }}
+                              >
+                                View Detail
+                              </Button>
+                            )
+                          } else if (info?.status == 4) {
+                            return (
+                              <Button
+                                type='default'
+                                size={'large'}
+                                onClick={() => {
+                                  setIsShowClose(true)
+                                  setCurrentContract({
+                                    contractNo: info?.contractNo,
+                                    idNo: info?.idNo
+                                  })
+                                }}
+                              >
+                                Close
+                              </Button>
+                            )
+                          } else if (info?.status == 6) {
+                            return (
+                              <Button type='default' size={'large'} onClick={() => {}}>
+                                Partial Connected Detail
+                              </Button>
+                            )
                           } else {
                             return <Space>{value}</Space>
                           }
@@ -309,8 +321,18 @@ const NewPostpaidConnection2: React.FC = () => {
             </Row>
           </Row>
 
-          <PopupDetailOrder isShowDetail={isShowDetail} setIsShowDetail={setIsShowDetail} contractNo={currentContractNo} setCurrentContractNo={setCurrentContractNo}/>
-          <PopupCloseOrder isShowDetail={isShowClose} setIsShowDetail={setIsShowClose} dataContract={currentContract} setCurrentContract={setCurrentContract}/>
+          <PopupDetailOrder
+            isShowDetail={isShowDetail}
+            setIsShowDetail={setIsShowDetail}
+            contractNo={currentContractNo}
+            setCurrentContractNo={setCurrentContractNo}
+          />
+          <PopupCloseOrder
+            isShowDetail={isShowClose}
+            setIsShowDetail={setIsShowClose}
+            dataContract={currentContract}
+            setCurrentContract={setCurrentContract}
+          />
         </>
       )}
     </>
