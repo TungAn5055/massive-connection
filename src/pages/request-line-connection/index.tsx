@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useCustomGetData from "@/hooks/useGetStaffCode.ts";
 import {STATE} from "@/ultils/constants.ts";
+import RequestLineConnectionContent from "@/components/request-line-connection";
 
 const RequestLineConnection: React.FC = () => {
   const {
@@ -28,7 +29,7 @@ const RequestLineConnection: React.FC = () => {
     }
   }, [responseStaffCode])
 
-  return <RequestLineConnection dataLine={dataLine} />
+  return <RequestLineConnectionContent dataLine={responseStaffCode} />
 }
 
 export default RequestLineConnection

@@ -13,6 +13,7 @@ import useSaveGroup from '@/hooks/useSaveGroup.ts'
 import downloadIcon from '@/assets/images/downloadicon.svg'
 import checkMarkIcon from '@/assets/images/check-mark-circle-icon.svg'
 import circleIcon from '@/assets/images/circle-line-icon.svg'
+import useSaveDocument from "@/hooks/useSaveDocument.ts";
 const { Option } = Select
 
 const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: any) => {
@@ -25,6 +26,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   const { responseUploadFile, requestUploadFile } = useUploadFile()
   const { responseDownloadFile, requestDownloadFile } = useDownloadFile()
   const { responseSaveContract, requestSaveContract } = useSaveContract()
+  const { responseSaveDocument, requestSaveDocument } = useSaveDocument()
   const { responseSaveGroup, requestSaveGroup } = useSaveGroup()
   const tableLoading = {
     spinning: false,
@@ -129,6 +131,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
 
   useEffect(() => {
     if (responseSaveContract?.data && responseSaveContract?.state === STATE?.SUCCESS && dataInfoGroup?.length > 0) {
+      console.log('0')
       const data = dataInfoGroup.map((it) => ({
         ...it,
         contractNo: responseSaveContract?.data
@@ -139,10 +142,24 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   }, [responseSaveContract])
 
   useEffect(() => {
-    if (responseSaveGroup?.data && responseSaveGroup?.state === STATE?.SUCCESS) {
-      setActiveTab('4')
+    if (responseSaveGroup?.data == true && responseSaveGroup?.state === STATE?.SUCCESS) {
+      console.log('1')
+      const data = listDataFiles?.filter((it) => it?.link_file).map((it) => { return ({
+        fileName: it?.link_file,
+        fileType: it?.type,
+        idNo: dataInfo?.idNo,
+        contractNo: responseSaveContract?.data
+      })})
+      requestSaveDocument(data)
     }
   }, [responseSaveGroup])
+
+  useEffect(() => {
+    if (responseSaveDocument?.data == true && responseSaveDocument?.state === STATE?.SUCCESS) {
+      console.log('2')
+      setActiveTab('4')
+    }
+  }, [responseSaveDocument])
 
   return (
     <>

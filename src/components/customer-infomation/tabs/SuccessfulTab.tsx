@@ -6,15 +6,15 @@ import { STATE } from '@/ultils/constants.ts'
 import { LoadingRegion } from '@/components/common/LoadingRegion.tsx'
 import { COLUMN_TABLE_SUCCESS_TAB } from '@/ultils/columsTables'
 
-const SuccessfulTab = ({ contractNo }: any) => {
+const SuccessfulTab = ({ contractNo, activeTab }: any) => {
   const [contentSuccess, setContentSuccess] = useState<any>({})
   const { responseGetOrderInfo, requestGetOrderInfo } = useGetOrderInfo()
 
   useEffect(() => {
-    if (contractNo) {
+    if (contractNo && activeTab == '4') {
       requestGetOrderInfo(`/api/get-order-info?contractNo=${contractNo}`)
     }
-  }, [contractNo])
+  }, [contractNo, activeTab])
 
   useEffect(() => {
     if (responseGetOrderInfo?.data && responseGetOrderInfo?.state === STATE?.SUCCESS) {

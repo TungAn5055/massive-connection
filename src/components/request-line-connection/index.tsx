@@ -6,7 +6,7 @@ import AttachedTab from '@/components/request-line-connection/tabs/AttachedTab.t
 import SuccessfulTab from '@/components/request-line-connection/tabs/SuccessfulTab.tsx'
 import { FolderOpenFilled } from '@ant-design/icons'
 
-const RequestLineConnection = ({ dataCustomers = {} }: any) => {
+const RequestLineConnectionContent = ({ dataCustomers = {} }: any) => {
   const [activeTab, setActiveTab] = useState('1')
   const [contractNo, setContractNo] = useState(null)
 
@@ -21,6 +21,7 @@ const RequestLineConnection = ({ dataCustomers = {} }: any) => {
 
   const onChangeTabs = () => {
     // setActiveTab(activeKey)
+    setDataInfoGroup({})
     return false
   }
 
@@ -84,4 +85,4 @@ const RequestLineConnection = ({ dataCustomers = {} }: any) => {
   )
 }
 
-export default RequestLineConnection
+export default RequestLineConnectionContent
