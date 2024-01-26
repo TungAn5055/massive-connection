@@ -4,14 +4,25 @@ import { STATE } from '@/ultils/constants.ts'
 import { FolderOpenFilled } from '@ant-design/icons'
 import { LoadingRegion } from '@/components/common/LoadingRegion.tsx'
 import useGetCloserOrderInfo from '@/hooks/useGetCloserOrderInfo.ts'
+import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder.ts";
+import {NotificationSuccess} from "@/components/common/Notification.tsx";
 
 const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrentContract, setIsShowDetail }: any) => {
   const [dataInfo, setDataInfo] = useState<any>({})
 
   const { responseCloseOrderInfo, requestCloseOrderInfo } = useGetCloserOrderInfo()
+  const { responseUpdateStatusOrder, requestUpdateStatusOrder } = useUpdateStatusOrder()
 
   const closePopup = () => {
     setIsShowDetail(false)
+    setCurrentContract({})
+  }
+
+  const closeData = () => {
+    requestUpdateStatusOrder({
+      status: 5,
+      contractNo: dataInfo?.contractInfo?.contractNo
+    })
     setCurrentContract({})
   }
 
@@ -30,6 +41,14 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
       setDataInfo(responseCloseOrderInfo?.data)
     }
   }, [responseCloseOrderInfo])
+
+  useEffect(() => {
+    console.log('responseUpdateStatusOrder+++', responseUpdateStatusOrder)
+    if (responseUpdateStatusOrder?.data && responseUpdateStatusOrder?.state === STATE?.SUCCESS) {
+      NotificationSuccess('Update status order success.', null)
+
+    }
+  }, [responseUpdateStatusOrder])
 
   return (
     <Modal
@@ -53,6 +72,17 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
             }}
           >
             Go Back
+          </Button>
+          <Button
+              key='back'
+              onClick={() => {
+                closeData()
+              }}
+              style={{
+                marginLeft: '15px',
+              }}
+          >
+            Close
           </Button>
         </div>
       ]}
@@ -84,7 +114,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Customer Type</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustType}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -92,7 +122,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Date of establish</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.billCycleFrom}</span>
+                      <span className={'legend-color'}>{dataInfo?.idIssueDate}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -103,7 +133,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>RUC</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.name}</span>
+                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -111,7 +141,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Address</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.repreCustName}</span>
+                      <span className={'legend-color'}>{dataInfo?.home}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -121,7 +151,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Razon Social</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.contactName}</span>
+                      <span className={'legend-color'}>{dataInfo?.name}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -129,7 +159,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Note</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{null}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -149,7 +179,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Customer Type</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustType}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -157,7 +187,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Date of birth</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.billCycleFrom}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustBirthDate}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -165,7 +195,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Gender</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.billCycleFrom}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustGender}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -173,7 +203,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Address</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.billCycleFrom}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustAddress}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -185,7 +215,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Identity card</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.name}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustIdNo}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -193,7 +223,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Issue date</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.repreCustName}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustIdIssueDate}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -201,7 +231,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Issue place</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.repreCustName}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustIdIssuePlace}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -209,7 +239,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Note</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.repreCustName}</span>
+                      <span className={'legend-color'}>{null}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -221,7 +251,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Customer name</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.contactName}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustName}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -229,7 +259,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Expired date</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustIdExpireDate}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -237,7 +267,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Nationality</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{dataInfo?.nationality}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -269,7 +299,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Número de contrato</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.contractNo}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -277,7 +307,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Fecha de firma</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.billCycleFrom}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.signDate}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -285,7 +315,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Ciclo de facturación</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.billCycleFrom}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.billCycleFrom}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -293,7 +323,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Direccion de facturacion</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.billCycleFrom}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.home}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -301,7 +331,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Distrito - Prov - Dpto</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.billCycleFrom}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.areaName}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -313,7 +343,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Tipo de documento</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.name}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.contractTypeName}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -321,7 +351,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Fecha de expiración</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.repreCustName}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.endDatetime}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -329,7 +359,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Pagador</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.repreCustName}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.payer}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -341,7 +371,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Idioma de contrato</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.contactName}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.contractLanguageName}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -349,7 +379,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Método de pago</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.payMethodCode}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -357,7 +387,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Direccion de facturacion</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.home}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -365,7 +395,7 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
                       <span className={'title-summary-detail'}>Envio de recibos</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.idNo}</span>
+                      <span className={'legend-color'}>{dataInfo?.contractInfo?.noticeCharge}</span>
                     </Col>
                   </Row>
                 </Col>
