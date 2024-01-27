@@ -5,6 +5,11 @@ export const CUSTOMER_INFO_TABS = {
   SUCCESSFUL: 'Successful Creation'
 }
 
+export const UPLOAD_SIMS_TABS = {
+  LINE: 'Line Information',
+  SUCCESSFUL: 'Successful Creation'
+}
+
 export const CUSTOMER_NEW_LINE_TABS = {
   INFO: 'Customer Information',
   LINE: 'Line Information',

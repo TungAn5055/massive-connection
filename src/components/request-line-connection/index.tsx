@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Col, Row } from 'antd'
 import { Tabs } from 'antd'
-import { CUSTOMER_INFO_TABS } from '@/ultils/constants'
+import { UPLOAD_SIMS_TABS } from '@/ultils/constants'
 import AttachedTab from '@/components/request-line-connection/tabs/AttachedTab.tsx'
 import SuccessfulTab from '@/components/request-line-connection/tabs/SuccessfulTab.tsx'
 import { FolderOpenFilled } from '@ant-design/icons'
 
-const RequestLineConnectionContent = ({ dataCustomers = {} }: any) => {
+const RequestLineConnectionContent = ({ contractNo }: any) => {
   const [activeTab, setActiveTab] = useState('1')
-  const [contractNo, setContractNo] = useState(null)
 
   const [_dataInfo, _setDataInfo] = useState({})
   const dataInfo = _dataInfo
@@ -17,21 +16,11 @@ const RequestLineConnectionContent = ({ dataCustomers = {} }: any) => {
     _setDataInfo({ ...dataInfo })
   }
 
-  const [dataInfoGroup, setDataInfoGroup] = useState({})
-
   const onChangeTabs = () => {
     // setActiveTab(activeKey)
-    setDataInfoGroup({})
     return false
   }
 
-  useEffect(() => {
-    if (dataCustomers?.custId) {
-      setDataInfo({
-        custId: dataCustomers?.custId
-      })
-    }
-  }, [dataCustomers])
   return (
     <>
       <Row className='site-page-header'>
@@ -53,7 +42,7 @@ const RequestLineConnectionContent = ({ dataCustomers = {} }: any) => {
             <Tabs.TabPane
               tab={
                 <span className={'title-tab-request'} key={1}>
-                  {CUSTOMER_INFO_TABS.ATTACHED}
+                  {UPLOAD_SIMS_TABS.LINE}
                 </span>
               }
               key='1'
@@ -61,16 +50,15 @@ const RequestLineConnectionContent = ({ dataCustomers = {} }: any) => {
             >
               <AttachedTab
                 dataInfo={dataInfo}
-                dataInfoGroup={dataInfoGroup}
                 setDataInfo={setDataInfo}
-                setContractNo={setContractNo}
+                contractNo={contractNo}
                 setActiveTab={setActiveTab}
               />
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={
                 <span className={'title-tab-request'} key={2}>
-                  {CUSTOMER_INFO_TABS.SUCCESSFUL}
+                  {UPLOAD_SIMS_TABS.SUCCESSFUL}
                 </span>
               }
               key='2'

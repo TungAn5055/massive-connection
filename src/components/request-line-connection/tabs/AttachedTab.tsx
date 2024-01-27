@@ -1,29 +1,28 @@
 import { Button, Col, Form, Input, Row, Select, Space, Table, Upload } from 'antd'
 import Column from 'antd/es/table/Column'
 import { EmptyUI } from '@/components/ui-source/empty'
-import { NO_DATA, SOURCE_TYPE_OF_DOCUMENT, STATE } from '@/ultils/constants'
+import { NO_DATA, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { useEffect, useMemo, useState } from 'react'
-import {NotificationSuccess, NotificationWarning} from '@/components/common/Notification'
+import { NotificationSuccess, NotificationWarning } from '@/components/common/Notification'
 import useUploadFile from '@/hooks/useUploadFile'
-import { SOURCE_UPLOAD_FILE } from '@/ultils/dataSourceConstants'
-import useDownloadFile from '@/hooks/useDownloadFile'
 import useSaveContract from '@/hooks/useSaveContract.ts'
 import useSaveGroup from '@/hooks/useSaveGroup.ts'
 import downloadIcon from '@/assets/images/downloadicon.svg'
-import checkMarkIcon from '@/assets/images/check-mark-circle-icon.svg'
-import circleIcon from '@/assets/images/circle-line-icon.svg'
+import useGetGroupInfo from '@/hooks/useGetGroupInfo'
+import useDownloadFileSim from '@/hooks/useDownloadFileSim'
 const { Option } = Select
 
-const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: any) => {
-  const [listSourceType, setListSourceType] = useState<any>(SOURCE_TYPE_OF_DOCUMENT)
-  const [listDataFiles, setListDataFiles] = useState<any>(SOURCE_UPLOAD_FILE)
+const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any) => {
+  const [listDataFiles, setListDataFiles] = useState<any>([])
   const [currentFile, setCurrentFile] = useState<any>('')
   const [currentType, setCurrentType] = useState<any>('')
   const [currentClickItem, setCurrentClickItem] = useState<any>({})
+  const [showError] = useState<boolean>(false)
 
+  const { responseGetGroupInfo, requestGetGroupInfo } = useGetGroupInfo()
   const { responseUploadFile, requestUploadFile } = useUploadFile()
-  const { responseDownloadFile, requestDownloadFile } = useDownloadFile()
+  const { responseDownloadFile, requestDownloadFile } = useDownloadFileSim()
   const { responseSaveContract, requestSaveContract } = useSaveContract()
   const { responseSaveGroup, requestSaveGroup } = useSaveGroup()
   const tableLoading = {
@@ -87,7 +86,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
 
   useEffect(() => {
     if (responseUploadFile?.data?.fileType && responseUploadFile?.state === STATE?.SUCCESS) {
-      NotificationSuccess("Upload file success",null)
+      NotificationSuccess('Upload file success', null)
       setListDataFiles((prev) => {
         prev = prev?.map((it) => {
           if (it?.type == responseUploadFile?.data?.fileType) {
@@ -101,40 +100,25 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
       })
       setCurrentType('')
       setCurrentFile('')
-      setListSourceType((prev) => {
-        prev = prev?.map((it) => {
-          if (it?.value == responseUploadFile?.data?.fileType) {
-            return { ...it, disabled: true }
-          } else {
-            return it
-          }
-        })
-
-        return prev
-      })
     }
   }, [responseUploadFile])
 
   useEffect(() => {
     if (responseDownloadFile?.data && responseDownloadFile?.state === STATE?.SUCCESS) {
-      const url = window.URL.createObjectURL(new Blob([responseSaveGroup?.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', currentClickItem?.link_file); //or any other extension
-      document.body.appendChild(link);
-      link.click();
+      const url = window.URL.createObjectURL(new Blob([responseSaveGroup?.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', currentClickItem?.link_file) //or any other extension
+      document.body.appendChild(link)
+      link.click()
       setCurrentClickItem({})
     }
   }, [responseDownloadFile])
 
   useEffect(() => {
-    if (responseSaveContract?.data && responseSaveContract?.state === STATE?.SUCCESS && dataInfoGroup?.length > 0) {
-      const data = dataInfoGroup.map((it) => ({
-        ...it,
-        contractNo: responseSaveContract?.data
-      }))
+    if (responseSaveContract?.data && responseSaveContract?.state === STATE?.SUCCESS) {
       setContractNo(responseSaveContract?.data)
-      requestSaveGroup(data)
+      requestSaveGroup([])
     }
   }, [responseSaveContract])
 
@@ -144,21 +128,32 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
     }
   }, [responseSaveGroup])
 
+  useEffect(() => {
+    if (contractNo) {
+      requestGetGroupInfo(`/api/get-group-info?ContractNo=${contractNo}`)
+    }
+  }, [contractNo])
+
+  useEffect(() => {
+    if (responseGetGroupInfo?.data && responseGetGroupInfo?.state === STATE?.SUCCESS) {
+      setListDataFiles(responseGetGroupInfo?.data)
+    }
+  }, [responseGetGroupInfo])
+
   return (
     <>
       <Form className={'form-search-customer'} name='advanced_search'>
         <fieldset>
           <legend>
-            <span className={'legend-color'}>Documentación adjunta</span>
+            <span className={'legend-color'}>Line upload</span>
           </legend>
-          <span style={{ marginLeft: '20px' }}>La siguiente documentación es SUSTEN</span>
           {/*line 1*/}
           <Row gutter={24} style={{ marginLeft: '10px', marginTop: '20px' }}>
             <Col span={8}>
               <Form.Item>
                 <Row className={'display-flex'}>
                   <Col span={6}>
-                    <span>Type of document</span>
+                    <span>Group</span>
                   </Col>
                   <Col span={18}>
                     <Select
@@ -167,15 +162,11 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                       onChange={(e) => {
                         setCurrentType(e)
                       }}
-                      style={{
-                        width: '90%'
-                      }}
-                      // options={listSourceType}
                     >
-                      {listSourceType.map((item, itemIndex) => {
+                      {responseGetGroupInfo?.data?.map((item, itemIndex) => {
                         return (
-                          <Option key={itemIndex} value={item.value} disabled={item?.disabled}>
-                            {item.label}
+                          <Option key={itemIndex} value={item.groupId}>
+                            {item.groupName}
                           </Option>
                         )
                       })}
@@ -184,6 +175,8 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                 </Row>
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={24} style={{ marginLeft: '10px', marginTop: '20px' }}>
             <Col span={8}>
               <Form.Item>
                 <Row className={'display-flex'}>
@@ -196,7 +189,8 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                 </Row>
               </Form.Item>
             </Col>
-            <Col span={3}>
+
+            <Col span={3} style={{ marginLeft: '30px' }}>
               <Upload
                 showUploadList={false}
                 onChange={onChangeFile}
@@ -211,7 +205,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                 </Button>
               </Upload>
             </Col>
-            <Col span={3}>
+            <Col span={2}>
               <Button
                 type='default'
                 size={'large'}
@@ -221,6 +215,20 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                 Upload
               </Button>
             </Col>
+            <Col span={4} style={{ paddingTop: '10px', color: '#6396bc' }}>
+              <a
+                href={
+                  'https://docs.google.com/spreadsheets/d/13lUIfjn_Zu9-VWLhpuIC6_Q5VlW3t-Ll/edit?usp=drive_link&ouid=108812830668437018115&rtpof=true&sd=true'
+                }
+              >
+                Click here to download template
+              </a>
+            </Col>
+            {showError && (
+              <Col span={4}>
+                <span>Pof favor, subir la cantidad correcta de seriales solicitados</span>
+              </Col>
+            )}
           </Row>
         </fieldset>
       </Form>
@@ -244,9 +252,9 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                 return <Space>{val}</Space>
               }}
             />
-            <Column title={'Type of document'} dataIndex='title_type' key='title_type' />
+            <Column title={'No of group'} dataIndex='title_type' key='title_type' />
             <Column
-              title={'Mandatory'}
+              title={'Number'}
               dataIndex='mandatory'
               key='mandatory'
               render={(val) => {
@@ -254,7 +262,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               }}
             />
             <Column
-              title={'Download document'}
+              title={'Plan'}
               dataIndex='link_file'
               key='link_file'
               render={(val, record) => {
@@ -278,9 +286,28 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               key='status'
               render={(val) => {
                 if (val) {
-                  return <img src={checkMarkIcon} alt='download' style={{ height: '30px' }} />
+                  return <span>OK</span>
                 } else {
-                  return <img src={circleIcon} alt='download' style={{ height: '30px' }} />
+                  return <span>NOK</span>
+                }
+              }}
+            />
+            <Column
+              title={'Download file'}
+              dataIndex='link_file'
+              key='link_file'
+              render={(val, record) => {
+                if (val) {
+                  return (
+                    <img
+                      src={downloadIcon}
+                      alt='download'
+                      onClick={() => downloadFile(record)}
+                      style={{ height: '30px' }}
+                    />
+                  )
+                } else {
+                  return <></>
                 }
               }}
             />
