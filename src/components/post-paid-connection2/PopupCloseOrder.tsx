@@ -4,10 +4,16 @@ import { STATE } from '@/ultils/constants.ts'
 import { FolderOpenFilled } from '@ant-design/icons'
 import { LoadingRegion } from '@/components/common/LoadingRegion.tsx'
 import useGetCloserOrderInfo from '@/hooks/useGetCloserOrderInfo.ts'
-import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder.ts";
-import {NotificationSuccess} from "@/components/common/Notification.tsx";
+import useUpdateStatusOrder from '@/hooks/useUpdateStatusOrder.ts'
+import { NotificationSuccess } from '@/components/common/Notification.tsx'
 
-const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrentContract, setIsShowDetail }: any) => {
+const PopupCloseOrder = ({
+  dataContract = null,
+  isShowDetail = false,
+  setCurrentContract,
+  setIsShowDetail,
+  doSearch
+}: any) => {
   const [dataInfo, setDataInfo] = useState<any>({})
 
   const { responseCloseOrderInfo, requestCloseOrderInfo } = useGetCloserOrderInfo()
@@ -43,10 +49,10 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
   }, [responseCloseOrderInfo])
 
   useEffect(() => {
-    console.log('responseUpdateStatusOrder+++', responseUpdateStatusOrder)
     if (responseUpdateStatusOrder?.data && responseUpdateStatusOrder?.state === STATE?.SUCCESS) {
       NotificationSuccess('Update status order success.', null)
-
+      doSearch()
+      setIsShowDetail(false)
     }
   }, [responseUpdateStatusOrder])
 
@@ -74,13 +80,13 @@ const PopupCloseOrder = ({ dataContract = null, isShowDetail = false, setCurrent
             Go Back
           </Button>
           <Button
-              key='back'
-              onClick={() => {
-                closeData()
-              }}
-              style={{
-                marginLeft: '15px',
-              }}
+            key='back'
+            onClick={() => {
+              closeData()
+            }}
+            style={{
+              marginLeft: '15px'
+            }}
           >
             Close
           </Button>

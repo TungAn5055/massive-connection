@@ -8,7 +8,7 @@ import { LoadingRegion } from '@/components/ui-source/loading'
 import { PageSizeOptionsInTableForMaterial } from '@/ultils/dataSourceConstants'
 import PopupDetailOrder from '@/components/post-paid-connection2/PopupDetailOrder.tsx'
 import PopupCloseOrder from '@/components/post-paid-connection2/PopupCloseOrder.tsx'
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 const NewPostpaidConnection2: React.FC = () => {
   const navigate = useNavigate()
@@ -296,9 +296,15 @@ const NewPostpaidConnection2: React.FC = () => {
                             )
                           } else if (info?.status == 1) {
                             return (
-                                <Button type='default' size={'large'} onClick={() => { navigate('/request-of-line-connection', { state: { ContractNo: info?.contractNo}})}}>
-                                  Upload SIMS
-                                </Button>
+                              <Button
+                                type='default'
+                                size={'large'}
+                                onClick={() => {
+                                  navigate('/request-of-line-connection', { state: { ContractNo: info?.contractNo } })
+                                }}
+                              >
+                                Upload SIMS
+                              </Button>
                             )
                           } else {
                             return <Space>{value}</Space>
@@ -340,6 +346,7 @@ const NewPostpaidConnection2: React.FC = () => {
             setIsShowDetail={setIsShowClose}
             dataContract={currentContract}
             setCurrentContract={setCurrentContract}
+            doSearch={doSearch}
           />
         </>
       )}

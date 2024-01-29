@@ -130,7 +130,7 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
 
   useEffect(() => {
     if (contractNo) {
-      requestGetGroupInfo(`/api/get-group-info?ContractNo=${contractNo}`)
+      requestGetGroupInfo(`/api/get-group-info?contractNo=${contractNo}`)
     }
   }, [contractNo])
 
