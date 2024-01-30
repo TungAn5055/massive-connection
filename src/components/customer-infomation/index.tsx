@@ -21,8 +21,8 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
 
   const [dataInfoGroup, setDataInfoGroup] = useState({})
 
-  const onChangeTabs = (activeKey) => {
-    setActiveTab(activeKey)
+  const onChangeTabs = () => {
+    // setActiveTab(activeKey)
     return false
   }
 
@@ -111,7 +111,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
               key='4'
               forceRender={true}
             >
-              <SuccessfulTab key={'successful'} contractNo={contractNo} activeTab={activeTab}/>
+              <SuccessfulTab key={'successful'} contractNo={contractNo} activeTab={activeTab} />
             </Tabs.TabPane>
           </Tabs>
         </Row>
