@@ -9,10 +9,10 @@ const axiosInstance = axios.create({
 axiosInstance.defaults.withCredentials = true
 
 axiosInstance.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axiosInstance.defaults.headers['Access-Control-Allow-Origin'] = '*'
+// axiosInstance.defaults.headers['Access-Control-Allow-Origin'] = '*'
 
 axiosInstance.defaults.headers.post['Content-Type'] = 'application/json'
-axiosInstance.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
+// axiosInstance.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
 
 axiosInstance.interceptors.request.use(
   (configs: any) => {
