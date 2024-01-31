@@ -17,5 +17,14 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  build: {
+    manifest: true,
+    chunkSizeWarningLimit: 1000,
+    target: ['es2020']
+  },
+  esbuild: {
+    // avoid manual import React
+    jsxInject: "import React from 'react'"
   }
 })
