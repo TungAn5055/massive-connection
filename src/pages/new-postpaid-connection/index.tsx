@@ -41,10 +41,10 @@ const NewPostpaidConnection: React.FC = () => {
 
   const checkFalseIdentity = useMemo(() => {
     if (valueIdType && valueIdNo) {
-      if (valueIdType === 'RUC' && valueIdNo?.length !== 11) {
+      if (valueIdType == 3 && valueIdNo?.length !== 11) {
         return true
       }
-      if (valueIdType === 'DNI' && valueIdNo?.length !== 8) {
+      if (valueIdType == 1 && valueIdNo?.length !== 8) {
         return true
       }
       return false
