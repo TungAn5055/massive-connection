@@ -5,12 +5,12 @@ import { NO_DATA, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { useEffect, useMemo, useState } from 'react'
 import { NotificationSuccess, NotificationWarning } from '@/components/common/Notification'
-import useUploadFile from '@/hooks/useUploadFile'
 import useSaveContract from '@/hooks/useSaveContract.ts'
 import useSaveGroup from '@/hooks/useSaveGroup.ts'
 import downloadIcon from '@/assets/images/downloadicon.svg'
 import useGetGroupInfo from '@/hooks/useGetGroupInfo'
 import useDownloadFileSim from '@/hooks/useDownloadFileSim'
+import useUploadSim from '@/hooks/useUploadSim'
 const { Option } = Select
 
 const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any) => {
@@ -19,9 +19,9 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
   const [currentType, setCurrentType] = useState<any>('')
   const [currentClickItem, setCurrentClickItem] = useState<any>({})
   const [showError] = useState<boolean>(false)
-
+  console.log('listDataFiles++++', listDataFiles)
   const { responseGetGroupInfo, requestGetGroupInfo } = useGetGroupInfo()
-  const { responseUploadFile, requestUploadFile } = useUploadFile()
+  const { responseUploadFile, requestUploadFile } = useUploadSim()
   const { responseDownloadFile, requestDownloadFile } = useDownloadFileSim()
   const { responseSaveContract, requestSaveContract } = useSaveContract()
   const { responseSaveGroup, requestSaveGroup } = useSaveGroup()
@@ -40,7 +40,7 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
     if (currentFile && currentType) {
       formData.append('file', currentFile)
       formData.append('fileType', currentType)
-      formData.append('idNo', dataInfo?.idNo)
+      formData.append('idNo', contractNo ?? dataInfo?.idNo)
 
       requestUploadFile(formData)
     } else {
@@ -58,7 +58,7 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
       requestDownloadFile({
         fileName: item?.link_file,
         fileType: item?.type,
-        idNo: dataInfo?.idNo
+        idNo: contractNo ?? dataInfo?.idNo
       })
     } else {
       NotificationWarning('File not found')
@@ -134,12 +134,6 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
     }
   }, [contractNo])
 
-  useEffect(() => {
-    if (responseGetGroupInfo?.data && responseGetGroupInfo?.state === STATE?.SUCCESS) {
-      setListDataFiles(responseGetGroupInfo?.data)
-    }
-  }, [responseGetGroupInfo])
-
   return (
     <>
       <Form className={'form-search-customer'} name='advanced_search'>
@@ -198,7 +192,7 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
                   return false
                 }}
                 multiple={false}
-                accept={'.pdf'}
+                accept={'.xlsx, .xls'}
               >
                 <Button type='default' size={'large'} onClick={() => {}} loading={responseUploadFile?.loading}>
                   Seleccionar archivo
@@ -217,6 +211,7 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
             </Col>
             <Col span={4} style={{ paddingTop: '10px', color: '#6396bc' }}>
               <a
+                target='_blank'
                 href={
                   'https://docs.google.com/spreadsheets/d/13lUIfjn_Zu9-VWLhpuIC6_Q5VlW3t-Ll/edit?usp=drive_link&ouid=108812830668437018115&rtpof=true&sd=true'
                 }
