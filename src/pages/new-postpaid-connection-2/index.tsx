@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 
 const NewPostpaidConnection2: React.FC = () => {
   const navigate = useNavigate()
-  const [valueType, setValueType] = useState<any>('10432498404')
+  const [valueType, setValueType] = useState<any>('')
   const [valueStatus, setValueStatus] = useState<any>(null)
   const [isShowDetail, setIsShowDetail] = useState<boolean>(false)
   const [isShowClose, setIsShowClose] = useState<boolean>(false)
@@ -46,8 +46,8 @@ const NewPostpaidConnection2: React.FC = () => {
 
   const doSearch = () => {
     if (valueType && valueStatus) {
-      // requestSearchMassiveOrder({ idNo: valueType, page: 1, pageSize: 10, status: valueStatus })
-      requestSearchMassiveOrder({ idNo: valueType, page: 0, pageSize: 10, status: '' })
+      requestSearchMassiveOrder({ idNo: valueType, page: 1, pageSize: 10, status: valueStatus })
+      // requestSearchMassiveOrder({ idNo: valueType, page: 0, pageSize: 10, status: '' })
     }
   }
 
