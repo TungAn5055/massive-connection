@@ -17,25 +17,24 @@ export const apiUploadFileAsync = async (params: any, setResponse: any) => {
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.post('/api/upload-file', params, {
+    const response: any = await axiosInstance.post('/api/upload-file', params, {
       headers: {
-        'content-type': 'multipart/form-data',
+        'content-type': 'multipart/form-data'
       },
       cancelToken: source.token
     })
-
     if (response?.data) {
       setResponse({
         data: response.data,
         state: STATE.SUCCESS,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     } else {
       setResponse({
         data: [],
         state: STATE.ERROR,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     }

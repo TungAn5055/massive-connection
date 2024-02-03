@@ -12,7 +12,7 @@ import { TextAutoCompleteBranch } from '@/components/customer-infomation/form-li
 import { colorRowTotal, formatPrice } from '@/ultils/helper.ts'
 import dayjs from 'dayjs'
 
-const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
+const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabActive }: any) => {
   const [isTotal, setIsTotal] = useState<any>('')
   const [isChangeGroup, setIsChangeGroup] = useState<boolean>(false)
   const [isDisabledTotal, setIsDisabledTotal] = useState<boolean>(true)
@@ -60,6 +60,10 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
   }
   const onNextStep = () => {
     setActiveTab((prev) => (parseInt(prev) + 1).toString())
+    setListTabActive((prev) => {
+      prev.push('2')
+      return prev
+    })
   }
 
   const onChangeTotal = (e) => {
@@ -192,7 +196,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup }: any) => {
                     <span style={{ color: 'red' }}> *</span>
                   </Col>
                   <Col span={16}>
-                    <Input size={'large'} value={isTotal} onChange={onChangeTotal} />
+                    <Input size={'large'} value={isTotal} onChange={onChangeTotal} type={'number'} step='50' />
                   </Col>
                 </Row>
               </Form.Item>

@@ -52,7 +52,7 @@ export const FormText = ({
         setErrorValue({ status: false, message: null })
       }
     } else if (attribute === 'repreCustIdNo') {
-      if (!/^\d{0,8}$/.test(e.target.value)) {
+      if (!/^\d{8}$/.test(e.target.value)) {
         setErrorValue({
           status: true,
           message: 'Only allow number and max 8 digits'

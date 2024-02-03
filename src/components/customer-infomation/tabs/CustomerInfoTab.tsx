@@ -8,7 +8,7 @@ import { FormTextAutoComplete } from '@/components/customer-infomation/form-info
 import { SOURCE_METHOD_DE_PAGO } from '@/ultils/constants'
 import { convertForDataSource } from '@/ultils/helper'
 
-const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {} }: any) => {
+const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {}, setListTabActive }: any) => {
   const onNextStep = () => {
     let allRequestOK = true
     Object.values(validateField).forEach((func) => {
@@ -21,6 +21,10 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
 
     if (allRequestOK) {
       setActiveTab((prev) => (parseInt(prev) + 1).toString())
+      setListTabActive((prev) => {
+        prev.push('1')
+        return prev
+      })
     } else {
       const listMessageError = document.getElementsByClassName('message-error-data')
       if (listMessageError.length) {

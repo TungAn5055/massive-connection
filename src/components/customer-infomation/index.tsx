@@ -11,6 +11,7 @@ import { FolderOpenFilled } from '@ant-design/icons'
 const CustomerInformation = ({ dataCustomers = {} }: any) => {
   const [activeTab, setActiveTab] = useState('1')
   const [contractNo, setContractNo] = useState(null)
+  const [listTabActive, setListTabActive] = useState([])
 
   const [_dataInfo, _setDataInfo] = useState({})
   const dataInfo = _dataInfo
@@ -18,12 +19,16 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
     Object.assign(dataInfo, { ...data })
     _setDataInfo({ ...dataInfo })
   }
-  console.log('dataInfo+++', dataInfo)
   const [dataInfoGroup, setDataInfoGroup] = useState({})
 
-  const onChangeTabs = () => {
-    // setActiveTab(activeKey)
-    return false
+  const onChangeTabs = (activeKey: any) => {
+    console.log('listTabActive+++', listTabActive)
+    // @ts-expect-error
+    if (activeKey && listTabActive?.includes(activeKey)) {
+      setActiveTab(activeKey)
+    } else {
+      return false
+    }
   }
 
   useEffect(() => {
@@ -65,6 +70,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
                 setDataInfo={setDataInfo}
                 setActiveTab={setActiveTab}
                 dataCustomer={dataCustomers}
+                setListTabActive={setListTabActive}
               />
             </Tabs.TabPane>
             <Tabs.TabPane
@@ -83,6 +89,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
                 setDataInfoGroup={setDataInfoGroup}
                 dataCustomer={dataCustomers}
                 setActiveTab={setActiveTab}
+                setListTabActive={setListTabActive}
               />
             </Tabs.TabPane>
             <Tabs.TabPane
@@ -100,6 +107,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
                 setDataInfo={setDataInfo}
                 setContractNo={setContractNo}
                 setActiveTab={setActiveTab}
+                setListTabActive={setListTabActive}
               />
             </Tabs.TabPane>
             <Tabs.TabPane

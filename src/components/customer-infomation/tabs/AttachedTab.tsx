@@ -4,7 +4,7 @@ import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA, SOURCE_TYPE_OF_DOCUMENT, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { useEffect, useMemo, useState } from 'react'
-import { NotificationSuccess, NotificationWarning } from '@/components/common/Notification'
+import { NotificationError, NotificationSuccess, NotificationWarning } from '@/components/common/Notification'
 import useUploadFile from '@/hooks/useUploadFile'
 import { SOURCE_UPLOAD_FILE } from '@/ultils/dataSourceConstants'
 import useDownloadFile from '@/hooks/useDownloadFile'
@@ -115,6 +115,9 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
         return prev
       })
     }
+    if (responseUploadFile?.message && responseUploadFile?.state === STATE?.ERROR) {
+      NotificationError(responseUploadFile?.message)
+    }
   }, [responseUploadFile])
 
   useEffect(() => {
@@ -138,6 +141,9 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
       setContractNo(responseSaveContract?.data)
       requestSaveGroup(data)
     }
+    if (responseSaveContract?.message && responseSaveContract?.state === STATE?.ERROR) {
+      NotificationError(responseSaveContract?.message)
+    }
   }, [responseSaveContract])
 
   useEffect(() => {
@@ -154,11 +160,17 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
         })
       requestSaveDocument(data)
     }
+    if (responseSaveGroup?.message && responseSaveGroup?.state === STATE?.ERROR) {
+      NotificationError(responseSaveGroup?.message)
+    }
   }, [responseSaveGroup])
 
   useEffect(() => {
     if (responseSaveDocument?.data == true && responseSaveDocument?.state === STATE?.SUCCESS) {
       setActiveTab('4')
+    }
+    if (responseSaveDocument?.message && responseSaveDocument?.state === STATE?.ERROR) {
+      NotificationError(responseSaveDocument?.message)
     }
   }, [responseSaveDocument])
 
@@ -169,7 +181,9 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
           <legend>
             <span className={'legend-color'}>Documentación adjunta</span>
           </legend>
-          <span style={{ marginLeft: '20px' }}>La siguiente documentación es SUSTEN</span>
+          <span style={{ marginLeft: '20px' }}>
+            La siguiente documentación es SUSTENTATORIA para la contratación del servico.
+          </span>
           {/*line 1*/}
           <Row gutter={24} style={{ marginLeft: '10px', marginTop: '20px' }}>
             <Col span={8}>
@@ -214,7 +228,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                 </Row>
               </Form.Item>
             </Col>
-            <Col span={3}>
+            <Col span={4}>
               <Upload
                 showUploadList={false}
                 onChange={onChangeFile}
@@ -223,6 +237,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                 }}
                 multiple={false}
                 accept={'.pdf'}
+                // style={{ width: '300px' }}
               >
                 <Button type='default' size={'large'} onClick={() => {}} loading={responseUploadFile?.loading}>
                   Seleccionar archivo

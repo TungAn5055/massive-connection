@@ -17,7 +17,7 @@ export const apiGetGroupInfoAsync = async (params: any, setResponse: any) => {
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.get(params, {
+    const response: any = await axiosInstance.get(params, {
       cancelToken: source.token
     })
 
@@ -25,14 +25,14 @@ export const apiGetGroupInfoAsync = async (params: any, setResponse: any) => {
       setResponse({
         data: response.data,
         state: STATE.SUCCESS,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     } else {
       setResponse({
         data: [],
         state: STATE.ERROR,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     }

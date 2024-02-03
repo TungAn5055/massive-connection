@@ -17,7 +17,7 @@ export const apiUploadSimAsync = async (params: any, setResponse: any) => {
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.post('/api/upload-file-sims', params, {
+    const response: any = await axiosInstance.post('/api/upload-file-sims', params, {
       headers: {
         'content-type': 'multipart/form-data'
       },
@@ -28,14 +28,14 @@ export const apiUploadSimAsync = async (params: any, setResponse: any) => {
       setResponse({
         data: response.data,
         state: STATE.SUCCESS,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     } else {
       setResponse({
         data: [],
         state: STATE.ERROR,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     }

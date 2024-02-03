@@ -3,7 +3,7 @@ import axiosInstance from '@/configs/axios'
 import { STATE } from '@/ultils/constants'
 
 let source: any = null
-export const cancelApiUpdateStatusOrder= () => cancel(source)
+export const cancelApiUpdateStatusOrder = () => cancel(source)
 
 export const apiUpdateStatusOrderAsync = async (params: any, setResponse: any) => {
   setResponse({
@@ -17,7 +17,7 @@ export const apiUpdateStatusOrderAsync = async (params: any, setResponse: any) =
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.post('/api/update-status-order', params, {
+    const response: any = await axiosInstance.post('/api/update-status-order', params, {
       cancelToken: source.token
     })
 
@@ -25,14 +25,14 @@ export const apiUpdateStatusOrderAsync = async (params: any, setResponse: any) =
       setResponse({
         data: response.data,
         state: STATE.SUCCESS,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     } else {
       setResponse({
         data: [],
         state: STATE.ERROR,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     }

@@ -33,7 +33,7 @@ export const TextAutoCompletePlan = ({
     return check
   })
   const onSearch = (val) => {
-    if (val?.length > 1) {
+    if (val?.length >= 1) {
       requestGetStaffCode(`/api/get-plan?name=${val}`)
     }
   }

@@ -32,7 +32,7 @@ export const FormTextAutoComplete = ({
     return check
   })
   const onSearch = (val) => {
-    if (val?.length > 1) {
+    if (val?.length >= 1) {
       requestGetStaffCode(`/api/get-staff-code?staffCode=${val?.toUpperCase()}`)
     }
   }
@@ -45,6 +45,18 @@ export const FormTextAutoComplete = ({
       }
     }, 1300)
   }
+
+  setValidateAll([attribute], () => {
+    let check = true
+    if (isRequired && !value) {
+      check = false
+      setErrorValue({
+        status: true,
+        message: `Please enter input ${title}`
+      })
+    }
+    return check
+  })
 
   const onSelect = (data) => {
     if (data) {

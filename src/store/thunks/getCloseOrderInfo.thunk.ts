@@ -17,7 +17,7 @@ export const apiGetCloseOrderInfoAsync = async (params: any, setResponse: any) =
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.post('/api/get-close-order-info', params, {
+    const response: any = await axiosInstance.post('/api/get-close-order-info', params, {
       cancelToken: source.token
     })
 
@@ -25,7 +25,7 @@ export const apiGetCloseOrderInfoAsync = async (params: any, setResponse: any) =
       setResponse({
         data: response.data,
         state: STATE.SUCCESS,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     } else {
@@ -34,7 +34,7 @@ export const apiGetCloseOrderInfoAsync = async (params: any, setResponse: any) =
         totalPages: null,
         currentPage: 1,
         state: STATE.ERROR,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     }
