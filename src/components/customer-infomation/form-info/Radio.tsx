@@ -32,9 +32,11 @@ export const FormRadio = ({
       status: false,
       message: null
     })
-    if (attributeSave) {
-      setDataInfo({ [attributeSave]: e.target.value })
-    }
+    setTimeout(() => {
+      if (attributeSave) {
+        setDataInfo({ [attributeSave]: e.target.value })
+      }
+    }, 1300)
   }
 
   useEffect(() => {

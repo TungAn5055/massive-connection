@@ -5,10 +5,13 @@ import dayjs from 'dayjs'
 
 export const FormDate = ({
   attribute,
+  attributeSave,
   title,
   isRequired = false,
+  readOnly = false,
   dataCustomer = {},
-  setValidateAll = () => {}
+  setValidateAll = () => {},
+  setDataInfo = () => {}
 }: any) => {
   const [value, setValue] = useState(dayjs())
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
@@ -24,13 +27,38 @@ export const FormDate = ({
     }
     return check
   })
-  const onChangeSyncDate = (e) => {
-    setValue(e.target.value)
+  const onChangeSyncDate = (date, dateString) => {
+    setValue(date)
+    if (attributeSave == 'signDate') {
+      setDataInfo({ [attributeSave ?? attribute]: dateString, effectDate: dateString })
+    } else {
+      setDataInfo({ [attributeSave ?? attribute]: dateString })
+    }
   }
 
   useEffect(() => {
     if (attribute && dataCustomer[attribute]) {
       setValue(dataCustomer[attribute])
+      if (attributeSave) {
+        if (attributeSave == 'signDate') {
+          setDataInfo({ [attributeSave ?? attribute]: dataCustomer[attribute], effectDate: dataCustomer[attribute] })
+        } else {
+          setDataInfo({ [attributeSave ?? attribute]: dataCustomer[attribute] })
+        }
+      }
+    } else {
+      const currentDate = dayjs()
+      setValue(currentDate)
+      if (attributeSave) {
+        if (attributeSave == 'signDate') {
+          setDataInfo({
+            [attributeSave ?? attribute]: dayjs(currentDate).format('DD/MM/YYYY'),
+            effectDate: dayjs(currentDate).format('DD/MM/YYYY')
+          })
+        } else {
+          setDataInfo({ [attributeSave ?? attribute]: dayjs(currentDate).format('DD/MM/YYYY') })
+        }
+      }
     }
   }, [dataCustomer])
 
@@ -45,9 +73,11 @@ export const FormDate = ({
           <DatePicker
             style={{ width: '90%', padding: '6px' }}
             value={dayjs(value, 'YYYY-MM-DD')}
-            onChange={(e) => onChangeSyncDate(e)}
+            onChange={onChangeSyncDate}
             // disabledDate={disableActiveTime}
             format={FORMAT_DATE.DAY_MONTH_YEAR}
+            inputReadOnly={readOnly}
+            disabled={readOnly}
           />
         </Col>
         {errorValue?.status && (

@@ -39,6 +39,11 @@ export const FormTextAutoComplete = ({
 
   const onChange = (data) => {
     setValue(data)
+    setTimeout(() => {
+      if (attributeSave) {
+        setDataInfo({ [attributeSave ?? attribute]: data })
+      }
+    }, 1300)
   }
 
   const onSelect = (data) => {

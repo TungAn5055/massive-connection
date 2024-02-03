@@ -35,9 +35,11 @@ export const FormSelect = ({
     if (e) {
       setErrorValue({ status: false, message: null })
     }
-    if (attributeSave) {
-      setDataInfo({ [attributeSave ?? attribute]: e })
-    }
+    setTimeout(() => {
+      if (attributeSave) {
+        setDataInfo({ [attributeSave ?? attribute]: e })
+      }
+    }, 1300)
   }
 
   useEffect(() => {
@@ -48,7 +50,10 @@ export const FormSelect = ({
 
   useEffect(() => {
     if (dataSource?.length && dataSource?.length === 1) {
-      setValue(dataSource[0])
+      setValue(dataSource[0]?.value)
+      if (attributeSave) {
+        setDataInfo({ [attributeSave ?? attribute]: dataSource[0]?.value })
+      }
     }
   }, [dataSource])
 

@@ -28,3 +28,19 @@ export function getBase64(file) {
     reader.onerror = (error) => reject(error)
   })
 }
+
+export function convertForDataSource(list) {
+  if (typeof list === 'object') {
+    const res: any = []
+    Object.keys(list)?.forEach((it) => {
+      res.push({
+        label: list[it],
+        value: it
+      })
+    })
+
+    return res
+  } else {
+    return list
+  }
+}

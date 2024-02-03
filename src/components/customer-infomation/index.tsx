@@ -18,7 +18,7 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
     Object.assign(dataInfo, { ...data })
     _setDataInfo({ ...dataInfo })
   }
-
+  console.log('dataInfo+++', dataInfo)
   const [dataInfoGroup, setDataInfoGroup] = useState({})
 
   const onChangeTabs = () => {

@@ -34,9 +34,11 @@ export const FormText = ({
   const onChange = (e) => {
     const val = e?.target?.value ? e.target.value?.trim() : e.target.value
     setValue(val)
-    if (attributeSave) {
-      setDataInfo({ [attributeSave ?? attribute]: val })
-    }
+    setTimeout(() => {
+      if (attributeSave) {
+        setDataInfo({ [attributeSave ?? attribute]: val })
+      }
+    }, 1300)
   }
 
   const onBlur = (e) => {
@@ -83,7 +85,7 @@ export const FormText = ({
 
   useEffect(() => {
     if (attribute && dataCustomer[attribute]) {
-      if (attributeSave && !listAttrRepresentanteLegal.includes(attributeSave)) {
+      if (!listAttrRepresentanteLegal.includes(attributeSave)) {
         setValue(dataCustomer[attribute])
         if (attributeSave) {
           setDataInfo({ [attributeSave]: dataCustomer[attribute] })
@@ -93,8 +95,10 @@ export const FormText = ({
   }, [dataCustomer])
 
   useEffect(() => {
-    if (attributeSave && dataInfo?.typeOfContact == 1 && listAttrRepresentanteLegal.includes(attributeSave)) {
-      setValue(dataCustomer[attribute])
+    if (dataInfo?.typeOfContact == 1 && listAttrRepresentanteLegal.includes(attributeSave)) {
+      if (attribute && dataCustomer[attribute]) {
+        setValue(dataCustomer[attribute])
+      }
       if (attributeSave) {
         setDataInfo({ [attributeSave]: dataCustomer[attribute] })
       }
@@ -102,22 +106,7 @@ export const FormText = ({
   }, [dataInfo?.typeOfContact])
 
   return (
-    <Form.Item
-      rules={
-        [
-          // {
-          //     message: 'this is custom',
-          //     validator: (_, value) => {
-          //         if (/^[a-zA-Z0-9]+$/.test(value)) {
-          //             return Promise.resolve();
-          //         } else {
-          //             return Promise.reject('Some message here');
-          //         }
-          //     }
-          // }
-        ]
-      }
-    >
+    <Form.Item>
       <Row className={'display-flex'}>
         <Col span={isCustomSpan ? 3 : 6}>
           <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) ? 'title-red' : ''}>{title}</span>

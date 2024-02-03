@@ -6,9 +6,7 @@ export const loginWithHeader = () => {
     dispatch(actions.loginWithHeader())
     apis
       .login()
-      .then((res: any) => {
-        console.log('res++++', res)
-      })
+      .then(() => {})
       .catch((err) => dispatch(actions.loginWithHeaderFail(err.message)))
   }
 }

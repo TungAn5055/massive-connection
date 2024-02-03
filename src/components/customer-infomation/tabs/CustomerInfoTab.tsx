@@ -6,6 +6,7 @@ import { FormCheckBox } from '@/components/customer-infomation/form-info/Checkbo
 import { FormRadio } from '@/components/customer-infomation/form-info/Radio.tsx'
 import { FormTextAutoComplete } from '@/components/customer-infomation/form-info/TextAutoComplete'
 import { SOURCE_METHOD_DE_PAGO } from '@/ultils/constants'
+import { convertForDataSource } from '@/ultils/helper'
 
 const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {} }: any) => {
   const onNextStep = () => {
@@ -81,7 +82,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setDataInfo={setDataInfo}
                 attribute={'idNo'}
                 attributeSave={'idNo'}
-                title={'No de documento'}
+                title={'N° de documento'}
                 isRequired={false}
                 readOnly={true}
                 dataCustomer={dataCustomer}
@@ -97,9 +98,9 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'name'}
-                title={'Razon Social'}
+                attributeSave={'name'}
+                title={'Razón Social'}
                 dataCustomer={dataCustomer}
-                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -107,7 +108,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'activitiesField'}
-                title={'Campo de activated'}
+                title={'Campo de actividad'}
                 dataCustomer={dataCustomer}
                 readOnly={true}
               />
@@ -122,8 +123,9 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'idIssueDate'}
-                title={'Fec. Emission'}
+                title={'Fec Emisión'}
                 isRequired={true}
+                readOnly={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
               />
@@ -135,6 +137,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 attribute={'idExpireDate'}
                 title={'Fec. Vencimiento'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -142,8 +145,9 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'landlineNo'}
-                title={'Numero de telefono fijo'}
+                title={'Número de telefono fijo'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
           </Row>
@@ -155,10 +159,11 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'mobileNo'}
-                title={'Numero Movil'}
+                title={'Número Móvil'}
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -171,6 +176,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setValidateAll={setValidateAll}
                 placeholder={'Ej: abc@gmail.com'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}></Col>
@@ -188,6 +194,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -200,6 +207,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -212,6 +220,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
           </Row>
@@ -223,11 +232,12 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'home'}
-                title={'Direccion'}
+                title={'Dirección'}
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
                 placeholder={'Ef: Calle ABC#123, Urb XYZ'}
+                readOnly={true}
               />
             </Col>
             <Col span={16}>
@@ -242,6 +252,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isCustomSpan={true}
                 dataCustomer={dataCustomer}
                 placeholder={'LIMA-UMA-LIMA'}
+                readOnly={true}
               />
             </Col>
           </Row>
@@ -263,6 +274,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 title={'Tipo de documento'}
                 isDisabled={true}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -270,9 +282,10 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'repreCustIdNo'}
-                title={'No de documento'}
+                title={'N° de documento'}
                 placeholder={'--'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -283,6 +296,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 title={'Nacionalidad'}
                 placeholder={'--'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
           </Row>
@@ -298,6 +312,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -308,6 +323,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 title={'Segundo Apellido'}
                 isRequired={false}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -319,6 +335,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
           </Row>
@@ -332,6 +349,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 attribute={'repreCustName'}
                 title={'Nombre Completo'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -343,6 +361,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -352,6 +371,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 attribute={'repreCustTelFax'}
                 title={'Teléfono de contacto'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
           </Row>
@@ -365,6 +385,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 attribute={'repreCustIdIssuePlace'}
                 title={'Lugar de Emisión'}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -376,6 +397,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -387,6 +409,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer}
+                readOnly={true}
               />
             </Col>
           </Row>
@@ -419,7 +442,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setDataInfo={setDataInfo}
                 attribute={'contractTypeCode'}
                 attributeSave={'contractTypeCode'}
-                title={'Tipo de contract'}
+                title={'Tipo de contrato'}
                 dataCustomer={dataCustomer?.contractInfo}
               />
             </Col>
@@ -427,11 +450,10 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormSelect
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'send_doc_type'}
+                attribute={'contractLanguages'}
                 attributeSave={'contractLanguageCode'}
                 title={'Idioma de contrato'}
-                dataSource={dataCustomer?.contractLanguages}
-                defaultValue={1}
+                dataSource={convertForDataSource(dataCustomer?.contractInfo?.contractLanguages)}
               />
             </Col>
           </Row>
@@ -454,9 +476,9 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormDate
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'effectDate'}
+                attribute={''}
                 attributeSave={'endDatetime'}
-                title={'Fecha de expiration'}
+                title={'Fecha de expiración'}
                 dataCustomer={dataCustomer?.contractInfo}
               />
             </Col>
@@ -466,7 +488,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setDataInfo={setDataInfo}
                 attribute={'payMethodCode'}
                 attributeSave={'payMethodCode'}
-                title={'Method de pago'}
+                title={'Método de pago'}
                 dataSource={SOURCE_METHOD_DE_PAGO}
                 placholder={'----Select payment method----'}
               />
@@ -503,7 +525,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setDataInfo={setDataInfo}
                 attribute={'home'}
                 attributeSave={'home'}
-                title={'Direccion de facturacion'}
+                title={'Dirección de facturación'}
                 placeholder={'Ej: Colle ABC#123, Urb XYZ'}
                 dataCustomer={dataCustomer?.contractInfo}
               />
@@ -518,7 +540,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setDataInfo={setDataInfo}
                 attribute={'areaName'}
                 attributeSave={'areaCode'}
-                title={'Distrito - Prov-Dpto.'}
+                title={'Distrito - Prov - Dpto.'}
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 isCustomSpan={true}
@@ -532,7 +554,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setDataInfo={setDataInfo}
                 attribute={'noticeCharge'}
                 attributeSave={'noticeCharge'}
-                title={'Envio de recibos'}
+                title={'Envío de recibos'}
                 isRequired={true}
                 setValidateAll={setValidateAll}
                 dataCustomer={dataCustomer?.contractInfo}
