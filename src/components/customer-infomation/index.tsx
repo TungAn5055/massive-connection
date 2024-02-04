@@ -15,6 +15,8 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
 
   const [_dataInfo, _setDataInfo] = useState({})
   const dataInfo = _dataInfo
+
+  console.log('dataInfo+++', dataInfo)
   const setDataInfo = (data: any) => {
     Object.assign(dataInfo, { ...data })
     _setDataInfo({ ...dataInfo })
@@ -22,7 +24,6 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
   const [dataInfoGroup, setDataInfoGroup] = useState({})
 
   const onChangeTabs = (activeKey: any) => {
-    console.log('listTabActive+++', listTabActive)
     // @ts-expect-error
     if (activeKey && listTabActive?.includes(activeKey)) {
       setActiveTab(activeKey)

@@ -27,12 +27,15 @@ export const FormDate = ({
     }
     return check
   })
-  const onChangeSyncDate = (date, dateString) => {
+  const onChangeSyncDate = (date) => {
     setValue(date)
     if (attributeSave == 'signDate') {
-      setDataInfo({ [attributeSave ?? attribute]: dateString, effectDate: dateString })
+      setDataInfo({
+        [attributeSave ?? attribute]: dayjs(date).format('YYYY-MM-DD'),
+        effectDate: dayjs(date).format('YYYY-MM-DD')
+      })
     } else {
-      setDataInfo({ [attributeSave ?? attribute]: dateString })
+      setDataInfo({ [attributeSave ?? attribute]: dayjs(date).format('YYYY-MM-DD') })
     }
   }
 
@@ -52,11 +55,11 @@ export const FormDate = ({
       if (attributeSave) {
         if (attributeSave == 'signDate') {
           setDataInfo({
-            [attributeSave ?? attribute]: dayjs(currentDate).format('DD/MM/YYYY'),
-            effectDate: dayjs(currentDate).format('DD/MM/YYYY')
+            [attributeSave ?? attribute]: dayjs(currentDate).format('YYYY-MM-DD'),
+            effectDate: dayjs(currentDate).format('YYYY-MM-DD')
           })
         } else {
-          setDataInfo({ [attributeSave ?? attribute]: dayjs(currentDate).format('DD/MM/YYYY') })
+          setDataInfo({ [attributeSave ?? attribute]: dayjs(currentDate).format('YYYY-MM-DD') })
         }
       }
     }
