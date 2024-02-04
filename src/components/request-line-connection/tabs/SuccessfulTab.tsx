@@ -72,15 +72,11 @@ const SuccessfulTab = ({ contractNo }: any) => {
                 <span>{contentSuccess?.billCycleFrom}</span>
               </div>
               <div className={'display-flex-space-between'}>
-                <span className={'title-bold'}>Icon plus/ minus</span>
-                <span>+</span>
-              </div>
-              <div className={'display-flex-space-between'}>
                 <span className={'title-bold'}>Tipo de connexion</span>
                 <span>{contentSuccess?.typeOfConnection}</span>
               </div>
               <div className={'display-flex-space-between'}>
-                <span className={'title-bold'}>Start of service</span>
+                <span className={'title-bold'}>Fec. Carga</span>
                 <span>{contentSuccess?.effectDate}</span>
               </div>
             </div>

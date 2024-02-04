@@ -17,7 +17,7 @@ export const apiDownloadFileSimAsync = async (params: any, setResponse: any) => 
   source = getTokenSource()
 
   try {
-    const response: any = await axiosInstance.post('/api/download-file', params, {
+    const response: any = await axiosInstance.post('/api/download-file-sims', params, {
       cancelToken: source.token,
       responseType: 'arraybuffer',
       headers: {

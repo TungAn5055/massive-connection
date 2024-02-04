@@ -5,15 +5,14 @@ import { NO_DATA, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { useEffect, useMemo, useState } from 'react'
 import { NotificationSuccess, NotificationWarning } from '@/components/common/Notification'
-import useSaveContract from '@/hooks/useSaveContract.ts'
-import useSaveGroup from '@/hooks/useSaveGroup.ts'
 import downloadIcon from '@/assets/images/downloadicon.svg'
 import useGetGroupInfo from '@/hooks/useGetGroupInfo'
 import useDownloadFileSim from '@/hooks/useDownloadFileSim'
 import useUploadSim from '@/hooks/useUploadSim'
+import useUpdateStatusOrder from '@/hooks/useUpdateStatusOrder'
 const { Option } = Select
 
-const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any) => {
+const AttachedTab = ({ contractNo, setActiveTab }: any) => {
   const [listDataFiles, setListDataFiles] = useState<any>([])
   const [currentFile, setCurrentFile] = useState<any>('')
   const [currentType, setCurrentType] = useState<any>('')
@@ -22,13 +21,12 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
   const { responseGetGroupInfo, requestGetGroupInfo } = useGetGroupInfo()
   const { responseUploadFile, requestUploadFile } = useUploadSim()
   const { responseDownloadFile, requestDownloadFile } = useDownloadFileSim()
-  const { responseSaveContract, requestSaveContract } = useSaveContract()
-  const { responseSaveGroup, requestSaveGroup } = useSaveGroup()
+  const { responseUpdateStatusOrder, requestUpdateStatusOrder } = useUpdateStatusOrder()
+
   const tableLoading = {
     spinning: false,
     indicator: <LoadingRegion />
   }
-
   const onChangeFile = async (file) => {
     if (file?.file?.originFileObj) {
       setCurrentFile(file?.file?.originFileObj)
@@ -38,8 +36,10 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
     const formData = new FormData()
     if (currentFile && currentType) {
       formData.append('file', currentFile)
-      formData.append('fileType', currentType)
-      formData.append('idNo', contractNo ?? dataInfo?.idNo)
+      formData.append('groupId', currentType?.groupId)
+      // formData.append('quantityOfLines', '21')
+      formData.append('quantityOfLines', currentType?.quantityOfLines)
+      formData.append('contractNo', contractNo)
 
       requestUploadFile(formData)
     } else {
@@ -52,12 +52,12 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
   }
 
   const downloadFile = async (item) => {
-    if (item?.link_file && item?.type) {
+    if (item?.fileName && item?.groupId) {
       setCurrentClickItem(item)
       requestDownloadFile({
-        fileName: item?.link_file,
-        fileType: item?.type,
-        idNo: contractNo ?? dataInfo?.idNo
+        fileName: item?.fileName,
+        groupId: item?.groupId,
+        idNo: contractNo
       })
     } else {
       NotificationWarning('File not found')
@@ -65,31 +65,31 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
   }
 
   const onSaveDataContract = () => {
-    requestSaveContract(dataInfo)
+    requestUpdateStatusOrder({
+      status: 2,
+      contractNo: contractNo
+    })
   }
 
   const isdDisableButtonNext = useMemo(() => {
     let flag = false
     if (listDataFiles?.length > 0) {
-      listDataFiles
-        .filter((it) => it?.mandatory)
-        ?.forEach((it) => {
-          if (!it?.link_file) {
-            flag = true
-          }
-        })
+      const res = listDataFiles.filter((it) => !it?.status)
+      if (res?.length > 0) {
+        flag = true
+      }
     }
 
     return flag
   }, [listDataFiles])
 
   useEffect(() => {
-    if (responseUploadFile?.data?.fileType && responseUploadFile?.state === STATE?.SUCCESS) {
+    if (responseUploadFile?.data?.fileName && responseUploadFile?.state === STATE?.SUCCESS) {
       NotificationSuccess('Upload file success', null)
       setListDataFiles((prev) => {
         prev = prev?.map((it) => {
-          if (it?.type == responseUploadFile?.data?.fileType) {
-            return { ...it, status: true, link_file: responseUploadFile?.data?.fileName }
+          if (it?.groupId == responseUploadFile?.data?.groupId) {
+            return { ...it, status: true, fileName: responseUploadFile?.data?.fileName }
           } else {
             return it
           }
@@ -104,7 +104,7 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
 
   useEffect(() => {
     if (responseDownloadFile?.data && responseDownloadFile?.state === STATE?.SUCCESS) {
-      const url = window.URL.createObjectURL(new Blob([responseSaveGroup?.data]))
+      const url = window.URL.createObjectURL(new Blob([responseDownloadFile?.data]))
       const link = document.createElement('a')
       link.href = url
       link.setAttribute('download', currentClickItem?.link_file) //or any other extension
@@ -115,17 +115,16 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
   }, [responseDownloadFile])
 
   useEffect(() => {
-    if (responseSaveContract?.data && responseSaveContract?.state === STATE?.SUCCESS) {
-      setContractNo(responseSaveContract?.data)
-      requestSaveGroup([])
+    if (responseUpdateStatusOrder?.data && responseUpdateStatusOrder?.state === STATE?.SUCCESS) {
+      setActiveTab('2')
     }
-  }, [responseSaveContract])
+  }, [responseUpdateStatusOrder])
 
   useEffect(() => {
-    if (responseSaveGroup?.data && responseSaveGroup?.state === STATE?.SUCCESS) {
-      setActiveTab('4')
+    if (responseGetGroupInfo?.data && responseGetGroupInfo?.state === STATE?.SUCCESS) {
+      setListDataFiles(responseGetGroupInfo?.data)
     }
-  }, [responseSaveGroup])
+  }, [responseGetGroupInfo])
 
   useEffect(() => {
     if (contractNo) {
@@ -151,14 +150,17 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
                   <Col span={18}>
                     <Select
                       size={'large'}
-                      value={currentType}
-                      onChange={(e) => {
-                        setCurrentType(e)
+                      value={currentType?.groupId}
+                      onChange={(e, info: any) => {
+                        setCurrentType({
+                          groupId: e,
+                          quantityOfLines: info?.quantityOfLines
+                        })
                       }}
                     >
                       {responseGetGroupInfo?.data?.map((item, itemIndex) => {
                         return (
-                          <Option key={itemIndex} value={item.groupId}>
+                          <Option key={itemIndex} value={item.groupId} quantityOfLines={item?.quantityOfLines}>
                             {item.groupName}
                           </Option>
                         )
@@ -233,45 +235,35 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
           </legend>
           <Table
             rowKey={(record: any) => record.id}
-            dataSource={listDataFiles}
+            // dataSource={listDataFiles}
+            dataSource={listDataFiles?.filter((it) => it?.status)}
             pagination={false}
             loading={tableLoading}
             locale={{ emptyText: <EmptyUI content={NO_DATA} /> }}
           >
             <Column
               title={'#'}
-              dataIndex='idx'
-              key='idx'
+              dataIndex=''
+              key='ddd'
+              render={(val, info, index) => {
+                return info && val && <Space>{index + 1}</Space>
+              }}
+            />
+            <Column title={'No of group'} dataIndex='groupName' key='groupName' />
+            <Column
+              title={'Number'}
+              dataIndex='quantityOfLines'
+              key='quantityOfLines'
               render={(val) => {
                 return <Space>{val}</Space>
               }}
             />
-            <Column title={'No of group'} dataIndex='title_type' key='title_type' />
-            <Column
-              title={'Number'}
-              dataIndex='mandatory'
-              key='mandatory'
-              render={(val) => {
-                return <Space>{val ? 'YES' : 'NO'}</Space>
-              }}
-            />
             <Column
               title={'Plan'}
-              dataIndex='link_file'
-              key='link_file'
-              render={(val, record) => {
-                if (val) {
-                  return (
-                    <img
-                      src={downloadIcon}
-                      alt='download'
-                      onClick={() => downloadFile(record)}
-                      style={{ height: '30px' }}
-                    />
-                  )
-                } else {
-                  return <></>
-                }
+              dataIndex='productName'
+              key='productName'
+              render={(val) => {
+                return <Space>{val}</Space>
               }}
             />
             <Column
@@ -288,8 +280,8 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
             />
             <Column
               title={'Download file'}
-              dataIndex='link_file'
-              key='link_file'
+              dataIndex='fileName'
+              key='fileName'
               render={(val, record) => {
                 if (val) {
                   return (
@@ -309,7 +301,7 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
         </fieldset>
       </Form>
       {isdDisableButtonNext && (
-        <div className={'message-error'}>Por Favor subir todos los documentos sustentatorios del Client</div>
+        <div className={'message-error'}>Por favor, subir documento para todos los grupos creados</div>
       )}
       <div className={'display-flex-center button-continue'}>
         <Button
@@ -317,9 +309,9 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
           size={'large'}
           onClick={onSaveDataContract}
           disabled={isdDisableButtonNext}
-          loading={responseSaveContract?.loading || responseSaveContract?.loading}
+          loading={responseUpdateStatusOrder?.loading}
         >
-          Registrar solicitud
+          Continue
         </Button>
       </div>
     </>
