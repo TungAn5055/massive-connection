@@ -13,8 +13,8 @@ const NewLineConnection: React.FC = () => {
   //   _setDataInfo({ ...dataInfo })
   // }
   const onChangeTabs = (activeKey: any) => {
+    return false
     setActiveTab(activeKey)
-    // return false
   }
 
   return (

@@ -151,7 +151,6 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
 
     return flag
   }, [isTotal, dataTable])
-
   useEffect(() => {
     if (dataTable?.length > 0) {
       const itemSave: any = []

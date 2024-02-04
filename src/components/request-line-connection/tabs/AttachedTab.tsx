@@ -4,7 +4,7 @@ import { EmptyUI } from '@/components/ui-source/empty'
 import { NO_DATA, STATE } from '@/ultils/constants'
 import { LoadingRegion } from '@/components/ui-source/loading'
 import { useEffect, useMemo, useState } from 'react'
-import { NotificationSuccess, NotificationWarning } from '@/components/common/Notification'
+import { NotificationError, NotificationSuccess, NotificationWarning } from '@/components/common/Notification'
 import downloadIcon from '@/assets/images/downloadicon.svg'
 import useGetGroupInfo from '@/hooks/useGetGroupInfo'
 import useDownloadFileSim from '@/hooks/useDownloadFileSim'
@@ -100,6 +100,9 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
       setCurrentType('')
       setCurrentFile('')
     }
+    if (responseUploadFile?.message && responseUploadFile?.state === STATE?.ERROR) {
+      NotificationError(responseUploadFile?.message)
+    }
   }, [responseUploadFile])
 
   useEffect(() => {
@@ -123,6 +126,9 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
   useEffect(() => {
     if (responseGetGroupInfo?.data && responseGetGroupInfo?.state === STATE?.SUCCESS) {
       setListDataFiles(responseGetGroupInfo?.data)
+    }
+    if (responseGetGroupInfo?.message && responseGetGroupInfo?.state === STATE?.ERROR) {
+      NotificationError(responseGetGroupInfo?.messag)
     }
   }, [responseGetGroupInfo])
 
@@ -157,6 +163,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
                           quantityOfLines: info?.quantityOfLines
                         })
                       }}
+                      placeholder={'- Select group of new lines -'}
                     >
                       {responseGetGroupInfo?.data?.map((item, itemIndex) => {
                         return (
@@ -179,13 +186,18 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
                     <span>Data file</span>
                   </Col>
                   <Col span={18}>
-                    <Input size={'large'} value={currentFile?.name ?? ''} disabled={true} />
+                    <Input
+                      size={'large'}
+                      value={currentFile?.name ?? ''}
+                      disabled={true}
+                      placeholder={'- Insert file here xls-'}
+                    />
                   </Col>
                 </Row>
               </Form.Item>
             </Col>
 
-            <Col span={3} style={{ marginLeft: '30px' }}>
+            <Col span={4} style={{ marginLeft: '30px' }}>
               <Upload
                 showUploadList={false}
                 onChange={onChangeFile}
@@ -200,7 +212,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
                 </Button>
               </Upload>
             </Col>
-            <Col span={2}>
+            <Col span={3}>
               <Button
                 type='default'
                 size={'large'}
@@ -210,7 +222,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
                 Upload
               </Button>
             </Col>
-            <Col span={4} style={{ paddingTop: '10px', color: '#6396bc' }}>
+            <Col span={5} style={{ paddingTop: '10px', color: '#6396bc' }}>
               <a
                 target='_blank'
                 href={
@@ -231,12 +243,12 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
       <Form className={'form-search-customer'} name='advanced_search'>
         <fieldset>
           <legend style={{ marginBottom: '0 !important' }}>
-            <span className={'legend-color'}>Uploaded Document</span>
+            <span className={'legend-color'}>Table of files</span>
           </legend>
           <Table
             rowKey={(record: any) => record.id}
             // dataSource={listDataFiles}
-            dataSource={listDataFiles?.filter((it) => it?.status)}
+            dataSource={listDataFiles}
             pagination={false}
             loading={tableLoading}
             locale={{ emptyText: <EmptyUI content={NO_DATA} /> }}

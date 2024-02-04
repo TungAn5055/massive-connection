@@ -125,7 +125,7 @@ const PopupCloseOrder = ({
                   </Row>
                   <Row className={'content-title-summary-detail '}>
                     <Col span={10}>
-                      <span className={'title-summary-detail'}>Date of establish</span>
+                      <span className={'title-summary-detail'}>Date of Stablish</span>
                     </Col>
                     <Col span={12}>
                       <span className={'legend-color'}>{dataInfo?.idIssueDate}</span>
@@ -154,7 +154,7 @@ const PopupCloseOrder = ({
                 <Col span={8} key={2}>
                   <Row className={'content-title-summary-detail '}>
                     <Col span={10}>
-                      <span className={'title-summary-detail'}>Razon Social</span>
+                      <span className={'title-summary-detail'}> Razón Social</span>
                     </Col>
                     <Col span={12}>
                       <span className={'legend-color'}>{dataInfo?.name}</span>
@@ -185,7 +185,7 @@ const PopupCloseOrder = ({
                       <span className={'title-summary-detail'}>Customer Type</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.repreCustType}</span>
+                      <span className={'legend-color'}>{dataInfo?.busType}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -326,7 +326,7 @@ const PopupCloseOrder = ({
                   </Row>
                   <Row className={'content-title-summary-detail '}>
                     <Col span={10}>
-                      <span className={'title-summary-detail'}>Direccion de facturacion</span>
+                      <span className={'title-summary-detail'}>Direccion de facturación</span>
                     </Col>
                     <Col span={12}>
                       <span className={'legend-color'}>{dataInfo?.contractInfo?.home}</span>
@@ -390,15 +390,7 @@ const PopupCloseOrder = ({
                   </Row>
                   <Row className={'content-title-summary-detail '}>
                     <Col span={10}>
-                      <span className={'title-summary-detail'}>Direccion de facturacion</span>
-                    </Col>
-                    <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.contractInfo?.home}</span>
-                    </Col>
-                  </Row>
-                  <Row className={'content-title-summary-detail '}>
-                    <Col span={10}>
-                      <span className={'title-summary-detail'}>Envio de recibos</span>
+                      <span className={'title-summary-detail'}>Envío de recibos</span>
                     </Col>
                     <Col span={12}>
                       <span className={'legend-color'}>{dataInfo?.contractInfo?.noticeCharge}</span>

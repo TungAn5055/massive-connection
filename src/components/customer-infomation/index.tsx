@@ -16,7 +16,6 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
   const [_dataInfo, _setDataInfo] = useState({})
   const dataInfo = _dataInfo
 
-  console.log('dataInfo+++', dataInfo)
   const setDataInfo = (data: any) => {
     Object.assign(dataInfo, { ...data })
     _setDataInfo({ ...dataInfo })

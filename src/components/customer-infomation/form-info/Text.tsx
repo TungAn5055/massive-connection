@@ -42,7 +42,7 @@ export const FormText = ({
   }
 
   const onBlur = (e) => {
-    if (attribute === 'email') {
+    if (attribute === 'email' || attribute === 'contactEmail') {
       if (e.target.value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e.target.value)) {
         setErrorValue({
           status: true,
@@ -51,7 +51,7 @@ export const FormText = ({
       } else {
         setErrorValue({ status: false, message: null })
       }
-    } else if (attribute === 'repreCustIdNo') {
+    } else if (attribute === 'repreCustIdNox') {
       if (!/^\d{8}$/.test(e.target.value)) {
         setErrorValue({
           status: true,
@@ -91,6 +91,13 @@ export const FormText = ({
           setDataInfo({ [attributeSave]: dataCustomer[attribute] })
         }
       }
+    } else if (attribute === 'repreCustIdNox' && dataCustomer['repreCustIdNo']) {
+      if (!listAttrRepresentanteLegal.includes(attributeSave)) {
+        setValue(dataCustomer['repreCustIdNo'])
+        if (attributeSave) {
+          setDataInfo({ [attributeSave]: dataCustomer['repreCustIdNo'] })
+        }
+      }
     }
   }, [dataCustomer])
 
@@ -98,9 +105,18 @@ export const FormText = ({
     if (dataInfo?.typeOfContact == 1 && listAttrRepresentanteLegal.includes(attributeSave)) {
       if (attribute && dataCustomer[attribute]) {
         setValue(dataCustomer[attribute])
-      }
-      if (attributeSave) {
-        setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+        if (attributeSave) {
+          setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+        }
+        setErrorValue({ status: false, message: null })
+      } else if (attribute === 'repreCustIdNox' && dataCustomer['repreCustIdNo']) {
+        if (listAttrRepresentanteLegal.includes(attributeSave)) {
+          setValue(dataCustomer['repreCustIdNo'])
+          if (attributeSave) {
+            setDataInfo({ [attributeSave]: dataCustomer['repreCustIdNo'] })
+          }
+        }
+        setErrorValue({ status: false, message: null })
       }
     }
   }, [dataInfo?.typeOfContact])

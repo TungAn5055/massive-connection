@@ -46,18 +46,6 @@ export const FormTextAutoComplete = ({
     }, 1300)
   }
 
-  setValidateAll([attribute], () => {
-    let check = true
-    if (isRequired && !value) {
-      check = false
-      setErrorValue({
-        status: true,
-        message: `Please enter input ${title}`
-      })
-    }
-    return check
-  })
-
   const onSelect = (data) => {
     if (data) {
       setValue(data)

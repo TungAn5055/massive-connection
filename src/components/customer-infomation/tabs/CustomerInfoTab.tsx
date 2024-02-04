@@ -587,7 +587,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormRadio
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'staffCode'}
+                attribute={'typeOfContact'}
                 attributeSave={'typeOfContact'}
                 title={'Contacto Autorizado'}
                 isRequired={true}
@@ -615,7 +615,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormText
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'repreCustIdNo'}
+                attribute={'repreCustIdNox'}
                 attributeSave={'contactId'}
                 title={'DNI'}
                 isRequired={true}
