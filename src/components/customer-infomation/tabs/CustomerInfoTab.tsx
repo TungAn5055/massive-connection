@@ -539,7 +539,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
           {/*line 4*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={16}>
-              <FormText
+              <FormTextAutoComplete
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'areaName'}

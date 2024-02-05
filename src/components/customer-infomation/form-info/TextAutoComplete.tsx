@@ -33,12 +33,20 @@ export const FormTextAutoComplete = ({
   })
   const onSearch = (val) => {
     if (val?.length >= 1) {
-      requestGetStaffCode(`/api/get-staff-code?staffCode=${val?.toUpperCase()}`)
+      if(attribute == 'areaName') {
+        requestGetStaffCode(`/api/get-area?name=${val?.toUpperCase()}`)
+      } else {
+        requestGetStaffCode(`/api/get-staff-code?staffCode=${val?.toUpperCase()}`)
+      }
     }
   }
 
-  const onChange = (data) => {
-    setValue(data)
+  const onChange = (data, info) => {
+    if(attribute == 'areaName') {
+      setValue(info?.label ??  data)
+    } else {
+      setValue(data)
+    }
     setTimeout(() => {
       if (attributeSave) {
         setDataInfo({ [attributeSave ?? attribute]: data })
@@ -46,9 +54,14 @@ export const FormTextAutoComplete = ({
     }, 1300)
   }
 
-  const onSelect = (data) => {
+  const onSelect = (data, info) => {
     if (data) {
-      setValue(data)
+      if(attribute == 'areaName') {
+        setValue(info?.label ??  data)
+      } else {
+        setValue(data)
+      }
+
       setErrorValue({ status: false, message: null })
       if (attributeSave) {
         setDataInfo({ [attributeSave]: data })
@@ -57,8 +70,17 @@ export const FormTextAutoComplete = ({
   }
 
   useEffect(() => {
-    if (responseStaffCode?.data?.length > 0 && responseStaffCode?.state === STATE?.SUCCESS) {
-      setOptions(responseStaffCode?.data.map((it) => ({ value: it })))
+    if (responseStaffCode?.data && responseStaffCode?.state === STATE?.SUCCESS) {
+      if(attribute == 'areaName') {
+        let data = Object.keys(responseStaffCode?.data).map((it) => ({
+          value: it,
+          label: it + ' - ' + responseStaffCode?.data[it],
+        }));
+        setOptions(data);
+      } else {
+        setOptions(responseStaffCode?.data.map((it) => ({ value: it })))
+      }
+
     } else {
       setOptions([])
     }
