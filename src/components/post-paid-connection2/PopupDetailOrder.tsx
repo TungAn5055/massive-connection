@@ -6,7 +6,7 @@ import { FolderOpenFilled } from '@ant-design/icons'
 import { EmptyUI } from '@/components/ui-source/empty'
 import Column from 'antd/es/table/Column'
 import { LoadingRegion } from '@/components/common/LoadingRegion.tsx'
-import checkMarkIcon from '@/assets/images/check-mark-circle-icon.svg'
+import checkMarkIcon from '@/assets/images/downloadicon.svg'
 import circleIcon from '@/assets/images/circle-line-icon.svg'
 
 const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDetail, setCurrentContractNo }: any) => {

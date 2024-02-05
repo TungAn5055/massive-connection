@@ -120,7 +120,7 @@ const PopupCloseOrder = ({
                       <span className={'title-summary-detail'}>Customer Type</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.repreCustType}</span>
+                      <span className={'legend-color'}>{dataInfo?.busType}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -185,7 +185,7 @@ const PopupCloseOrder = ({
                       <span className={'title-summary-detail'}>Customer Type</span>
                     </Col>
                     <Col span={12}>
-                      <span className={'legend-color'}>{dataInfo?.busType}</span>
+                      <span className={'legend-color'}>{dataInfo?.repreCustType}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>

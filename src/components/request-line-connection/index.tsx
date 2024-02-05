@@ -21,8 +21,8 @@ const RequestLineConnectionContent = ({ contractNo }: any) => {
     _setDataInfo({ ...dataInfo })
   }
 
-  const onChangeTabs = (activeKey) => {
-    setActiveTab(activeKey)
+  const onChangeTabs = () => {
+    // setActiveTab(activeKey)
     return false
   }
 
