@@ -95,7 +95,6 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
         let text = ''
         res.forEach((it: any, index: number) => {
           if(it?.data == false && dataActive[index]) {
-            console.log(dataActive[index]?.fileName)
             flag = false;
             text += dataActive[index]?.fileName + ","
           }
@@ -103,6 +102,13 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
 
         if(!flag) {
           NotificationError(`Upload file error: ${text}`)
+        }
+
+        if(flag) {
+          requestUpdateStatusOrder({
+            status: 2,
+            contractNo: contractNo
+          })
         }
       }
     });
@@ -170,7 +176,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
       setListDataFiles(responseGetGroupInfo?.data)
     }
     if (responseGetGroupInfo?.message && responseGetGroupInfo?.state === STATE?.ERROR) {
-      NotificationError(responseGetGroupInfo?.messag)
+      NotificationError(responseGetGroupInfo?.message)
     }
   }, [responseGetGroupInfo])
 
