@@ -17,7 +17,14 @@ export const COLUMN_TABLE_SUCCESS_TAB = [
   {
     title: 'Fingerprint validation',
     dataIndex: 'lineActivation',
-    key: 'lineActivation'
+    key: 'lineActivation',
+    render: (value) => {
+      if (value) {
+        return "Yes"
+      } else {
+        return  "No"
+      }
+    }
   },
   {
     title: 'Branch Assigned',

@@ -174,9 +174,9 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                   key='lineActivation'
                   render={(value) => {
                     if (value) {
-                      return <Space>True</Space>
+                      return <Space>Yes</Space>
                     } else {
-                      return <Space>False</Space>
+                      return <Space>No</Space>
                     }
                   }}
                 />

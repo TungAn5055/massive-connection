@@ -44,7 +44,7 @@ const SuccessfulTab = ({ contractNo }: any) => {
           className={'display-flex-center'}
           style={{ fontSize: '15px', fontWeight: '600', color: '#0f4da2', margin: '10px 0' }}
         >
-          <span>Solicitud de creación de Work Order registrada con éxito</span>
+          <span>Carga de SIMS realizada con éxito</span>
         </div>
       </div>
       {!!contentSuccess?.idNo && (
@@ -68,7 +68,7 @@ const SuccessfulTab = ({ contractNo }: any) => {
                 <span>{contentSuccess?.contactName}</span>
               </div>
               <div className={'display-flex-space-between'}>
-                <span className={'title-bold'}>Circle de facturacion</span>
+                <span className={'title-bold'}>Circle de facturación</span>
                 <span>{contentSuccess?.billCycleFrom}</span>
               </div>
               <div className={'display-flex-space-between'}>

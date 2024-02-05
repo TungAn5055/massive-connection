@@ -124,7 +124,7 @@ const AttachedTab = ({ dataInfo, contractNo, setActiveTab, setContractNo }: any)
 
   useEffect(() => {
     if (responseSaveGroup?.data && responseSaveGroup?.state === STATE?.SUCCESS) {
-      setActiveTab('4')
+      setActiveTab('2')
     }
   }, [responseSaveGroup])
 
