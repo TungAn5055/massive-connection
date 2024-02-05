@@ -10,6 +10,7 @@ import useGetGroupInfo from '@/hooks/useGetGroupInfo'
 import useDownloadFileSim from '@/hooks/useDownloadFileSim'
 import useUploadSim from '@/hooks/useUploadSim'
 import useUpdateStatusOrder from '@/hooks/useUpdateStatusOrder'
+import axiosInstance from "@/configs/axios.ts";
 const { Option } = Select
 
 const AttachedTab = ({ contractNo, setActiveTab }: any) => {
@@ -29,17 +30,29 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
   }
   const onChangeFile = async (file) => {
     if (file?.file?.originFileObj) {
-      setCurrentFile(file?.file?.originFileObj)
+      setCurrentFile(file?.file)
     }
   }
   const onUploadFile = async () => {
     const formData = new FormData()
     if (currentFile && currentType) {
-      formData.append('file', currentFile)
+      formData.append('file', currentFile?.originFileObj)
       formData.append('groupId', currentType?.groupId)
       // formData.append('quantityOfLines', '21')
       formData.append('quantityOfLines', currentType?.quantityOfLines)
       formData.append('contractNo', contractNo)
+
+      setListDataFiles((prev) => {
+        prev = prev?.map((it) => {
+          if (it?.groupId == currentType?.groupId) {
+            return { ...it, dataFile: currentFile }
+          } else {
+            return it
+          }
+        })
+
+        return prev
+      })
 
       requestUploadFile(formData)
     } else {
@@ -64,7 +77,36 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
     }
   }
 
-  const onSaveDataContract = () => {
+  const onSaveDataContract = async () => {
+    await  Promise.all( listDataFiles?.filter(it => it?.status).map( async(it) => {
+      const formData1 = new FormData()
+      formData1.append('file', it?.dataFile?.originFileObj)
+      formData1.append('groupId', currentType?.groupId)
+      formData1.append('contractNo', contractNo)
+      return await axiosInstance.post('/api/save-list-sims', formData1, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        },
+      })
+    })).then(function(res, ) {
+      if(res?.length > 0) {
+        let dataActive =  listDataFiles?.filter(it => it?.status);
+        let flag = true;
+        let text = ''
+        res.forEach((it: any, index: number) => {
+          if(it?.data == false && dataActive[index]) {
+            console.log(dataActive[index]?.fileName)
+            flag = false;
+            text += dataActive[index]?.fileName + ","
+          }
+        })
+
+        if(!flag) {
+          NotificationError(`Upload file error: ${text}`)
+        }
+      }
+    });
+
     requestUpdateStatusOrder({
       status: 2,
       contractNo: contractNo
