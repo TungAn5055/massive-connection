@@ -122,7 +122,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
 
   useEffect(() => {
     if (responseDownloadFile?.data && responseDownloadFile?.state === STATE?.SUCCESS) {
-      const url = window.URL.createObjectURL(new Blob([responseSaveGroup?.data]))
+      const url = window.URL.createObjectURL(new Blob([responseDownloadFile?.data]))
       const link = document.createElement('a')
       link.href = url
       link.setAttribute('download', currentClickItem?.link_file) //or any other extension
