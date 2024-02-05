@@ -34,13 +34,15 @@ export const FormText = ({
   const onChange = (e) => {
     const val = e?.target?.value ? e.target.value?.trim() : e.target.value
     setValue(val)
-    if (attributeSave) {
-      setDataInfo({ [attributeSave ?? attribute]: val })
-    }
+    setTimeout(() => {
+      if (attributeSave) {
+        setDataInfo({ [attributeSave ?? attribute]: val })
+      }
+    }, 1300)
   }
 
   const onBlur = (e) => {
-    if (attribute === 'email') {
+    if (attribute === 'email' || attribute === 'contactEmail') {
       if (e.target.value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e.target.value)) {
         setErrorValue({
           status: true,
@@ -49,8 +51,8 @@ export const FormText = ({
       } else {
         setErrorValue({ status: false, message: null })
       }
-    } else if (attribute === 'repreCustIdNo') {
-      if (!/^\d{0,8}$/.test(e.target.value)) {
+    } else if (attribute === 'repreCustIdNox') {
+      if (!/^\d{8}$/.test(e.target.value)) {
         setErrorValue({
           status: true,
           message: 'Only allow number and max 8 digits'
@@ -83,41 +85,44 @@ export const FormText = ({
 
   useEffect(() => {
     if (attribute && dataCustomer[attribute]) {
-      if (attributeSave && !listAttrRepresentanteLegal.includes(attributeSave)) {
+      if (!listAttrRepresentanteLegal.includes(attributeSave)) {
         setValue(dataCustomer[attribute])
         if (attributeSave) {
           setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+        }
+      }
+    } else if (attribute === 'repreCustIdNox' && dataCustomer['repreCustIdNo']) {
+      if (!listAttrRepresentanteLegal.includes(attributeSave)) {
+        setValue(dataCustomer['repreCustIdNo'])
+        if (attributeSave) {
+          setDataInfo({ [attributeSave]: dataCustomer['repreCustIdNo'] })
         }
       }
     }
   }, [dataCustomer])
 
   useEffect(() => {
-    if (attributeSave && dataInfo?.typeOfContact == 1 && listAttrRepresentanteLegal.includes(attributeSave)) {
-      setValue(dataCustomer[attribute])
-      if (attributeSave) {
-        setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+    if (dataInfo?.typeOfContact == 1 && listAttrRepresentanteLegal.includes(attributeSave)) {
+      if (attribute && dataCustomer[attribute]) {
+        setValue(dataCustomer[attribute])
+        if (attributeSave) {
+          setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+        }
+        setErrorValue({ status: false, message: null })
+      } else if (attribute === 'repreCustIdNox' && dataCustomer['repreCustIdNo']) {
+        if (listAttrRepresentanteLegal.includes(attributeSave)) {
+          setValue(dataCustomer['repreCustIdNo'])
+          if (attributeSave) {
+            setDataInfo({ [attributeSave]: dataCustomer['repreCustIdNo'] })
+          }
+        }
+        setErrorValue({ status: false, message: null })
       }
     }
   }, [dataInfo?.typeOfContact])
 
   return (
-    <Form.Item
-      rules={
-        [
-          // {
-          //     message: 'this is custom',
-          //     validator: (_, value) => {
-          //         if (/^[a-zA-Z0-9]+$/.test(value)) {
-          //             return Promise.resolve();
-          //         } else {
-          //             return Promise.reject('Some message here');
-          //         }
-          //     }
-          // }
-        ]
-      }
-    >
+    <Form.Item>
       <Row className={'display-flex'}>
         <Col span={isCustomSpan ? 3 : 6}>
           <span className={LIST_ATTRIBUTE_RED_TITLE.includes(attribute) ? 'title-red' : ''}>{title}</span>

@@ -49,7 +49,7 @@ export const SOURCE_UPLOAD_FILE = [
     idx: 2,
     type: 2,
     title_type: 'Ficha RUC',
-    mandatory: false,
+    mandatory: true,
     link_file: null,
     status: false
   },
@@ -57,7 +57,7 @@ export const SOURCE_UPLOAD_FILE = [
     idx: 3,
     type: 3,
     title_type: 'Vigencia de Poder',
-    mandatory: false,
+    mandatory: true,
     link_file: null,
     status: false
   },
@@ -65,7 +65,7 @@ export const SOURCE_UPLOAD_FILE = [
     idx: 4,
     type: 4,
     title_type: 'DNI de Representante Lega',
-    mandatory: false,
+    mandatory: true,
     link_file: null,
     status: false
   },

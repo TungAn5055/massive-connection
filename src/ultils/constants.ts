@@ -6,7 +6,7 @@ export const CUSTOMER_INFO_TABS = {
 }
 
 export const UPLOAD_SIMS_TABS = {
-  LINE: 'Line Information',
+  LINE: 'SIM Upload',
   SUCCESSFUL: 'Successful Creation'
 }
 
@@ -35,10 +35,10 @@ export const STATE = {
 }
 
 export const NOTIFICATION = {
-  WARNING: 'Cảnh báo',
-  SUCCESS: 'Thành công',
-  INFO: 'Thông tin',
-  ERROR: 'Lỗi'
+  WARNING: 'Warning',
+  SUCCESS: 'Success',
+  INFO: 'Info',
+  ERROR: 'Error'
 }
 
 export const SOURCE_METHOD_DE_PAGO = [{ label: 'Pago normal', value: '01' }]
@@ -46,8 +46,9 @@ export const SOURCE_STATUS_POST2 = [
   { label: 'New', value: 1 },
   { label: 'Uploaded', value: 2 },
   { label: 'Delivered', value: 3 },
-  { label: 'Connection', value: 4 },
-  { label: 'Closed', value: 5 }
+  { label: 'Connected', value: 4 },
+  { label: 'Closed', value: 5 },
+  { label: 'Partial connected', value: 6 }
 ]
 
 export const SOURCE_TYPE_OF_DOCUMENT = [

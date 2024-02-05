@@ -17,7 +17,7 @@ export const apiCustomerSearchAsync = async (params: any, setResponse: any) => {
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.post('/api/search-customer', params, {
+    const response: any = await axiosInstance.post('/api/search-customer', params, {
       cancelToken: source.token
     })
 
@@ -25,14 +25,14 @@ export const apiCustomerSearchAsync = async (params: any, setResponse: any) => {
       setResponse({
         data: response.data,
         state: STATE.SUCCESS,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     } else {
       setResponse({
         data: [],
         state: STATE.ERROR,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     }

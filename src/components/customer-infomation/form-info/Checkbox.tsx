@@ -4,10 +4,12 @@ import { LIST_ATTRIBUTE_RED_TITLE } from '@/ultils/constants.ts'
 
 export const FormCheckBox = ({
   attribute,
+  attributeSave = null,
   title,
   isRequired = false,
   dataCustomer = {},
-  setValidateAll = () => {}
+  setValidateAll = () => {},
+  setDataInfo = () => {}
 }: any) => {
   const [value, setValue] = useState([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
@@ -41,11 +43,19 @@ export const FormCheckBox = ({
 
   const onChange = (val) => {
     setValue(val)
+    setTimeout(() => {
+      if (attributeSave) {
+        setDataInfo({ [attributeSave]: val })
+      }
+    }, 1300)
   }
 
   useEffect(() => {
     if (attribute && dataCustomer[attribute]) {
       setValue(dataCustomer[attribute])
+      if (attributeSave) {
+        setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+      }
     }
   }, [dataCustomer])
 

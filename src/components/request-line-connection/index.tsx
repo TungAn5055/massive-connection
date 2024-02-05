@@ -5,11 +5,16 @@ import { UPLOAD_SIMS_TABS } from '@/ultils/constants'
 import AttachedTab from '@/components/request-line-connection/tabs/AttachedTab.tsx'
 import SuccessfulTab from '@/components/request-line-connection/tabs/SuccessfulTab.tsx'
 import { FolderOpenFilled } from '@ant-design/icons'
+import dayjs from 'dayjs'
 
 const RequestLineConnectionContent = ({ contractNo }: any) => {
+  const currentDate = dayjs().format('YYYY-MM-DD')
   const [activeTab, setActiveTab] = useState('1')
-
-  const [_dataInfo, _setDataInfo] = useState({})
+  const [_dataInfo, _setDataInfo] = useState({
+    createdDate: currentDate,
+    createdUser: '',
+    custId: 31471655
+  })
   const dataInfo = _dataInfo
   const setDataInfo = (data: any) => {
     Object.assign(dataInfo, { ...data })

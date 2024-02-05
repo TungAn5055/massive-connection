@@ -32,13 +32,18 @@ export const FormTextAutoComplete = ({
     return check
   })
   const onSearch = (val) => {
-    if (val?.length > 1) {
+    if (val?.length >= 1) {
       requestGetStaffCode(`/api/get-staff-code?staffCode=${val?.toUpperCase()}`)
     }
   }
 
   const onChange = (data) => {
     setValue(data)
+    setTimeout(() => {
+      if (attributeSave) {
+        setDataInfo({ [attributeSave ?? attribute]: data })
+      }
+    }, 1300)
   }
 
   const onSelect = (data) => {

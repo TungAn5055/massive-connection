@@ -5,9 +5,11 @@ import useGetOrderInfo from '@/hooks/useGetOrderInfo.ts'
 import { STATE } from '@/ultils/constants.ts'
 import { LoadingRegion } from '@/components/common/LoadingRegion.tsx'
 import { COLUMN_TABLE_SUCCESS_TAB } from '@/ultils/columsTables'
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 
 const SuccessfulTab = ({ contractNo, activeTab }: any) => {
   const [contentSuccess, setContentSuccess] = useState<any>({})
+  const [currentVal, setCurrentVal] = useState<any>(0)
   const { responseGetOrderInfo, requestGetOrderInfo } = useGetOrderInfo()
 
   useEffect(() => {
@@ -19,6 +21,9 @@ const SuccessfulTab = ({ contractNo, activeTab }: any) => {
   useEffect(() => {
     if (responseGetOrderInfo?.data && responseGetOrderInfo?.state === STATE?.SUCCESS) {
       setContentSuccess(responseGetOrderInfo?.data)
+      if (responseGetOrderInfo?.data?.billCycleFrom) {
+        setCurrentVal(responseGetOrderInfo?.data?.billCycleFrom)
+      }
     }
   }, [responseGetOrderInfo])
 
@@ -69,11 +74,35 @@ const SuccessfulTab = ({ contractNo, activeTab }: any) => {
               </div>
               <div className={'display-flex-space-between'}>
                 <span className={'title-bold'}>Circle de facturacion</span>
-                <span>{contentSuccess?.billCycleFrom}</span>
-              </div>
-              <div className={'display-flex-space-between'}>
-                <span className={'title-bold'}>Icon plus/ minus</span>
-                <span>+</span>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'right'
+                  }}
+                >
+                  <span>{currentVal}</span>
+                  <span>
+                    <PlusOutlined
+                      onClick={() => {
+                        setCurrentVal((prev) => parseInt(prev) + 1)
+                      }}
+                    />
+                  </span>
+                  <span>
+                    <MinusOutlined
+                      onClick={() => {
+                        setCurrentVal((prev) => {
+                          if (prev >= 1) {
+                            return parseInt(prev) - 1
+                          } else {
+                            return prev
+                          }
+                        })
+                      }}
+                    />
+                  </span>
+                </div>
               </div>
               <div className={'display-flex-space-between'}>
                 <span className={'title-bold'}>Tipo de connexion</span>

@@ -8,12 +8,8 @@ const Login: React.FC = () => {
   //   // navigate('/about')
   // }
 
-  const onFinish = (values) => {
-    console.log('Success:', values)
-  }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
+  const onFinish = () => {}
+  const onFinishFailed = () => {}
 
   return (
     <>

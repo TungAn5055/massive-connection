@@ -17,7 +17,7 @@ export const apiSearchMassiveOrderAsync = async (params: any, setResponse: any) 
   source = getTokenSource()
 
   try {
-    const response = await axiosInstance.post('/api/search-massive-order', params, {
+    const response: any = await axiosInstance.post('/api/search-massive-order', params, {
       cancelToken: source.token
     })
 
@@ -27,7 +27,7 @@ export const apiSearchMassiveOrderAsync = async (params: any, setResponse: any) 
         totalPages: response.data?.totalPages,
         currentPage: response.data?.currentPage,
         state: STATE.SUCCESS,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     } else {
@@ -36,7 +36,7 @@ export const apiSearchMassiveOrderAsync = async (params: any, setResponse: any) 
         totalPages: null,
         currentPage: 1,
         state: STATE.ERROR,
-        message: '',
+        message: response?.status?.message,
         loading: false
       })
     }

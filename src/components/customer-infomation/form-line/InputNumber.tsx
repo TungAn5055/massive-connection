@@ -32,9 +32,9 @@ export const FormInputNumber = ({
   const onChange = (e) => {
     const { value: inputValue } = e.target
     const reg = /^\d*(\.\d*)?$/
-    if (reg.test(inputValue) && !isNaN(inputValue)) {
-      let val  = inputValue
-      if(max && inputValue > max) {
+    if (inputValue && reg.test(inputValue) && !isNaN(inputValue)) {
+      let val = inputValue
+      if (max && inputValue > max) {
         val = max
       }
       setValue(parseInt(val, 10))
@@ -56,7 +56,16 @@ export const FormInputNumber = ({
           {isRequired && <span style={{ color: 'red' }}> *</span>}
         </Col>
         <Col span={16}>
-          <Input size={'large'}  disabled={isDisabled} value={value} onChange={onChange} min={0} max={max}/>
+          <Input
+            size={'large'}
+            disabled={isDisabled}
+            value={value}
+            onChange={onChange}
+            min={0}
+            max={max}
+            type={'number'}
+            step='50'
+          />
         </Col>
         {errorValue?.status && (
           <>

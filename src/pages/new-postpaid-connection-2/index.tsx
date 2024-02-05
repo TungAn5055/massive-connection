@@ -9,15 +9,17 @@ import { PageSizeOptionsInTableForMaterial } from '@/ultils/dataSourceConstants'
 import PopupDetailOrder from '@/components/post-paid-connection2/PopupDetailOrder.tsx'
 import PopupCloseOrder from '@/components/post-paid-connection2/PopupCloseOrder.tsx'
 import { useNavigate } from 'react-router-dom'
+import { NotificationError } from '@/components/common/Notification'
 
 const NewPostpaidConnection2: React.FC = () => {
   const navigate = useNavigate()
-  const [valueType, setValueType] = useState<any>('10432498404')
+  const [valueType, setValueType] = useState<any>('')
   const [valueStatus, setValueStatus] = useState<any>(null)
   const [isShowDetail, setIsShowDetail] = useState<boolean>(false)
   const [isShowClose, setIsShowClose] = useState<boolean>(false)
   const [currentContractNo, setCurrentContractNo] = useState<any>(null)
   const [currentContract, setCurrentContract] = useState<any>({})
+  const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
   const [paramsPage, setParamsPage] = useState({
     pageSize: 10,
@@ -38,6 +40,7 @@ const NewPostpaidConnection2: React.FC = () => {
 
   const handleChangeType = (e) => {
     setValueType(e?.target?.value)
+    onBlur(e)
   }
 
   const handleChangeStatus = (val) => {
@@ -45,9 +48,13 @@ const NewPostpaidConnection2: React.FC = () => {
   }
 
   const doSearch = () => {
-    if (valueType && valueStatus) {
-      // requestSearchMassiveOrder({ idNo: valueType, page: 1, pageSize: 10, status: valueStatus })
-      requestSearchMassiveOrder({ idNo: valueType, page: 0, pageSize: 10, status: '' })
+    if (valueType) {
+      setParamsPage({
+        pageSize: 10,
+        currentPage: 1
+      })
+      requestSearchMassiveOrder({ idNo: valueType, page: 1, pageSize: 10, status: valueStatus ?? '' })
+      // requestSearchMassiveOrder({ idNo: valueType, page: 0, pageSize: 10, status: '' })
     }
   }
 
@@ -57,13 +64,24 @@ const NewPostpaidConnection2: React.FC = () => {
       pageSize: pageSize,
       currentPage: pageNumber
     }))
-    if (valueType && valueStatus) {
+    if (valueType) {
       requestSearchMassiveOrder({ idNo: valueType, page: pageNumber, pageSize: pageSize, status: valueStatus })
     }
   }
 
+  const onBlur = (e) => {
+    if (!/^\d+$/.test(e.target.value) || e.target.value.length < 8 || e.target.value.length > 11) {
+      setErrorValue({
+        status: true,
+        message: 'Only allow number and form 8 - 11 digits'
+      })
+    } else {
+      setErrorValue({ status: false, message: null })
+    }
+  }
+
   const disableButtonSearch = useMemo(() => {
-    if (valueType && valueStatus) {
+    if (valueType && valueType?.length >= 8 && valueType?.length <= 11) {
       return false
     } else {
       return true
@@ -72,6 +90,10 @@ const NewPostpaidConnection2: React.FC = () => {
 
   useEffect(() => {
     if (responseMassiveOrder?.data && responseMassiveOrder?.state === STATE?.SUCCESS) {
+      console.log('responseMassiveOrder+++', responseMassiveOrder)
+    }
+    if (responseMassiveOrder?.message && responseMassiveOrder?.state === STATE?.ERROR) {
+      NotificationError(responseMassiveOrder?.message)
     }
   }, [responseMassiveOrder])
 
@@ -106,10 +128,12 @@ const NewPostpaidConnection2: React.FC = () => {
                     <Input
                       size={'large'}
                       onChange={handleChangeType}
+                      onBlur={onBlur}
                       value={valueType}
-                      // max={11}
-                      // min={8}
+                      max={11}
+                      min={8}
                     />
+                    {errorValue?.status && <div className={'message-error-data'}>{errorValue?.message}</div>}
                   </Col>
                 </Row>
               </Col>
@@ -122,11 +146,13 @@ const NewPostpaidConnection2: React.FC = () => {
                     <Select
                       size={'large'}
                       value={valueStatus}
+                      allowClear={true}
                       onChange={handleChangeStatus}
                       style={{
                         width: 400
                       }}
                       options={SOURCE_STATUS_POST2}
+                      placeholder={'Select Status'}
                     />
                   </Col>
                 </Row>
@@ -164,7 +190,7 @@ const NewPostpaidConnection2: React.FC = () => {
             <Row className={'content-customer-information'} style={{ margin: 0 }}>
               <form className={'form-search-customer'} name='advanced_search'>
                 <fieldset>
-                  <legend>Result</legend>
+                  <legend>Results</legend>
                   {/*table*/}
                   <Row gutter={24} style={{ width: '100%', margin: '10px' }}>
                     <Table
@@ -177,8 +203,8 @@ const NewPostpaidConnection2: React.FC = () => {
                     >
                       <Column
                         title={'No'}
-                        dataIndex='contractNo'
-                        key='contractNo'
+                        dataIndex='idNo'
+                        key='idNo'
                         render={(value) => {
                           return {
                             children: <Space>{value}</Space>
@@ -317,7 +343,7 @@ const NewPostpaidConnection2: React.FC = () => {
                       <Col>
                         <Pagination
                           size='small'
-                          total={responseMassiveOrder.totalPages}
+                          total={parseInt(responseMassiveOrder.totalPages) * paramsPage?.pageSize}
                           pageSize={paramsPage.pageSize}
                           pageSizeOptions={PageSizeOptionsInTableForMaterial}
                           locale={{ items_per_page: '' }}
