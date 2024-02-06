@@ -109,7 +109,7 @@ const SuccessfulTab = ({ contractNo, activeTab }: any) => {
                 <span>{contentSuccess?.typeOfConnection}</span>
               </div>
               <div className={'display-flex-space-between'}>
-                <span className={'title-bold'}>Start of service</span>
+                <span className={'title-bold'}>Date of registration</span>
                 <span>{contentSuccess?.effectDate}</span>
               </div>
             </div>

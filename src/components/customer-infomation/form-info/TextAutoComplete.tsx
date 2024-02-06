@@ -47,6 +47,9 @@ export const FormTextAutoComplete = ({
     } else {
       setValue(data)
     }
+    if(data) {
+      setErrorValue({ status: false, message: null })
+    }
     setTimeout(() => {
       if (attributeSave) {
         setDataInfo({ [attributeSave ?? attribute]: data })

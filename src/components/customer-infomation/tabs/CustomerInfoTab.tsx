@@ -2,11 +2,11 @@ import { Button, Col, Row } from 'antd'
 import { FormText } from '@/components/customer-infomation/form-info/Text'
 import { FormSelect } from '@/components/customer-infomation/form-info/Select'
 import { FormDate } from '@/components/customer-infomation/form-info/Date'
-import { FormCheckBox } from '@/components/customer-infomation/form-info/Checkbox.tsx'
 import { FormRadio } from '@/components/customer-infomation/form-info/Radio.tsx'
 import { FormTextAutoComplete } from '@/components/customer-infomation/form-info/TextAutoComplete'
 import { SOURCE_METHOD_DE_PAGO } from '@/ultils/constants'
 import { convertForDataSource } from '@/ultils/helper'
+import {RadioNoti} from "@/components/customer-infomation/form-info/RadioNoti.tsx";
 
 const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {}, setListTabActive }: any) => {
   const onNextStep = () => {
@@ -360,7 +360,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormDate
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'repreCustBirthday'}
+                attribute={'repreCustBirthDate'}
                 title={'Fec. Nacimiento'}
                 isRequired={true}
                 setValidateAll={setValidateAll}
@@ -444,10 +444,11 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               <FormText
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
-                attribute={'contractTypeCode'}
+                attribute={'contractTypeName'}
                 attributeSave={'contractTypeCode'}
                 title={'Tipo de contrato'}
                 dataCustomer={dataCustomer?.contractInfo}
+                readOnly={true}
               />
             </Col>
             <Col span={8}>
@@ -553,7 +554,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
               />
             </Col>
             <Col span={8}>
-              <FormCheckBox
+              <RadioNoti
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'noticeCharge'}

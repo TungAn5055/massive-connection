@@ -21,13 +21,24 @@ export const FormText = ({
 
   setValidateAll([attribute], () => {
     let check = true
-    if (isRequired && !value) {
-      check = false
-      setErrorValue({
-        status: true,
-        message: `Please enter input ${title}`
-      })
+    if (attribute === 'email' || attribute === 'contactEmail') {
+      if (isRequired && (!value || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))) {
+        check = false
+        setErrorValue({
+          status: true,
+          message: `Please enter input ${title}`
+        })
+      }
+    } else {
+      if (isRequired && !value) {
+        check = false
+        setErrorValue({
+          status: true,
+          message: `Please enter input ${title}`
+        })
+      }
     }
+
     return check
   })
 

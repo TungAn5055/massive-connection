@@ -90,7 +90,6 @@ const NewPostpaidConnection2: React.FC = () => {
 
   useEffect(() => {
     if (responseMassiveOrder?.data && responseMassiveOrder?.state === STATE?.SUCCESS) {
-      console.log('responseMassiveOrder+++', responseMassiveOrder)
     }
     if (responseMassiveOrder?.message && responseMassiveOrder?.state === STATE?.ERROR) {
       NotificationError(responseMassiveOrder?.message)
