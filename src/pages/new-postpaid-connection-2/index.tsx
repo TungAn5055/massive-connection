@@ -306,7 +306,8 @@ const NewPostpaidConnection2: React.FC = () => {
                                   setIsShowClose(true)
                                   setCurrentContract({
                                     contractNo: info?.contractNo,
-                                    idNo: info?.idNo
+                                    idNo: info?.idNo,
+                                    isDetail: false,
                                   })
                                 }}
                               >
@@ -315,7 +316,14 @@ const NewPostpaidConnection2: React.FC = () => {
                             )
                           } else if (info?.status == 6) {
                             return (
-                              <Button type='default' size={'large'} onClick={() => {}}>
+                              <Button type='default' size={'large'}  onClick={() => {
+                                setIsShowClose(true)
+                                setCurrentContract({
+                                  contractNo: info?.contractNo,
+                                  idNo: info?.idNo,
+                                  isDetail: true,
+                                })
+                              }}>
                                 Partial Connected Detail
                               </Button>
                             )

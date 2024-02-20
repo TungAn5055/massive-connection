@@ -79,17 +79,19 @@ const PopupCloseOrder = ({
           >
             Go Back
           </Button>
-          <Button
-            key='back'
-            onClick={() => {
-              closeData()
-            }}
-            style={{
-              marginLeft: '15px'
-            }}
-          >
-            Close
-          </Button>
+          {
+            !dataContract?.contractNo && (<Button
+                  key='back'
+                  onClick={() => {
+                    closeData()
+                  }}
+                  style={{
+                    marginLeft: '15px'
+                  }}
+              >
+                Close
+              </Button>)
+          }
         </div>
       ]}
       width={'100%'}
