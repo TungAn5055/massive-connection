@@ -7,7 +7,7 @@ import { STATE } from '@/ultils/constants'
 
 const NewPostpaidConnection: React.FC = () => {
   const navigate = useNavigate()
-  const [valueIdType, setValueIdType] = useState(null)
+  const [valueIdType, setValueIdType] = useState(3)
   const [valueIdNo, setValueIdNo] = useState('')
   const { responseSearchCustomer, requestSearchCustomer } = useCustomerSearch()
 
@@ -18,8 +18,8 @@ const NewPostpaidConnection: React.FC = () => {
   }
 
   const options = [
-    { value: '3', label: 'RUC' },
-    { value: '1', label: 'DNI' }
+    { value: 3, label: 'RUC' },
+    { value: 1, label: 'DNI' }
   ]
 
   const handleChangeType = (e: any) => {
@@ -100,6 +100,7 @@ const NewPostpaidConnection: React.FC = () => {
                         width: 400
                       }}
                       options={options}
+                      disabled={true}
                     />
                   </Col>
                 </Row>
@@ -116,7 +117,7 @@ const NewPostpaidConnection: React.FC = () => {
                       value={valueIdNo}
                       onChange={handleChangeIdentity}
                       // onBlur={onBlur}
-                      max={valueIdType === 'DNI' ? 8 : 11}
+                      max={valueIdType === 1 ? 8 : 11}
                     />
                   </Col>
                 </Row>

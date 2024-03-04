@@ -26,7 +26,7 @@ export const FormText = ({
         check = false
         setErrorValue({
           status: true,
-          message: `Please enter input ${title}`
+          message: `Por favor ingrese lo solicitado`
         })
       }
     } else {
@@ -43,11 +43,11 @@ export const FormText = ({
   })
 
   const onChange = (e) => {
-    const val = e?.target?.value ? e.target.value?.trim() : e.target.value
+    const val = e.target.value
     setValue(val)
     setTimeout(() => {
       if (attributeSave) {
-        setDataInfo({ [attributeSave ?? attribute]: val })
+        setDataInfo({ [attributeSave ?? attribute]: e.target.value?.trim() })
       }
     }, 1300)
   }
@@ -57,7 +57,7 @@ export const FormText = ({
       if (e.target.value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e.target.value)) {
         setErrorValue({
           status: true,
-          message: 'The input is not valid E-mail'
+          message: 'El e-mail ingresado es incorrecto'
         })
       } else {
         setErrorValue({ status: false, message: null })
@@ -66,7 +66,7 @@ export const FormText = ({
       if (!/^\d{8}$/.test(e.target.value)) {
         setErrorValue({
           status: true,
-          message: 'Only allow number and max 8 digits'
+          message: 'Solo se permite números (8 digitos)'
         })
       } else {
         setErrorValue({ status: false, message: null })
@@ -81,7 +81,7 @@ export const FormText = ({
         setErrorValue({ status: false, message: null })
       }
     } else if (attribute === 'position') {
-      if (!/^[a-zA-Z]+$/.test(e.target.value)) {
+      if (!/^[a-zA-Z\w]+$/.test(e.target.value)) {
         setErrorValue({
           status: true,
           message: 'Only allow character'

@@ -115,8 +115,8 @@ const routes = [
             element: <NewPostpaidConnection2 />
           },
           {
-            path: '/request-new-prepaid',
-            key: 'request-new-prepaid',
+            path: '/request-new-postpaid',
+            key: 'request-new-postpaid',
             title: 'Request new postpaid connection',
             title_page: 'Request new postpaid connection',
             exact: true,
@@ -174,8 +174,8 @@ const routes = [
     element: <Home />
   },
   {
-    path: '/request-new-prepaid',
-    key: 'request-new-prepaid',
+    path: '/request-new-postpaid',
+    key: 'request-new-postpaid',
     title: 'Request new postpaid connection',
     title_page: 'Request new postpaid connection',
     exact: true,

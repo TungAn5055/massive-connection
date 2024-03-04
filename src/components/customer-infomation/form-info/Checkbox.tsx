@@ -35,7 +35,7 @@ export const FormCheckBox = ({
       check = false
       setErrorValue({
         status: true,
-        message: `Please enter input ${title}`
+        message: `Por favor ingrese lo solicitado`
       })
     }
     return check

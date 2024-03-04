@@ -13,7 +13,7 @@ const CustomerInformation: React.FC = () => {
 
   useEffect(() => {
     if (!dataCustomers || Object.values(dataCustomers)?.length === 0) {
-      navigate('/request-new-prepaid')
+      navigate('/request-new-postpaid')
     }
   }, [dataCustomers])
 

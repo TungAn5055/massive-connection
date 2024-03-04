@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Input, Pagination, Row, Select, Space, Table } from 'antd'
 import { FolderOpenFilled } from '@ant-design/icons'
 import { SOURCE_STATUS_POST2, STATE } from '@/ultils/constants'
@@ -48,14 +48,14 @@ const NewPostpaidConnection2: React.FC = () => {
   }
 
   const doSearch = () => {
-    if (valueType) {
+    // if (valueType) {
       setParamsPage({
         pageSize: 10,
         currentPage: 1
       })
       requestSearchMassiveOrder({ idNo: valueType, page: 1, pageSize: 10, status: valueStatus ?? '' })
       // requestSearchMassiveOrder({ idNo: valueType, page: 0, pageSize: 10, status: '' })
-    }
+    // }
   }
 
   const onChangePage = (pageNumber, pageSize) => {
@@ -73,20 +73,20 @@ const NewPostpaidConnection2: React.FC = () => {
     if (!/^\d+$/.test(e.target.value) || e.target.value.length < 8 || e.target.value.length > 11) {
       setErrorValue({
         status: true,
-        message: 'Only allow number and form 8 - 11 digits'
+        message: 'Solo se permite números (8-11 digitos)'
       })
     } else {
       setErrorValue({ status: false, message: null })
     }
   }
 
-  const disableButtonSearch = useMemo(() => {
-    if (valueType && valueType?.length >= 8 && valueType?.length <= 11) {
-      return false
-    } else {
-      return true
-    }
-  }, [valueStatus, valueType])
+  // const disableButtonSearch = useMemo(() => {
+  //   if (valueType && valueType?.length >= 8 && valueType?.length <= 11) {
+  //     return false
+  //   } else {
+  //     return true
+  //   }
+  // }, [valueStatus, valueType])
 
   useEffect(() => {
     if (responseMassiveOrder?.data && responseMassiveOrder?.state === STATE?.SUCCESS) {
@@ -172,7 +172,7 @@ const NewPostpaidConnection2: React.FC = () => {
                   type='default'
                   size={'large'}
                   htmlType='submit'
-                  disabled={disableButtonSearch}
+                  // disabled={disableButtonSearch}
                   loading={responseMassiveOrder?.loading}
                   onClick={doSearch}
                 >

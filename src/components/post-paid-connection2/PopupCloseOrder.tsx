@@ -50,7 +50,7 @@ const PopupCloseOrder = ({
 
   useEffect(() => {
     if (responseUpdateStatusOrder?.data && responseUpdateStatusOrder?.state === STATE?.SUCCESS) {
-      NotificationSuccess('Update status order success.', null)
+      NotificationSuccess('Estado de la orden actualizado correctamente.', null)
       doSearch()
       setIsShowDetail(false)
     }

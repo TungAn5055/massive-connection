@@ -44,7 +44,7 @@ export const FormText = ({
       if (e.target.value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e.target.value)) {
         setErrorValue({
           status: true,
-          message: 'The input is not valid E-mail'
+          message: 'El e-mail ingresado es incorrecto'
         })
       } else {
         setErrorValue({ status: false, message: null })
@@ -53,7 +53,7 @@ export const FormText = ({
       if (!/^\d{0,8}$/.test(e.target.value)) {
         setErrorValue({
           status: true,
-          message: 'Only allow number and max 8 digits'
+          message: 'Solo se permite números (8 digitos)'
         })
       } else {
         setErrorValue({ status: false, message: null })

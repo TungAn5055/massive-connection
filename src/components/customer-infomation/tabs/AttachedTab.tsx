@@ -64,7 +64,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
         idNo: dataInfo?.idNo
       })
     } else {
-      NotificationWarning('File not found')
+      NotificationWarning('Archivo no encontrado')
     }
   }
 
@@ -89,7 +89,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
 
   useEffect(() => {
     if (responseUploadFile?.data?.fileType && responseUploadFile?.state === STATE?.SUCCESS) {
-      NotificationSuccess('Upload file success', null)
+      NotificationSuccess('Archivo cargado correctamente', null)
       setListDataFiles((prev) => {
         prev = prev?.map((it) => {
           if (it?.type == responseUploadFile?.data?.fileType) {

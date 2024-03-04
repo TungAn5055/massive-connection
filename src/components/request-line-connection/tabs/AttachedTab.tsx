@@ -70,14 +70,15 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
       requestDownloadFile({
         fileName: item?.fileName,
         groupId: item?.groupId,
-        idNo: contractNo
+        contractNo: contractNo
       })
     } else {
-      NotificationWarning('File not found')
+      NotificationWarning('Archivo no encontrado')
     }
   }
 
   const onSaveDataContract = async () => {
+    console.log("currentType++++", currentType)
     await  Promise.all( listDataFiles?.filter(it => it?.status).map( async(it) => {
       const formData1 = new FormData()
       formData1.append('file', it?.dataFile?.originFileObj)
@@ -101,7 +102,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
         })
 
         if(!flag) {
-          NotificationError(`Upload file error: ${text}`)
+          NotificationError(`Save file error: ${text}`)
         }
 
         if(flag) {
@@ -133,7 +134,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
 
   useEffect(() => {
     if (responseUploadFile?.data?.fileName && responseUploadFile?.state === STATE?.SUCCESS) {
-      NotificationSuccess('Upload file success', null)
+      NotificationSuccess('Archivo cargado correctamente', null)
       setListDataFiles((prev) => {
         prev = prev?.map((it) => {
           if (it?.groupId == responseUploadFile?.data?.groupId) {
@@ -145,7 +146,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
 
         return prev
       })
-      setCurrentType('')
+      // setCurrentType('')
       setCurrentFile('')
     }
     if (responseUploadFile?.message && responseUploadFile?.state === STATE?.ERROR) {
@@ -158,7 +159,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
       const url = window.URL.createObjectURL(new Blob([responseDownloadFile?.data]))
       const link = document.createElement('a')
       link.href = url
-      link.setAttribute('download', currentClickItem?.link_file) //or any other extension
+      link.setAttribute('download', currentClickItem?.fileName) //or any other extension
       document.body.appendChild(link)
       link.click()
       setCurrentClickItem({})

@@ -114,7 +114,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                       <span className={'title-summary-detail'}>Tipo de conexión</span>
                     </Col>
                     <Col span={12}>
-                      <span>{dataInfo?.repreCustName}</span>
+                      <span>{dataInfo?.typeOfConnection}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -124,7 +124,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                       <span className={'title-summary-detail'}>Representante legal</span>
                     </Col>
                     <Col span={12}>
-                      <span>{dataInfo?.contactName}</span>
+                      <span>{dataInfo?.repreCustName}</span>
                     </Col>
                   </Row>
                   <Row className={'content-title-summary-detail '}>
@@ -132,7 +132,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                       <span className={'title-summary-detail'}>Contacto Autorizado</span>
                     </Col>
                     <Col span={12}>
-                      <span>{dataInfo?.idNo}</span>
+                      <span>{dataInfo?.contactName}</span>
                     </Col>
                   </Row>
                 </Col>
@@ -144,7 +144,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
           <Form className={'form-search-customer'} name='advanced_search'>
             <fieldset>
               <legend style={{ marginBottom: '0 !important' }}>
-                <span className={'legend-color'}>Payment Information</span>
+                <span className={'legend-color'}>Order information</span>
               </legend>
               <Table
                 rowKey={(record: any) => record?.title}

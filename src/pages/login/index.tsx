@@ -50,7 +50,7 @@ const Login: React.FC = () => {
               rules={[
                 {
                   type: 'email',
-                  message: 'The input is not valid E-mail!'
+                  message: 'El e-mail ingresado es incorrecto!'
                 },
                 {
                   required: true,

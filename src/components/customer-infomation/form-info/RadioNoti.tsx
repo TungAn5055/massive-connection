@@ -20,7 +20,7 @@ export const RadioNoti = ({
       check = false
       setErrorValue({
         status: true,
-        message: `Please choice ${title}`
+        message: `Por favor seleccione lo solicitado`
       })
     }
     return check

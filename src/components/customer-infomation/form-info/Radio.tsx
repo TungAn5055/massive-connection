@@ -11,7 +11,7 @@ export const FormRadio = ({
   attributeSave,
   setDataInfo = () => {}
 }: any) => {
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState(1)
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
   setValidateAll([attribute], () => {

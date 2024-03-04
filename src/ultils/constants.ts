@@ -35,7 +35,7 @@ export const STATE = {
 }
 
 export const NOTIFICATION = {
-  WARNING: 'Warning',
+  WARNING: 'Advertencia',
   SUCCESS: 'Success',
   INFO: 'Info',
   ERROR: 'Error'
