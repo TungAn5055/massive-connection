@@ -99,7 +99,7 @@ export const FormText = ({
       if (!listAttrRepresentanteLegal.includes(attributeSave)) {
         setValue(dataCustomer[attribute])
         if (attributeSave) {
-          setDataInfo({ [attributeSave]: dataCustomer[attribute] })
+          setDataInfo({ [attributeSave]: dataCustomer[attributeSave] })
         }
       }
     } else if (attribute === 'repreCustIdNox' && dataCustomer['repreCustIdNo']) {
