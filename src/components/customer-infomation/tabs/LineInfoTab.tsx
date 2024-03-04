@@ -41,11 +41,13 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
   }
 
   const addGroup = () => {
-    setListGroups((prev) => {
-      prev.push({})
-      return prev
-    })
-    setIsChanged(!isChanged)
+    if(listGroups?.length < 10) {
+      setListGroups((prev) => {
+        prev.push({})
+        return prev
+      })
+      setIsChanged(!isChanged)
+    }
   }
 
   const removeGroup = (index) => {
@@ -309,6 +311,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
                   title={''}
                   dataIndex='title'
                   key='title'
+                  align='center'
                   render={(value, record: any) => {
                     return {
                       props: { style: colorRowTotal(record) },
@@ -320,6 +323,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
                   title={'Quantity of lines'}
                   dataIndex='quantity'
                   key='quantity'
+                  align='center'
                   render={(value, record: any) => {
                     return {
                       props: { style: colorRowTotal(record) },
@@ -331,6 +335,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
                   title={'Unit Price'}
                   dataIndex='unit_price'
                   key='unit_price'
+                  align='center'
                   render={(value, record: any) => {
                     return {
                       props: { style: colorRowTotal(record) },
@@ -339,9 +344,10 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
                   }}
                 />
                 <Column
-                  title={'Totals Price'}
+                  title={'Total Price'}
                   dataIndex='total_price'
                   key='total_price'
+                  align='center'
                   render={(value, record: any) => {
                     return {
                       props: { style: colorRowTotal(record) },
@@ -353,6 +359,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
                   title={'Line Validation'}
                   dataIndex='is_line_active'
                   key='is_line_active'
+                  align='center'
                   render={(value, record: any, index) => {
                     return {
                       props: { style: colorRowTotal(record) },

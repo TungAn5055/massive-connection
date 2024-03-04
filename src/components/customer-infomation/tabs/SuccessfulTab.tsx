@@ -6,6 +6,7 @@ import { STATE } from '@/ultils/constants.ts'
 import { LoadingRegion } from '@/components/common/LoadingRegion.tsx'
 import { COLUMN_TABLE_SUCCESS_TAB } from '@/ultils/columsTables'
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
+import dayjs from "dayjs";
 
 const SuccessfulTab = ({ contractNo, activeTab }: any) => {
   const [contentSuccess, setContentSuccess] = useState<any>({})
@@ -109,12 +110,12 @@ const SuccessfulTab = ({ contractNo, activeTab }: any) => {
                 <span>{contentSuccess?.typeOfConnection}</span>
               </div>
               <div className={'display-flex-space-between'}>
-                <span className={'title-bold'}>Date of registration</span>
-                <span>{contentSuccess?.effectDate}</span>
+                <span className={'title-bold'}>Date of request</span>
+                <span>{dayjs(contentSuccess?.effectDate).format('DD/MM/YYYY')}</span>
               </div>
             </div>
           </div>
-          <div style={{ width: '520px' }}>
+          <div style={{ width: '520px', marginTop: "20px" }}>
             <Table
               columns={COLUMN_TABLE_SUCCESS_TAB}
               dataSource={contentSuccess?.groups ?? []}

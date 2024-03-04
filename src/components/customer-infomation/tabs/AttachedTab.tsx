@@ -20,7 +20,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
   const [listSourceType, setListSourceType] = useState<any>(SOURCE_TYPE_OF_DOCUMENT)
   const [listDataFiles, setListDataFiles] = useState<any>(SOURCE_UPLOAD_FILE)
   const [currentFile, setCurrentFile] = useState<any>('')
-  const [currentType, setCurrentType] = useState<any>('')
+  const [currentType, setCurrentType] = useState<any>(1)
   const [currentClickItem, setCurrentClickItem] = useState<any>({})
 
   const { responseUploadFile, requestUploadFile } = useUploadFile()
@@ -182,7 +182,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
             <span className={'legend-color'}>Documentación adjunta</span>
           </legend>
           <span style={{ marginLeft: '20px' }}>
-            La siguiente documentación es SUSTENTATORIA para la contratación del servico.
+            La siguiente documentación es SUSTENTATORIA para la contratación del Servicio.
           </span>
           {/*line 1*/}
           <Row gutter={24} style={{ marginLeft: '10px', marginTop: '20px' }}>
@@ -206,7 +206,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
                     >
                       {listSourceType.map((item, itemIndex) => {
                         return (
-                          <Option key={itemIndex} value={item.value} disabled={item?.disabled}>
+                          <Option key={itemIndex} value={item.value}>
                             {item.label}
                           </Option>
                         )
@@ -273,6 +273,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               title={'#'}
               dataIndex='idx'
               key='idx'
+              align='center'
               render={(val) => {
                 return <Space>{val}</Space>
               }}
@@ -282,6 +283,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               title={'Mandatory'}
               dataIndex='mandatory'
               key='mandatory'
+              align='center'
               render={(val) => {
                 return <Space>{val ? 'YES' : 'NO'}</Space>
               }}
@@ -290,6 +292,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               title={'Download document'}
               dataIndex='link_file'
               key='link_file'
+              align='center'
               render={(val, record) => {
                 if (val) {
                   return (
@@ -309,6 +312,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               title={'Status'}
               dataIndex='status'
               key='status'
+              align='center'
               render={(val) => {
                 if (val) {
                   return <img src={checkMarkIcon} alt='download' style={{ height: '30px' }} />

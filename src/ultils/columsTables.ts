@@ -2,21 +2,25 @@ export const COLUMN_TABLE_SUCCESS_TAB = [
   {
     title: 'Group',
     dataIndex: 'groupName',
-    key: 'groupName'
+    key: 'groupName',
+    align:'center',
   },
   {
     title: 'Plans',
     dataIndex: 'productCode',
+    align:'center',
     key: 'productCode'
   },
   {
     title: 'Quantity',
     dataIndex: 'quantityOfLines',
+    align:'center',
     key: 'quantityOfLines'
   },
   {
     title: 'Fingerprint validation',
     dataIndex: 'lineActivation',
+    align:'center',
     key: 'lineActivation',
     render: (value) => {
       if (value) {
@@ -29,6 +33,7 @@ export const COLUMN_TABLE_SUCCESS_TAB = [
   {
     title: 'Branch Assigned',
     dataIndex: 'shopCode',
+    align:'center',
     key: 'shopCode'
   }
 ]
