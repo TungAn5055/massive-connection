@@ -11,9 +11,11 @@ import useDownloadFileSim from '@/hooks/useDownloadFileSim'
 import useUploadSim from '@/hooks/useUploadSim'
 import useUpdateStatusOrder from '@/hooks/useUpdateStatusOrder'
 import axiosInstance from "@/configs/axios.ts";
+import {useNavigate} from "react-router-dom";
 const { Option } = Select
 
 const AttachedTab = ({ contractNo, setActiveTab }: any) => {
+  const navigate = useNavigate()
   const [listDataFiles, setListDataFiles] = useState<any>([])
   const [currentFile, setCurrentFile] = useState<any>('')
   const [currentType, setCurrentType] = useState<any>('')
@@ -365,6 +367,14 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
         <div className={'message-error'}>Por favor, subir documento para todos los grupos creados</div>
       )}
       <div className={'display-flex-center button-continue'}>
+        <Button
+            type='default'
+            size={'large'}
+            onClick={() => navigate(-1)}
+            style={{ marginRight: "10px"}}
+        >
+          Go back
+        </Button>
         <Button
           type='default'
           size={'large'}

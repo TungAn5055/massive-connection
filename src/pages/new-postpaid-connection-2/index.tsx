@@ -64,9 +64,9 @@ const NewPostpaidConnection2: React.FC = () => {
       pageSize: pageSize,
       currentPage: pageNumber
     }))
-    if (valueType) {
+    // if (valueType) {
       requestSearchMassiveOrder({ idNo: valueType, page: pageNumber, pageSize: pageSize, status: valueStatus })
-    }
+    // }
   }
 
   const onBlur = (e) => {
@@ -107,9 +107,9 @@ const NewPostpaidConnection2: React.FC = () => {
           <a href={'http://www.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias'} target='_blank'>
             RUC Information
           </a>
-          <a href={'https://cel.reniec.gob.pe/valreg/valreg.do\n'} target='_blank'>
-            DNI information
-          </a>
+          {/*<a href={'https://cel.reniec.gob.pe/valreg/valreg.do\n'} target='_blank'>*/}
+          {/*  DNI information*/}
+          {/*</a>*/}
         </Col>
       </Row>
 
@@ -204,26 +204,17 @@ const NewPostpaidConnection2: React.FC = () => {
                         title={'No'}
                         dataIndex='idNo'
                         key='idNo'
-                        render={(value) => {
+                        render={(value, info,  index) => {
                           return {
-                            children: <Space>{value}</Space>
+                            children: value && info ? <Space>{paramsPage?.currentPage == 1 ? (index + 1)  : (index + 1) + paramsPage?.pageSize * (paramsPage?.currentPage - 1)}</Space> : <Space>{index + 1}</Space>
                           }
                         }}
                       />
                       <Column
-                        title={'Type of document'}
-                        dataIndex='idTypeName'
-                        key='idTypeName'
-                        render={(value) => {
-                          return {
-                            children: <Space>{value}</Space>
-                          }
-                        }}
-                      />
-                      <Column
-                        title={'Identity number'}
+                        title={'RUC number'}
                         dataIndex='custId'
                         key='custId'
+                        align='center'
                         render={(value) => {
                           return {
                             children: <Space>{value}</Space>
@@ -231,7 +222,7 @@ const NewPostpaidConnection2: React.FC = () => {
                         }}
                       />
                       <Column
-                        title={'Customer name'}
+                        title={'Company name'}
                         dataIndex='name'
                         key='name'
                         render={(value) => {
@@ -241,9 +232,32 @@ const NewPostpaidConnection2: React.FC = () => {
                         }}
                       />
                       <Column
+                          title={'Quantity of lines'}
+                          dataIndex='totalLines'
+                          key='totalLines'
+                          align='right'
+                          render={(value) => {
+                            return {
+                              children: <Space>{value}</Space>
+                            }
+                          }}
+                      />
+                      <Column
+                          title={'Quantity of plans'}
+                          dataIndex='quantityOfPlans'
+                          key='quantityOfPlans'
+                          align='right'
+                          render={(value) => {
+                            return {
+                              children: <Space>{value}</Space>
+                            }
+                          }}
+                      />
+                      <Column
                         title={'Creation date'}
                         dataIndex='createdDate'
                         key='createdDate'
+                        align='right'
                         render={(value) => {
                           return {
                             children: <Space>{value}</Space>
@@ -254,35 +268,17 @@ const NewPostpaidConnection2: React.FC = () => {
                         title={'Status'}
                         dataIndex='status'
                         key='status'
+                        align='center'
                         render={(value) => {
                           const textStatus = SOURCE_STATUS_POST2?.find((it) => it?.value == value)
                           return <Space>{textStatus?.label}</Space>
-                        }}
-                      />{' '}
-                      <Column
-                        title={'Quantity of lines'}
-                        dataIndex='totalLines'
-                        key='totalLines'
-                        render={(value) => {
-                          return {
-                            children: <Space>{value}</Space>
-                          }
-                        }}
-                      />
-                      <Column
-                        title={'Quantity of plans'}
-                        dataIndex='quantityOfPlans'
-                        key='quantityOfPlans'
-                        render={(value) => {
-                          return {
-                            children: <Space>{value}</Space>
-                          }
                         }}
                       />
                       <Column
                         title={'Action'}
                         dataIndex='null'
                         key='null'
+                        align='center'
                         render={(value, info: any) => {
                           if (info?.status == 3) {
                             return (

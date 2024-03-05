@@ -5,7 +5,6 @@ import useGetOrderInfo from '@/hooks/useGetOrderInfo.ts'
 import { STATE } from '@/ultils/constants.ts'
 import { LoadingRegion } from '@/components/common/LoadingRegion.tsx'
 import { COLUMN_TABLE_SUCCESS_TAB } from '@/ultils/columsTables'
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import dayjs from "dayjs";
 
 const SuccessfulTab = ({ contractNo, activeTab }: any) => {
@@ -76,33 +75,13 @@ const SuccessfulTab = ({ contractNo, activeTab }: any) => {
               <div className={'display-flex-space-between'}>
                 <span className={'title-bold'}>Circle de facturacion</span>
                 <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'right'
-                  }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'right'
+                    }}
                 >
                   <span>{currentVal}</span>
-                  <span>
-                    <PlusOutlined
-                      onClick={() => {
-                        setCurrentVal((prev) => parseInt(prev) + 1)
-                      }}
-                    />
-                  </span>
-                  <span>
-                    <MinusOutlined
-                      onClick={() => {
-                        setCurrentVal((prev) => {
-                          if (prev >= 1) {
-                            return parseInt(prev) - 1
-                          } else {
-                            return prev
-                          }
-                        })
-                      }}
-                    />
-                  </span>
                 </div>
               </div>
               <div className={'display-flex-space-between'}>

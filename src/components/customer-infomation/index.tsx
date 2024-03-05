@@ -23,7 +23,6 @@ const CustomerInformation = ({ dataCustomers = {} }: any) => {
   const [dataInfoGroup, setDataInfoGroup] = useState({})
 
   const onChangeTabs = (activeKey: any) => {
-    setActiveTab(activeKey)
     // @ts-expect-error
     if (activeKey && listTabActive?.includes(activeKey)) {
       setActiveTab(activeKey)
