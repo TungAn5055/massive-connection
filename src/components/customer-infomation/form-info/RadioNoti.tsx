@@ -11,7 +11,7 @@ export const RadioNoti = ({
   attributeSave,
   setDataInfo = () => {}
 }: any) => {
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState('1')
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
   setValidateAll([attribute], () => {
@@ -45,6 +45,10 @@ export const RadioNoti = ({
       if (attributeSave) {
         setDataInfo({ [attributeSave]: dataCustomer[attribute] })
       }
+    } else {
+      if (attributeSave) {
+        setDataInfo({ [attributeSave]: 1 })
+      }
     }
   }, [dataCustomer])
 
@@ -57,9 +61,11 @@ export const RadioNoti = ({
         </Col>
         <Col span={18}>
           <Radio.Group onChange={onChange} value={value}>
-            <Radio value={1}>A domicillo</Radio>
-            <Radio value={2}>Email</Radio>
-            <Radio value={3}>SMS</Radio>
+            { Object.keys(dataCustomer?.noticeCharges)?.length > 0 &&
+                Object.keys(dataCustomer?.noticeCharges).map((it) => (
+                  <Radio value={it}>{dataCustomer?.noticeCharges[it]}</Radio>
+                ))
+            }
           </Radio.Group>
         </Col>
         {errorValue?.status && (

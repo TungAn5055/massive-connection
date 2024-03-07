@@ -315,10 +315,19 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               align='center'
               render={(val) => {
                 if (val) {
-                  return <img src={checkMarkIcon} alt='download' style={{ height: '30px' }} />
+                  return <div style={{ height: '30px',
+                    display: 'flex',
+                    alignItems: "center",
+                    justifyContent: "center", }}>
+                    <img src={checkMarkIcon} alt='download' style={{ height: '30px',  }} />
+                  </div>
                 } else {
-                  return <img src={circleIcon} alt='download' style={{ height: '30px' }} />
-                }
+                  return   <div style={{ height: '30px',     display: 'flex',
+                    alignItems: "center",
+                    justifyContent: "center", }}>
+                      <img src={circleIcon} alt='download' style={{height: '30px',}}/>
+                  </div>
+                    }
               }}
             />
           </Table>

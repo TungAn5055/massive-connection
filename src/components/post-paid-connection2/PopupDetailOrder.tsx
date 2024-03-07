@@ -156,6 +156,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                   title={'Plan'}
                   dataIndex='productCode'
                   key='productCode'
+                  align='left'
                   render={(value) => {
                     return <Space>{value}</Space>
                   }}
@@ -164,6 +165,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                   title={'Quantity'}
                   dataIndex='quantityOfLines'
                   key='quantityOfLines'
+                  align='center'
                   render={(value) => {
                     return <Space>{value}</Space>
                   }}
@@ -172,6 +174,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                   title={'Fingerprint validation'}
                   dataIndex='lineActivation'
                   key='lineActivation'
+                  align='center'
                   render={(value) => {
                     if (value) {
                       return <Space>Yes</Space>
@@ -184,6 +187,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                   title={'Branch Assigned'}
                   dataIndex='shopCode'
                   key='shopCode'
+                  align='center'
                   render={(value) => {
                     return <Space>{value}</Space>
                   }}
@@ -192,6 +196,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                   title={'Delivered by'}
                   dataIndex='deliveryBy'
                   key='deliveryBy'
+                  align='center'
                   render={(value) => {
                     return <Space>{value}</Space>
                   }}
@@ -200,6 +205,7 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                   title={'Time of Delivery'}
                   dataIndex='deliveryTime'
                   key='deliveryTime'
+                  align='center'
                   render={(value) => {
                     return <Space>{value}</Space>
                   }}
@@ -208,13 +214,20 @@ const PopupDetailOrder = ({ contractNo = null, isShowDetail = false, setIsShowDe
                   title={'Certificate of Delivery Goods'}
                   dataIndex=''
                   key=''
+                  align='center'
                   render={(val) => {
                     if (val) {
-                      return <img src={checkMarkIcon} alt='download' style={{ height: '30px' }} />
-                    } else {
-                      return <img src={circleIcon} alt='download' style={{ height: '30px' }} />
+                      return <div style={{ height: '30px',
+                        display: 'flex',
+                        alignItems: "center",
+                        justifyContent: "center", }}><img src={checkMarkIcon} alt='download' style={{height: '30px'}}/> </div>
+                        } else {
+                          return <div style={{ height: '30px',
+                          display: 'flex',
+                          alignItems: "center",
+                            justifyContent: "center", }}> <img src={circleIcon} alt='download' style={{height: '30px'}}/> </div>
                     }
-                  }}
+                    }}
                 />
               </Table>
             </fieldset>

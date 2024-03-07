@@ -14,6 +14,7 @@ const PopupCloseOrder = ({
   setIsShowDetail,
   doSearch
 }: any) => {
+  console.log('dataContract+++', dataContract)
   const [dataInfo, setDataInfo] = useState<any>({})
 
   const { responseCloseOrderInfo, requestCloseOrderInfo } = useGetCloserOrderInfo()
@@ -80,7 +81,7 @@ const PopupCloseOrder = ({
             Go Back
           </Button>
           {
-            !dataContract?.contractNo && (<Button
+            !!dataContract?.contractNo && (<Button
                   key='back'
                   onClick={() => {
                     closeData()
