@@ -384,6 +384,11 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
           Continuar
         </Button>
       </div>
+      {isdDisableButtonNext && (
+        <div className={'display-flex-center button-continue'}>
+          <span style={{ color: 'red' }}>El número de seriales ingresados no corresponde al total requerido</span>
+        </div>
+      )}
     </>
   )
 }

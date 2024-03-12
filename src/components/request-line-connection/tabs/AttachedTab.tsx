@@ -10,8 +10,8 @@ import useGetGroupInfo from '@/hooks/useGetGroupInfo'
 import useDownloadFileSim from '@/hooks/useDownloadFileSim'
 import useUploadSim from '@/hooks/useUploadSim'
 import useUpdateStatusOrder from '@/hooks/useUpdateStatusOrder'
-import axiosInstance from "@/configs/axios.ts";
-import {useNavigate} from "react-router-dom";
+import axiosInstance from '@/configs/axios.ts'
+import { useNavigate } from 'react-router-dom'
 const { Option } = Select
 
 const AttachedTab = ({ contractNo, setActiveTab }: any) => {
@@ -59,7 +59,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
       requestUploadFile(formData)
     } else {
       if (!currentType) {
-        NotificationWarning('Please choice Type of document')
+        NotificationWarning('Por favor seleccione el tipo de documento')
       } else if (currentFile) {
         NotificationWarning('Not have file')
       }
@@ -80,41 +80,45 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
   }
 
   const onSaveDataContract = async () => {
-    console.log("currentType++++", currentType)
-    await  Promise.all( listDataFiles?.filter(it => it?.status).map( async(it) => {
-      const formData1 = new FormData()
-      formData1.append('file', it?.dataFile?.originFileObj)
-      formData1.append('groupId', currentType?.groupId)
-      formData1.append('contractNo', contractNo)
-      return await axiosInstance.post('/api/save-list-sims', formData1, {
-        headers: {
-          'content-type': 'multipart/form-data'
-        },
-      })
-    })).then(function(res, ) {
-      if(res?.length > 0) {
-        let dataActive =  listDataFiles?.filter(it => it?.status);
-        let flag = true;
+    console.log('currentType++++', currentType)
+    await Promise.all(
+      listDataFiles
+        ?.filter((it) => it?.status)
+        .map(async (it) => {
+          const formData1 = new FormData()
+          formData1.append('file', it?.dataFile?.originFileObj)
+          formData1.append('groupId', currentType?.groupId)
+          formData1.append('contractNo', contractNo)
+          return await axiosInstance.post('/api/save-list-sims', formData1, {
+            headers: {
+              'content-type': 'multipart/form-data'
+            }
+          })
+        })
+    ).then(function (res) {
+      if (res?.length > 0) {
+        const dataActive = listDataFiles?.filter((it) => it?.status)
+        let flag = true
         let text = ''
         res.forEach((it: any, index: number) => {
-          if(it?.data == false && dataActive[index]) {
-            flag = false;
-            text += dataActive[index]?.fileName + ","
+          if (it?.data == false && dataActive[index]) {
+            flag = false
+            text += dataActive[index]?.fileName + ','
           }
         })
 
-        if(!flag) {
+        if (!flag) {
           NotificationError(`Save file error: ${text}`)
         }
 
-        if(flag) {
+        if (flag) {
           requestUpdateStatusOrder({
             status: 2,
             contractNo: contractNo
           })
         }
       }
-    });
+    })
 
     requestUpdateStatusOrder({
       status: 2,
@@ -367,12 +371,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
         <div className={'message-error'}>Por favor, subir documento para todos los grupos creados</div>
       )}
       <div className={'display-flex-center button-continue'}>
-        <Button
-            type='default'
-            size={'large'}
-            onClick={() => navigate(-1)}
-            style={{ marginRight: "10px"}}
-        >
+        <Button type='default' size={'large'} onClick={() => navigate(-1)} style={{ marginRight: '10px' }}>
           Go back
         </Button>
         <Button

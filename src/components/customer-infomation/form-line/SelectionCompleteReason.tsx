@@ -14,7 +14,6 @@ export const SelectionCompleteReason = ({
   setValidateAll = () => {},
   setIsChangeGroup = () => {}
 }: any) => {
-  console.log('item++++', item)
   const [value, setValue] = useState('')
   const [options, setOptions] = useState<any>([])
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
@@ -52,8 +51,8 @@ export const SelectionCompleteReason = ({
     if (responseStaffCode?.data?.length > 0 && responseStaffCode?.state === STATE?.SUCCESS) {
       setOptions(
         responseStaffCode?.data.map((it) => ({
-          value: it?.name,
-          code: it?.code
+          value: it?.code,
+          label: it?.name
         }))
       )
     } else {

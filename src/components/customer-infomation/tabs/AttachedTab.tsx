@@ -48,7 +48,7 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
       requestUploadFile(formData)
     } else {
       if (!currentType) {
-        NotificationWarning('Please choice Type of document')
+        NotificationWarning('Por favor seleccione el tipo de documento')
       } else if (currentFile) {
         NotificationWarning('Not have file')
       }
@@ -296,12 +296,14 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               render={(val, record) => {
                 if (val) {
                   return (
-                    <img
-                      src={downloadIcon}
-                      alt='download'
-                      onClick={() => downloadFile(record)}
-                      style={{ height: '30px' }}
-                    />
+                    <div style={{ height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <img
+                        src={downloadIcon}
+                        alt='download'
+                        onClick={() => downloadFile(record)}
+                        style={{ height: '30px' }}
+                      />
+                    </div>
                   )
                 } else {
                   return <></>
@@ -315,19 +317,18 @@ const AttachedTab = ({ dataInfo, dataInfoGroup, setActiveTab, setContractNo }: a
               align='center'
               render={(val) => {
                 if (val) {
-                  return <div style={{ height: '30px',
-                    display: 'flex',
-                    alignItems: "center",
-                    justifyContent: "center", }}>
-                    <img src={checkMarkIcon} alt='download' style={{ height: '30px',  }} />
-                  </div>
+                  return (
+                    <div style={{ height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <img src={checkMarkIcon} alt='download' style={{ height: '30px' }} />
+                    </div>
+                  )
                 } else {
-                  return   <div style={{ height: '30px',     display: 'flex',
-                    alignItems: "center",
-                    justifyContent: "center", }}>
-                      <img src={circleIcon} alt='download' style={{height: '30px',}}/>
-                  </div>
-                    }
+                  return (
+                    <div style={{ height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <img src={circleIcon} alt='download' style={{ height: '30px' }} />
+                    </div>
+                  )
+                }
               }}
             />
           </Table>
