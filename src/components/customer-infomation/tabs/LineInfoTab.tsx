@@ -7,10 +7,10 @@ import { LoadingRegion } from '@/components/ui-source/loading'
 import { PlusOutlined } from '@ant-design/icons'
 import { FormInputNumber } from '@/components/customer-infomation/form-line/InputNumber'
 import { TextAutoCompletePlan } from '@/components/customer-infomation/form-line/TextAutoCompletePlan'
-import { TextAutoCompleteReason } from '@/components/customer-infomation/form-line/TextAutoCompleteReason'
 import { TextAutoCompleteBranch } from '@/components/customer-infomation/form-line/TextAutoCompleteBranch'
 import { colorRowTotal, formatPrice } from '@/ultils/helper.ts'
 import dayjs from 'dayjs'
+import { SelectionCompleteReason } from '@/components/customer-infomation/form-line/SelectionCompleteReason'
 
 const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabActive }: any) => {
   const [isTotal, setIsTotal] = useState<any>('')
@@ -41,7 +41,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
   }
 
   const addGroup = () => {
-    if(listGroups?.length < 10) {
+    if (listGroups?.length < 10) {
       setListGroups((prev) => {
         prev.push({})
         return prev
@@ -246,7 +246,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
                     <>
                       <Row gutter={24} style={{ marginBottom: '30px' }}>
                         <Col span={10}>
-                          <TextAutoCompleteReason
+                          <SelectionCompleteReason
                             index={index}
                             item={item}
                             setData={setListGroups}

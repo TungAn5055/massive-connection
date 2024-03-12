@@ -34,7 +34,7 @@ export const FormText = ({
         check = false
         setErrorValue({
           status: true,
-          message: `Please enter input ${title}`
+          message: `Por favor ingrese lo solicitado`
         })
       }
     }
@@ -81,7 +81,7 @@ export const FormText = ({
         setErrorValue({ status: false, message: null })
       }
     } else if (attribute === 'position') {
-      if (!/^[a-zA-Z\w]+$/.test(e.target.value)) {
+      if (/\d/.test(e.target.value)) {
         setErrorValue({
           status: true,
           message: 'Only allow character'

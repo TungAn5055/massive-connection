@@ -6,7 +6,7 @@ import { FormRadio } from '@/components/customer-infomation/form-info/Radio.tsx'
 import { FormTextAutoComplete } from '@/components/customer-infomation/form-info/TextAutoComplete'
 import { SOURCE_METHOD_DE_PAGO } from '@/ultils/constants'
 import { convertForDataSource } from '@/ultils/helper'
-import {RadioNoti} from "@/components/customer-infomation/form-info/RadioNoti.tsx";
+import { RadioNoti } from '@/components/customer-infomation/form-info/RadioNoti.tsx'
 
 const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {}, setListTabActive }: any) => {
   const onNextStep = () => {
@@ -526,6 +526,8 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
             </Col>
             <Col span={8}>
               <FormText
+                isRequired={true}
+                setValidateAll={setValidateAll}
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'home'}

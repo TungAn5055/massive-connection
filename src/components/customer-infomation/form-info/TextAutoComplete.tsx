@@ -33,7 +33,7 @@ export const FormTextAutoComplete = ({
   })
   const onSearch = (val) => {
     if (val?.length >= 1) {
-      if(attribute == 'areaName') {
+      if (attribute == 'areaName') {
         requestGetStaffCode(`/api/get-area?name=${val?.toUpperCase()}`)
       } else {
         requestGetStaffCode(`/api/get-staff-code?staffCode=${val?.toUpperCase()}`)
@@ -42,12 +42,12 @@ export const FormTextAutoComplete = ({
   }
 
   const onChange = (data, info) => {
-    if(attribute == 'areaName') {
-      setValue(info?.label ??  data)
+    if (attribute == 'areaName') {
+      setValue(info?.label ?? data)
     } else {
       setValue(data)
     }
-    if(data) {
+    if (data) {
       setErrorValue({ status: false, message: null })
     }
     setTimeout(() => {
@@ -59,8 +59,8 @@ export const FormTextAutoComplete = ({
 
   const onSelect = (data, info) => {
     if (data) {
-      if(attribute == 'areaName') {
-        setValue(info?.label ??  data)
+      if (attribute == 'areaName') {
+        setValue(info?.label ?? data)
       } else {
         setValue(data)
       }
@@ -74,16 +74,15 @@ export const FormTextAutoComplete = ({
 
   useEffect(() => {
     if (responseStaffCode?.data && responseStaffCode?.state === STATE?.SUCCESS) {
-      if(attribute == 'areaName') {
-        let data = Object.keys(responseStaffCode?.data).map((it) => ({
+      if (attribute == 'areaName') {
+        const data = Object.keys(responseStaffCode?.data).map((it) => ({
           value: it,
-          label: it + ' - ' + responseStaffCode?.data[it],
-        }));
-        setOptions(data);
+          label: it + ' - ' + responseStaffCode?.data[it]
+        }))
+        setOptions(data)
       } else {
         setOptions(responseStaffCode?.data.map((it) => ({ value: it })))
       }
-
     } else {
       setOptions([])
     }
@@ -114,7 +113,7 @@ export const FormTextAutoComplete = ({
         {errorValue?.status && (
           <>
             <Col span={6}> </Col>
-            <Col span={18}>
+            <Col span={isCustomSpan ? 21 : 18}>
               <div className={'message-error-data'}>{errorValue?.message}</div>{' '}
             </Col>
           </>
