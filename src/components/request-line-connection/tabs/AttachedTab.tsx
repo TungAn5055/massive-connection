@@ -12,6 +12,7 @@ import useUploadSim from '@/hooks/useUploadSim'
 import useUpdateStatusOrder from '@/hooks/useUpdateStatusOrder'
 import axiosInstance from '@/configs/axios.ts'
 import { useNavigate } from 'react-router-dom'
+import useDownloadFileTempleSim from '@/hooks/useDownloadFileTempleSim'
 const { Option } = Select
 
 const AttachedTab = ({ contractNo, setActiveTab }: any) => {
@@ -24,6 +25,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
   const { responseGetGroupInfo, requestGetGroupInfo } = useGetGroupInfo()
   const { responseUploadFile, requestUploadFile } = useUploadSim()
   const { responseDownloadFile, requestDownloadFile } = useDownloadFileSim()
+  const { responseDownloadTempleFile, requestDownloadTempleFile } = useDownloadFileTempleSim()
   const { responseUpdateStatusOrder, requestUpdateStatusOrder } = useUpdateStatusOrder()
 
   const tableLoading = {
@@ -67,6 +69,9 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
   }
 
   const downloadFile = async (item) => {
+    console.log('item?.fileName+++', item?.fileName)
+    console.log('item?.groupId+++', item?.groupId)
+    console.log('contractNo+++', contractNo)
     if (item?.fileName && item?.groupId) {
       setCurrentClickItem(item)
       requestDownloadFile({
@@ -162,6 +167,7 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
 
   useEffect(() => {
     if (responseDownloadFile?.data && responseDownloadFile?.state === STATE?.SUCCESS) {
+      console.log('responseDownloadFile?.data+++', responseDownloadFile?.data)
       const url = window.URL.createObjectURL(new Blob([responseDownloadFile?.data]))
       const link = document.createElement('a')
       link.href = url
@@ -171,6 +177,19 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
       setCurrentClickItem({})
     }
   }, [responseDownloadFile])
+
+  useEffect(() => {
+    if (responseDownloadTempleFile?.data && responseDownloadTempleFile?.state === STATE?.SUCCESS) {
+      console.log('responseDownloadTempleFile?.data+++', responseDownloadTempleFile?.data)
+      const url = window.URL.createObjectURL(new Blob([responseDownloadTempleFile?.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'Template_file_upload_sim.xlsx') //or any other extension
+      document.body.appendChild(link)
+      link.click()
+      setCurrentClickItem({})
+    }
+  }, [responseDownloadTempleFile])
 
   useEffect(() => {
     if (responseUpdateStatusOrder?.data && responseUpdateStatusOrder?.state === STATE?.SUCCESS) {
@@ -278,14 +297,13 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
               </Button>
             </Col>
             <Col span={5} style={{ paddingTop: '10px', color: '#6396bc' }}>
-              <a
-                target='_blank'
-                href={
-                  'https://docs.google.com/spreadsheets/d/13lUIfjn_Zu9-VWLhpuIC6_Q5VlW3t-Ll/edit?usp=drive_link&ouid=108812830668437018115&rtpof=true&sd=true'
-                }
+              <span
+                onClick={() => {
+                  requestDownloadTempleFile()
+                }}
               >
                 Click here to download template
-              </a>
+              </span>
             </Col>
             {showError && (
               <Col span={4}>
