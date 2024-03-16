@@ -7,6 +7,8 @@ import { FormTextAutoComplete } from '@/components/customer-infomation/form-info
 import { SOURCE_METHOD_DE_PAGO } from '@/ultils/constants'
 import { convertForDataSource } from '@/ultils/helper'
 import { RadioNoti } from '@/components/customer-infomation/form-info/RadioNoti.tsx'
+import {SelectionCompleteAccount} from "@/components/customer-infomation/form-info/SelectionCompleteAccount.tsx";
+import {FormSelectIdType} from "@/components/customer-infomation/form-info/SelectIdType.tsx";
 
 const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {}, setListTabActive }: any) => {
   const onNextStep = () => {
@@ -572,7 +574,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
           {/*line 5*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <FormTextAutoComplete
+              <SelectionCompleteAccount
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'staffCode'}
@@ -612,6 +614,17 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setValidateAll={setValidateAll}
                 placeholder={'Ingresar Nombres y Apellidos'}
                 dataCustomer={dataCustomer}
+              />
+            </Col>
+            <Col span={8}>
+              <FormSelectIdType
+                  dataInfo={dataInfo}
+                  setDataInfo={setDataInfo}
+                  attribute={'contactIdType'}
+                  attributeSave={'contactIdType'}
+                  title={'ID type'}
+                  dataSource={SOURCE_METHOD_DE_PAGO}
+                  placholder={'Seleccione tipo de documento'}
               />
             </Col>
             <Col span={8}>
