@@ -44,3 +44,16 @@ export function convertForDataSource(list) {
     return list
   }
 }
+
+export const convertObjectToArraySource = (objects: any) => {
+  const arr: any = []
+  if (Object.keys(objects)?.length > 0) {
+    Object.keys(objects).forEach((it) => {
+      if (objects[parseInt(it)]) {
+        arr.push({ value: it, label: objects[parseInt(it)] })
+      }
+    })
+  }
+
+  return arr
+}
