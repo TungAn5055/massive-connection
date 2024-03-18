@@ -39,20 +39,11 @@ export const FormRadio = ({
     }, 1300)
   }
 
-
-
   useEffect(() => {
-    if (attribute && dataCustomer[attribute]) {
-      setValue(dataCustomer[attribute])
-      if (attributeSave) {
-        setDataInfo({ [attributeSave]: dataCustomer[attribute] })
-      }
-    } else {
-      if (attributeSave) {
-        setDataInfo({ [attributeSave]: value })
-      }
+    if (attributeSave) {
+      setDataInfo({ [attributeSave]: 1 })
     }
-  }, [dataCustomer])
+  }, [])
 
   return (
     <Form.Item>

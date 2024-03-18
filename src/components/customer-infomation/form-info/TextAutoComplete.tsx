@@ -112,7 +112,7 @@ export const FormTextAutoComplete = ({
         </Col>
         {errorValue?.status && (
           <>
-            <Col span={6}> </Col>
+            <Col span={isCustomSpan ? 3 : 6}> </Col>
             <Col span={isCustomSpan ? 21 : 18}>
               <div className={'message-error-data'}>{errorValue?.message}</div>{' '}
             </Col>

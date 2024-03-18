@@ -129,6 +129,19 @@ export const FormText = ({
         }
         setErrorValue({ status: false, message: null })
       }
+    } else if (dataInfo?.typeOfContact == 2) {
+      if (
+        attribute === 'repreCustName' ||
+        attribute === 'repreCustIdNox' ||
+        attribute === 'position' ||
+        attribute === 'repreCustTelFax' ||
+        attribute === 'contactEmail'
+      ) {
+        setValue(null)
+        if (attributeSave) {
+          setDataInfo({ [attributeSave]: null })
+        }
+      }
     }
   }, [dataInfo?.typeOfContact])
 

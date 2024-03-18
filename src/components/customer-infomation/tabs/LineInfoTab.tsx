@@ -137,7 +137,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
     if (total > 0) {
       res.push(itemTotal)
       const itemActive = res?.find((it) => it?.is_line_active)
-      setDataInfo({ contractValue: total, quantityOfPlans: itemActive?.index + 1 })
+      setDataInfo({ contractValue: isTotal, quantityOfPlans: itemActive?.index + 1 })
     }
     return res
   }, [listGroups, isChangeGroup, idxIsLine])
@@ -156,7 +156,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
   useEffect(() => {
     if (dataTable?.length > 0) {
       const itemSave: any = []
-
+      console.log('dataTable+++', dataTable)
       dataTable
         .filter((it) => !it?.is_total)
         .forEach((it) => {
@@ -169,10 +169,10 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
             offerId: it?.offerId,
             productCode: it?.productCode,
             quantityOfLines: it?.quantity,
-            reasonCode: it?.reasonCode,
+            reasonCode: it?.reason,
             serviceTypeId: 0,
             shopCode: it?.shopCode,
-            status: true,
+            status: 1,
             unitPrice: it?.unit_price
           })
         })

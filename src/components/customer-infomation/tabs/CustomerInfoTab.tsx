@@ -5,13 +5,10 @@ import { FormDate } from '@/components/customer-infomation/form-info/Date'
 import { FormRadio } from '@/components/customer-infomation/form-info/Radio.tsx'
 import { FormTextAutoComplete } from '@/components/customer-infomation/form-info/TextAutoComplete'
 import { SOURCE_METHOD_DE_PAGO } from '@/ultils/constants'
-import { convertForDataSource, convertObjectToArraySource } from '@/ultils/helper'
+import { convertForDataSource } from '@/ultils/helper'
 import { RadioNoti } from '@/components/customer-infomation/form-info/RadioNoti.tsx'
-import { SelectionCompleteAccount } from '@/components/customer-infomation/form-info/SelectionCompleteAccount.tsx'
-import { FormSelectIdType } from '@/components/customer-infomation/form-info/SelectIdType.tsx'
 
 const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {}, setListTabActive }: any) => {
-  console.log('dataCustomer+++', dataCustomer)
   const onNextStep = () => {
     let allRequestOK = true
     Object.values(validateField).forEach((func) => {
@@ -575,7 +572,7 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
           {/*line 5*/}
           <Row gutter={24} style={{ marginBottom: '30px' }}>
             <Col span={8}>
-              <SelectionCompleteAccount
+              <FormTextAutoComplete
                 dataInfo={dataInfo}
                 setDataInfo={setDataInfo}
                 attribute={'staffCode'}
@@ -615,17 +612,6 @@ const CustomerInfoTab = ({ dataInfo, setDataInfo, setActiveTab, dataCustomer = {
                 setValidateAll={setValidateAll}
                 placeholder={'Ingresar Nombres y Apellidos'}
                 dataCustomer={dataCustomer}
-              />
-            </Col>
-            <Col span={8}>
-              <FormSelectIdType
-                dataInfo={dataInfo}
-                setDataInfo={setDataInfo}
-                attribute={'repreCustIdType'}
-                attributeSave={'contactIdType'}
-                title={'ID type'}
-                dataSource={convertObjectToArraySource(dataCustomer?.contactIdType ?? {})}
-                placholder={'Seleccione tipo de documento'}
               />
             </Col>
             <Col span={8}>
