@@ -135,7 +135,7 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
     if (total > 0) {
       res.push(itemTotal)
       const itemActive = res?.find((it) => it?.is_line_active)
-      setDataInfo({ contractValue: isTotal, quantityOfPlans: itemActive?.index + 1 })
+      setDataInfo({ contractValue: totalPrice, quantityOfPlans: itemActive?.index + 1 })
     }
     return res
   }, [listGroups, isChangeGroup, idxIsLine])
