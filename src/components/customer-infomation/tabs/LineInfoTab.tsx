@@ -26,7 +26,6 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
       unit_price: null
     }
   ])
-
   const [isChanged, setIsChanged] = useState(false)
 
   const tableLoading = {
@@ -100,9 +99,8 @@ const LineInfoTab = ({ setActiveTab, setDataInfo, setDataInfoGroup, setListTabAc
       unit_price: null,
       total_price: null
     }
-    const dataGroupFull = listGroups?.filter(
-      (it) => it?.plan && it?.quantity && it?.reason && it?.branch && it?.unit_price
-    )
+
+    const dataGroupFull = listGroups?.filter((it) => it?.plan && it?.quantity && it?.reason && it?.branch)
     res = dataGroupFull?.map((item, index) => {
       return {
         ...item,

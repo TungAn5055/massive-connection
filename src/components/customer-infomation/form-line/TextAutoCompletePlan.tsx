@@ -16,6 +16,7 @@ export const TextAutoCompletePlan = ({
 }: any) => {
   const [value, setValue] = useState('')
   const [options, setOptions] = useState<any>([])
+  const [currentOption, setCurrentOption] = useState<any>({})
   const [errorValue, setErrorValue] = useState<any>({ status: false, message: null })
 
   const [responseStaffCode, requestGetStaffCode] = useCustomGetData()
@@ -44,13 +45,13 @@ export const TextAutoCompletePlan = ({
 
   const onSelect = (data, list) => {
     if (data) {
+      setCurrentOption(list)
       setValue(data)
       setErrorValue({ status: false, message: null })
       setData((prev) => {
         prev[index] = { ...item, plan: data, offerId: list?.offerId, productCode: list?.productCode }
         return prev
       })
-      setIsChangeGroup((prev) => !prev)
       if (list?.offerId) {
         requestGetPrice(`/api/get-price?offerId=${list?.offerId}`)
       }
@@ -75,7 +76,13 @@ export const TextAutoCompletePlan = ({
   useEffect(() => {
     if (responseGetPrice?.data && responseGetPrice?.state === STATE?.SUCCESS) {
       setData((prev) => {
-        prev[index] = { ...item, unit_price: responseGetPrice?.data }
+        prev[index] = {
+          ...item,
+          unit_price: responseGetPrice?.data,
+          plan: currentOption?.productName,
+          offerId: currentOption?.offerId,
+          productCode: currentOption?.productCode
+        }
         return prev
       })
       setIsChangeGroup((prev) => !prev)
