@@ -43,7 +43,6 @@ export const TextAutoCompleteBranch = ({
       prev[index] = { ...item, branch: data, shopCode: list?.code ?? data }
       return prev
     })
-    setIsChangeGroup((prev) => !prev)
   }
 
   const onSelect = (data, info: any) => {

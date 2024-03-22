@@ -69,9 +69,6 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
   }
 
   const downloadFile = async (item) => {
-    console.log('item?.fileName+++', item?.fileName)
-    console.log('item?.groupId+++', item?.groupId)
-    console.log('contractNo+++', contractNo)
     if (item?.fileName && item?.groupId) {
       setCurrentClickItem(item)
       requestDownloadFile({
@@ -85,7 +82,6 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
   }
 
   const onSaveDataContract = async () => {
-    console.log('currentType++++', currentType)
     await Promise.all(
       listDataFiles
         ?.filter((it) => it?.status)
@@ -167,7 +163,6 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
 
   useEffect(() => {
     if (responseDownloadFile?.data && responseDownloadFile?.state === STATE?.SUCCESS) {
-      console.log('responseDownloadFile?.data+++', responseDownloadFile?.data)
       const url = window.URL.createObjectURL(new Blob([responseDownloadFile?.data]))
       const link = document.createElement('a')
       link.href = url
@@ -180,7 +175,6 @@ const AttachedTab = ({ contractNo, setActiveTab }: any) => {
 
   useEffect(() => {
     if (responseDownloadTempleFile?.data && responseDownloadTempleFile?.state === STATE?.SUCCESS) {
-      console.log('responseDownloadTempleFile?.data+++', responseDownloadTempleFile?.data)
       const url = window.URL.createObjectURL(new Blob([responseDownloadTempleFile?.data]))
       const link = document.createElement('a')
       link.href = url

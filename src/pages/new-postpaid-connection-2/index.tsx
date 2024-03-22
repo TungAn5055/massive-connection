@@ -320,7 +320,7 @@ const NewPostpaidConnection2: React.FC = () => {
                                   isDetail: true,
                                 })
                               }}>
-                                Partial Connected Detail
+                                View detail partial connected order
                               </Button>
                             )
                           } else if (info?.status == 1) {
